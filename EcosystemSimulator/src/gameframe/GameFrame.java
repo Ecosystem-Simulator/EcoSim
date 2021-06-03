@@ -5,20 +5,67 @@
  */
 package gameframe;
 
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  *
  * @author 1347278
  */
 public class GameFrame extends javax.swing.JFrame {
-
+    //keep track how much time has actually passed since last cycle
+    private double delta_time;
+    private long prev_time;
+    public long tickCount = 0;
+    //timer object
+    private Timer timer = null;
+    private boolean active = false;
+    //how long to wait between timer calls
+    private int timerDelay = 30; 
     /**
      * Creates new form GameFrame
      */
     public GameFrame() {
         initComponents();
-        //why isn't this working
-        //hi there
-        //newer change
+    }
+    
+    public void startTimer() {                                         
+        if (timer != null) {
+            System.out.println("A timer is already working!");
+            return;
+        }
+        //make a new timer object
+        timer = new Timer(true);
+        //make a timertask that has a job to do (call updateTime)
+        TimerTask task = new TimerTask() {
+            public void run() {
+                tick();
+            }
+        };
+        //tell timer to start repeating the task
+        timer.scheduleAtFixedRate(task, 0, timerDelay);
+        prev_time = System.nanoTime();
+    }
+
+    public void timeAdjust() {
+        long curr_time=System.nanoTime();
+        delta_time = (curr_time-prev_time)/1000000000.0;
+        System.out.println(delta_time);
+        prev_time = curr_time;
+    }
+
+    //runs every tick when the timer is on. 
+    public void tick() {
+        updateTicker();
+        //keyboardCheck();   
+        //updateActors();      //most important part of simulation!
+        //removeDeactivatedActors();    //removes actors from list that are not active any more
+        //redraw();
+    } 
+    
+    //updates the tickCount
+    public void updateTicker() {
+        tickCount++;
+        //textTick.setText(""+tickCount);
     }
 
     /**
