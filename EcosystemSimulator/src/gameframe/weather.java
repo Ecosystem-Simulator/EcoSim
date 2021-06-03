@@ -1,3 +1,4 @@
+package gameframe;
 public class weather {
     
    String weather = ""; 
