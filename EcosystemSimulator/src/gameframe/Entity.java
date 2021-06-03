@@ -1,3 +1,5 @@
+package gameframe;
+
 import java.util.ArrayList;
 
 public class Entity {
