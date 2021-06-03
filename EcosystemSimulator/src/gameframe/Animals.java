@@ -14,6 +14,7 @@ public class Animals extends Entity{
     }
     public void move(){
         //move code
+        //test1
     }
     public void eat(){
         //eat code
