@@ -4,7 +4,6 @@ public class weather {
    String yesterdayWeather = "";
    int weatherCounter = 1;
     
-    
     public void chooseWeather(){
        int chance = (int)(Math.random()*10)+1;
        if (weatherCounter < 7){
