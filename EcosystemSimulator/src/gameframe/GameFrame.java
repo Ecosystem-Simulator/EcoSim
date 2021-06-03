@@ -18,7 +18,7 @@ public class GameFrame extends javax.swing.JFrame {
         initComponents();
         //why isn't this working
         //hi there
-        //new change
+        //newer change
     }
 
     /**
