@@ -1,7 +1,4 @@
-public class test {
-    
-
-public class test {
+public class weather {
     
    String weather = ""; 
    String yesterdayWeather = "";
@@ -74,7 +71,7 @@ public class test {
     
     public void sun(){
         //floodwater goes away
-        //no tint/yellow
+        //no tint
         //
     }
     
@@ -92,6 +89,7 @@ public class test {
     }
     
     public void drought(){
+        //tint world yellow
         
     }
 }
