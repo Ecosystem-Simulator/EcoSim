@@ -1,5 +1,5 @@
 
-public class test {
+public class weather {
     
    String weather = ""; 
    String yesterdayWeather = "";
