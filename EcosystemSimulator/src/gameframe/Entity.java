@@ -1,6 +1,8 @@
 package gameframe;
 
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Color;
 
 public class Entity {
     private ArrayList<Entity> entities;
@@ -24,6 +26,12 @@ public class Entity {
     /*public boolean isActive() {
         return (active);
     }*/
+    
+    public void draw(Graphics g){
+        g.setColor(new Color(255, 0, 0));
+        g.fillOval(getX(), getY(), 10, 10);
+    }
+    
     public ArrayList<Entity> getEntities() {
         return (entities);
     }

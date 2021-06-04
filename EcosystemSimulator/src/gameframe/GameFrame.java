@@ -84,6 +84,11 @@ public class GameFrame extends javax.swing.JFrame {
         // entities.add(new ...)
     }
     
+    /*public void drawStuff(Graphics g){
+        Entity e = new Entity(10, 10, entities);
+        e.draw(g);
+    }*/
+    
     public GameFrame() {
         initComponents();
         setupSimulation();
