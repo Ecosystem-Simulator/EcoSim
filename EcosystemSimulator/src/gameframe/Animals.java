@@ -1,5 +1,9 @@
 package gameframe;
+
 import java.util.ArrayList;
+import java.awt.Graphics;
+import java.awt.Color;
+
 public class Animals extends Entity{
     private String gender;
     private int age;
