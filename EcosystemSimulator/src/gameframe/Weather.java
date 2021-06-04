@@ -1,14 +1,13 @@
 package gameframe;
 public class Weather {
     
-   String weather = ""; 
-   String yesterdayWeather = "";
-   int weatherCounter = 1;
-    
+    String weather = ""; 
+    String yesterdayWeather = "";
+    int weatherCounter = 1;
     
     public void chooseWeather(){
-       int chance = (int)(Math.random()*10)+1;
-       if (weatherCounter < 7){
+        int chance = (int)(Math.random()*10)+1;
+        if (weatherCounter < 7){
             if (chance <= 7){
                 weather  = "sunny";      
             }
@@ -21,11 +20,11 @@ public class Weather {
             else{
                 weatherCounter = 1; 
             }
-       }
-       else if (yesterdayWeather.equals("rainy")){
+        }
+        else if (yesterdayWeather.equals("rainy")){
            weather = "flood";      
-       }
-       else if (yesterdayWeather.equals("flood")){
+        }
+        else if (yesterdayWeather.equals("flood")){
             int x = (int)(Math.random()*10)+1;
             if (x <= 3){
                 weather = "flood";
@@ -39,28 +38,28 @@ public class Weather {
                 else{
                     weather = "rainy";
                 }
-           }
-       }
-       else if(yesterdayWeather.equals("sunny")){
-           weather = "drought";
-       }
-       else if (yesterdayWeather.equals("drought")){
-           int a = (int)(Math.random()*10)+1;
-           if (a <= 3){
-               weather = "drought";
-           }
-           else{
-               weatherCounter = 1;
-               int r = (int)(Math.random()*10)+1;
-               if (r <= 7){
-                   weather = "sunny";
-               }
-               else{
-                   weather = "rainy";
-               }
-           }
-       }
-       yesterdayWeather = weather;      
+            }
+        }
+        else if(yesterdayWeather.equals("sunny")){
+            weather = "drought";
+        }
+        else if (yesterdayWeather.equals("drought")){
+            int a = (int)(Math.random()*10)+1;
+            if (a <= 3){
+                weather = "drought";
+            }
+            else{
+                weatherCounter = 1;
+                int r = (int)(Math.random()*10)+1;
+                if (r <= 7){
+                    weather = "sunny";
+                }
+                else{
+                    weather = "rainy";
+                }
+            }
+        }
+        yesterdayWeather = weather;      
     } 
     
     public void rain(){
@@ -90,8 +89,7 @@ public class Weather {
     }
     
     public void drought(){
-        //tint world yellow
-        
+        //tint world yellow   
     }
 }
 
