@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Entity {
     private ArrayList<Entity> entities;
     private int x, y;
-    private double direction;
-    private boolean active = true;
+    //private double direction;
+    //private boolean active = true;
     public Entity(int x, int y, ArrayList<Entity> entities){
         this.x = x;
         this.y = y;
@@ -21,11 +21,11 @@ public class Entity {
         return(y);
     }
     
-    public boolean isActive() {
+    /*public boolean isActive() {
         return (active);
-    }
+    }*/
     public ArrayList<Entity> getEntities() {
-        return entities;
+        return (entities);
     }
 
 }

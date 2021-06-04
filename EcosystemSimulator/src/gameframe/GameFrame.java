@@ -5,6 +5,13 @@
  */
 package gameframe;
 
+import java.awt.Color;
+import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.event.*;
+import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +29,10 @@ public class GameFrame extends javax.swing.JFrame {
     //timer object
     private Timer timer = null;
     private boolean active = false;
+    //drawing object
+    private Image ib;
+    private Graphics ibg;
+    private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
     private int timerDelay = 30; 
     /**
@@ -70,7 +81,7 @@ public class GameFrame extends javax.swing.JFrame {
     
     public void setupSimulation(){
         // setup simulation!
-        // entities.add(new ... )
+        // entities.add(new ...)
     }
     
     public GameFrame() {
@@ -130,7 +141,6 @@ public class GameFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GameFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

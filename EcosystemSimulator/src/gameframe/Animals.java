@@ -3,12 +3,16 @@ import java.util.ArrayList;
 public class Animals extends Entity{
     private String gender;
     private int age;
+    private int hunger;
+    private int thirst;
     private int attractiveness;
     private boolean restrictedVision;
     public Animals(int x, int y, ArrayList<Entity> entities, String gender){
         super(x, y, entities);
         this.gender = gender;
         age = 0;
+        hunger = 0;
+        thirst = 0;
         attractiveness = (int)(Math.random()*100)+1;
         restrictedVision = false;
     }
