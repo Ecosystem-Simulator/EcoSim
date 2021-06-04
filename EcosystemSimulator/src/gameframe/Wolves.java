@@ -5,6 +5,8 @@
  */
 package gameframe;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 /**
@@ -14,5 +16,11 @@ import java.util.ArrayList;
 public class Wolves extends Animal{
     public Wolves(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, gender, entitygrid, gridLength);
+    }
+    
+    @Override
+    public void draw(Graphics g){
+        g.setColor(new Color(220, 220, 220));
+        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight());
     }
 }
