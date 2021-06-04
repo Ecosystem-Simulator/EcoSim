@@ -11,8 +11,8 @@ public class Animals extends Entity{
     private int thirst;
     private int attractiveness;
     private boolean restrictedVision;
-    public Animals(int x, int y, ArrayList<Entity> entities, String gender){
-        super(x, y, entities);
+    public Animals(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
+        super(x, y, entities, entitygrid, gridLength);
         this.gender = gender;
         age = 0;
         hunger = 0;

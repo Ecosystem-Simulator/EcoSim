@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author thuph
  */
 public class Salmon extends Food {
-    public Salmon (int x, int y, ArrayList<Entity> entities){
-        super(x, y, entities);
+    public Salmon (int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, entities, entitygrid, gridLength);
     }
 }

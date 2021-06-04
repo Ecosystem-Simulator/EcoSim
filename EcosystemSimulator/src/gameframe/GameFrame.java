@@ -26,6 +26,8 @@ public class GameFrame extends javax.swing.JFrame {
     public long tickCount = 0;
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
+    //make a grid of entities
+    Entity[][] entitygrid = new Entity[10][10];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -35,9 +37,14 @@ public class GameFrame extends javax.swing.JFrame {
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
     private int timerDelay = 30; 
+    //side length of grid
+    int gridLength = 50;
     /**
      * Creates new form GameFrame
      */
+    Entity e;
+    Entity eb;
+    
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -70,7 +77,7 @@ public class GameFrame extends javax.swing.JFrame {
         //keyboardCheck();   
         //updateActors();      //most important part of simulation!
         //removeDeactivatedActors();    //removes actors from list that are not active any more
-        //redraw();
+        redraw();
     } 
     
     //updates the tickCount
@@ -78,20 +85,50 @@ public class GameFrame extends javax.swing.JFrame {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-    
+    public void setUpImageBuffer(){
+        ib=panelDraw.createImage(panelDraw.getWidth(),panelDraw.getHeight());
+        ibg=ib.getGraphics();
+    }
     public void setupSimulation(){
         // setup simulation!
         // entities.add(new ...)
+        e = new Entity(0, 0, entities, entitygrid, gridLength);
+        eb = new Entity(0, 1, entities, entitygrid, gridLength);
     }
     
-    /*public void drawStuff(Graphics g){
-        Entity e = new Entity(10, 10, entities);
+    public void drawStuff(Graphics g){
+        
         e.draw(g);
-    }*/
+        eb.draw(g);
+        g.setColor(new Color(0, 0, 0));
+        for(int r = 0; r < entitygrid.length; r++){
+            for(int c = 0; c < entitygrid[0].length; c++){
+                g.drawRect(r*gridLength, c*gridLength, gridLength, gridLength);
+            }
+        }
+    }
+    
+     public void redraw() {
+        //switch to white and draw a white rectangle over the entire image buffer to clear it
+        ibg.setColor(backgroundColor);
+        ibg.clearRect(0,0, panelDraw.getWidth(), panelDraw.getHeight() );
+        ibg.fillRect(0,0,panelDraw.getWidth(), panelDraw.getHeight() );
+   
+        /* you can certainly just put all your draw code in here, but to stay organized, I am going to pass the
+         * image buffer object to my own draw method.  This keeps the code a little cleaner... */
+        drawStuff(ibg);
+        
+        /* this is the actual drawing of your stuff onto the actual panel.  It copies the image buffer to the
+         * panel's image. */
+        Graphics g = panelDraw.getGraphics();
+        g.drawImage(ib,0,0,this);
+    }   
+    
     
     public GameFrame() {
         initComponents();
         setupSimulation();
+        setUpImageBuffer();
     }
 
     /**
@@ -103,21 +140,61 @@ public class GameFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelDraw = new javax.swing.JPanel();
+        buttonStart = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelDraw.setBackground(new java.awt.Color(255, 255, 255));
+        panelDraw.setPreferredSize(new java.awt.Dimension(500, 500));
+
+        javax.swing.GroupLayout panelDrawLayout = new javax.swing.GroupLayout(panelDraw);
+        panelDraw.setLayout(panelDrawLayout);
+        panelDrawLayout.setHorizontalGroup(
+            panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+        panelDrawLayout.setVerticalGroup(
+            panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        buttonStart.setText("Start Simulation");
+        buttonStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonStartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(418, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonStart)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(buttonStart)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
+        startTimer();
+    }//GEN-LAST:event_buttonStartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,5 +232,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonStart;
+    private javax.swing.JPanel panelDraw;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public class Food extends Entity{
     private int age;
-    public Food(int x, int y, ArrayList<Entity> entities) {
-        super(x, y, entities);
+    public Food(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(x, y, entities, entitygrid, gridLength);
         age = 0;
     }
 }
