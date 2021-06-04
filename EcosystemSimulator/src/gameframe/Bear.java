@@ -11,7 +11,7 @@ public class Bear extends Animal{
     
     public void draw(Graphics g){
         g.setColor(new Color(255, 0, 0));
-        g.fillOval(getX() - length/2, getY() - height/2, length, height);
+        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight());
     }
     
     
