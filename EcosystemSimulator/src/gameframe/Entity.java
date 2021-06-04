@@ -37,7 +37,12 @@ public class Entity {
     public int getY(){
         return(y);
     }
-    
+    public int getLength(){
+        return(length);
+    }
+    public int getHeight(){
+        return(height);
+    }
     /*public boolean isActive() {
         return (active);
     }*/
