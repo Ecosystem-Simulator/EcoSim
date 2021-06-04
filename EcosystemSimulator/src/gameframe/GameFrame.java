@@ -5,6 +5,7 @@
  */
 package gameframe;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
@@ -16,6 +17,8 @@ public class GameFrame extends javax.swing.JFrame {
     private double delta_time;
     private long prev_time;
     public long tickCount = 0;
+    //creating arraylist of entities
+    ArrayList<Entity> entities = new ArrayList<Entity>();
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -24,9 +27,6 @@ public class GameFrame extends javax.swing.JFrame {
     /**
      * Creates new form GameFrame
      */
-    public GameFrame() {
-        initComponents();
-    }
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -67,6 +67,16 @@ public class GameFrame extends javax.swing.JFrame {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
+    
+    public void setupSimulation(){
+        // setup simulation!
+        // entities.add(new ... )
+    }
+    
+    public GameFrame() {
+        initComponents();
+        setupSimulation();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,6 +106,7 @@ public class GameFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

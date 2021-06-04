@@ -3,7 +3,7 @@ package gameframe;
 import java.util.ArrayList;
 
 public class Entity {
-    protected static ArrayList<Entity> entities;
+    private ArrayList<Entity> entities;
     private int x, y;
     private double direction;
     private boolean active = true;
