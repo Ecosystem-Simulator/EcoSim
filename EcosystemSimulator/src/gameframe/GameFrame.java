@@ -42,8 +42,11 @@ public class GameFrame extends javax.swing.JFrame {
     /**
      * Creates new form GameFrame
      */
+    
+    //testing objects
     Entity e;
     Entity eb;
+    Wolf w;
     
     
     public void startTimer() {                                         
@@ -94,12 +97,18 @@ public class GameFrame extends javax.swing.JFrame {
         // entities.add(new ...)
         e = new Entity(0, 0, entities, entitygrid, gridLength);
         eb = new Entity(0, 1, entities, entitygrid, gridLength);
+        w = new Wolf(0, 2, entities, "male", entitygrid, gridLength);
+        entities.add(e);
+        entities.add(eb);
+        entities.add(w);
     }
     
     public void drawStuff(Graphics g){
         
-        e.draw(g);
-        eb.draw(g);
+        for (Entity temp: entities){
+            temp.draw(g);
+        }
+        
         g.setColor(new Color(0, 0, 0));
         for(int r = 0; r < entitygrid.length; r++){
             for(int c = 0; c < entitygrid[0].length; c++){

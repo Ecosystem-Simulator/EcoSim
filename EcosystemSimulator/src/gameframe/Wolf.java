@@ -20,7 +20,8 @@ public class Wolf extends Animal{
     
     @Override
     public void draw(Graphics g){
-        g.setColor(new Color(220, 220, 220));
+        g.setColor(new Color(105, 105, 105));
         g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight());
+        //g.drawString("Wolf", getX() - getLength(), getY() + getHeight()*2);
     }
 }
