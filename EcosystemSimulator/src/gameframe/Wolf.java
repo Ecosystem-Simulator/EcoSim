@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 1090720
+ * @author thuph
  */
 public class Wolf extends Animal{
     public Wolf(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
