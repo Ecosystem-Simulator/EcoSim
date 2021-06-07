@@ -9,6 +9,7 @@ public class Entity {
     private Entity[][] entitygrid;
     private int x, y;
     private int gridX, gridY;
+    private int gridLength;
     private int length = 10;
     private int height = 10;
     //private double direction;
@@ -20,6 +21,7 @@ public class Entity {
         y = gridY*gridLength + gridLength/2;
         this.entities = entities;
         this.entitygrid = entitygrid;
+        this.gridLength = gridLength;
     }
     
     public int getGridX(){
@@ -42,6 +44,9 @@ public class Entity {
     }
     public int getHeight(){
         return(height);
+    }
+    public int getGridLength(){
+        return gridLength;
     }
     public int getDistance(Entity e){
         return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));

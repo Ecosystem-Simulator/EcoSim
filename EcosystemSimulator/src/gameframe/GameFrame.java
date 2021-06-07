@@ -52,6 +52,7 @@ public class GameFrame extends javax.swing.JFrame {
     PoisonBerries pb;
     Grass g;
     Rock r;
+    Water wa;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -106,7 +107,8 @@ public class GameFrame extends javax.swing.JFrame {
         b = new Berries(0, 4, entities, entitygrid, gridLength);
         pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
         g = new Grass(0, 6, entities, entitygrid, gridLength);
-        r = new Rock(0, 7, entities, entitygrid, gridLength);
+        r = new Rock(0, 7, entities, entitygrid, gridLength, false);
+        wa = new Water(0, 8, entities, entitygrid, gridLength, false);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
@@ -115,6 +117,7 @@ public class GameFrame extends javax.swing.JFrame {
         entities.add(pb);
         entities.add(g);
         entities.add(r);
+        entities.add(wa);
     }
     
     public void drawStuff(Graphics g){
