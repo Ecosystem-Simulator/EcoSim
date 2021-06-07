@@ -20,7 +20,7 @@ public class Mud extends Terrain{
     
     @Override
     public void draw(Graphics g){
-        g.setColor(new Color(102, 51, 0));
+        g.setColor(new Color(146, 105, 50));
         g.fillRect(getX() - getGridLength()/2, getY() - getGridLength()/2, getGridLength(), getGridLength());
     }
 }
