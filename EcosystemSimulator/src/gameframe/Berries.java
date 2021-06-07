@@ -20,7 +20,7 @@ public class Berries extends Food{
     }
     public void draw(Graphics g){
         g.setColor(new Color(0, 153, 0));
-        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight());
+        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength()*2, getHeight()*2);
         g.setColor (new Color(204, 0, 0));
         g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength()/2, getHeight()/2);
     }
