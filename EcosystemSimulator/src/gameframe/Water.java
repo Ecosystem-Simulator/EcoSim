@@ -12,6 +12,6 @@ public class Water extends Terrain{
     @Override
     public void draw(Graphics g){
         g.setColor(new Color(58, 142, 216));
-        g.fillRect(getX() - getGridLength()/2, getY() - getGridLength()/2, getGridLength(), getGridLength()); //should be x, y, gridlength, gridlength
+        g.fillRect(getX() - getGridLength()/2, getY() - getGridLength()/2, getGridLength(), getGridLength()); 
     }
 }
