@@ -21,7 +21,7 @@ public class Mud extends Terrain{
     @Override
     public void draw(Graphics g){
         g.setColor(new Color(102, 51, 0));
-        g.fillRect(getX(), getY(), 50, 50); //should be x, y, gridlength, gridlength
+        g.fillRect(getX() - getGridLength()/2, getY() - getGridLength()/2, getGridLength(), getGridLength());
     }
 }
 
