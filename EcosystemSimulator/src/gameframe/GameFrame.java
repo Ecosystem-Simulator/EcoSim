@@ -48,6 +48,7 @@ public class GameFrame extends javax.swing.JFrame {
     Entity eb;
     Wolf w;
     Deer d;
+    Berries b;
     
     
     public void startTimer() {                                         
@@ -100,10 +101,12 @@ public class GameFrame extends javax.swing.JFrame {
         eb = new Entity(0, 1, entities, entitygrid, gridLength);
         w = new Wolf(0, 2, entities, "male", entitygrid, gridLength);
         d = new Deer(0, 3, entities, "male", entitygrid, gridLength);
+        b = new Berries(0, 4, entities, entitygrid, gridLength);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
         entities.add(d);
+        entities.add(b);
     }
     
     public void drawStuff(Graphics g){
