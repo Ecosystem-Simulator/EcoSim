@@ -1,6 +1,7 @@
 package gameframe;
 public class Weather {
     
+    //test
     String weather = ""; 
     String yesterdayWeather = "";
     int weatherCounter = 1;
