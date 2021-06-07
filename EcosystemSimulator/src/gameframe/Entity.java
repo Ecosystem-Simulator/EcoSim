@@ -43,6 +43,9 @@ public class Entity {
     public int getHeight(){
         return(height);
     }
+    public int getDistance(Entity e){
+        return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));
+    }
     /*public boolean isActive() {
         return (active);
     }*/
