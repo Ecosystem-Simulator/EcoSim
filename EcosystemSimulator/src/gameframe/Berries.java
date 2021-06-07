@@ -18,6 +18,7 @@ public class Berries extends Food{
         super(x, y, entities, entitygrid, gridLength);
         setNutritionVal(20);
     }
+    @Override
     public void draw(Graphics g){
         g.setColor(new Color(0, 153, 0));
         g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
