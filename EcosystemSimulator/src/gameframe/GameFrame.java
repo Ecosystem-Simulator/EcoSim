@@ -50,7 +50,8 @@ public class GameFrame extends javax.swing.JFrame {
     Deer d;
     Berries b;
     PoisonBerries pb;
-    
+    Grass g;
+    Rock r;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -104,12 +105,16 @@ public class GameFrame extends javax.swing.JFrame {
         d = new Deer(0, 3, entities, "male", entitygrid, gridLength);
         b = new Berries(0, 4, entities, entitygrid, gridLength);
         pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
+        g = new Grass(0, 6, entities, entitygrid, gridLength);
+        r = new Rock(0, 7, entities, entitygrid, gridLength);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
         entities.add(d);
         entities.add(b);
         entities.add(pb);
+        entities.add(g);
+        entities.add(r);
     }
     
     public void drawStuff(Graphics g){
