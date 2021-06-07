@@ -46,13 +46,13 @@ public class GameFrame extends javax.swing.JFrame {
     //testing objects
     Entity e;
     Entity eb;
-    Wolf w;
+    Bear w;
     Deer d;
     Berries b;
     PoisonBerries pb;
     Grass g;
     Rock r;
-    Water wa;
+    Mud wa;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -102,13 +102,13 @@ public class GameFrame extends javax.swing.JFrame {
         // entities.add(new ...)
         e = new Entity(0, 0, entities, entitygrid, gridLength);
         eb = new Entity(0, 1, entities, entitygrid, gridLength);
-        w = new Wolf(0, 2, entities, "male", entitygrid, gridLength);
+        w = new Bear(0, 2, entities, "male", entitygrid, gridLength);
         d = new Deer(0, 3, entities, "male", entitygrid, gridLength);
         b = new Berries(0, 4, entities, entitygrid, gridLength);
         pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
         g = new Grass(0, 6, entities, entitygrid, gridLength);
         r = new Rock(0, 7, entities, entitygrid, gridLength, false);
-        wa = new Water(0, 8, entities, entitygrid, gridLength, false);
+        wa = new Mud(0, 8, entities, entitygrid, gridLength, false);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
@@ -172,17 +172,17 @@ public class GameFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panelDraw.setBackground(new java.awt.Color(255, 255, 255));
-        panelDraw.setPreferredSize(new java.awt.Dimension(500, 500));
+        panelDraw.setPreferredSize(new java.awt.Dimension(501, 501));
 
         javax.swing.GroupLayout panelDrawLayout = new javax.swing.GroupLayout(panelDraw);
         panelDraw.setLayout(panelDrawLayout);
         panelDrawLayout.setHorizontalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
         panelDrawLayout.setVerticalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
 
         buttonStart.setText("Start Simulation");
@@ -199,7 +199,7 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(418, Short.MAX_VALUE))
+                .addContainerGap(417, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonStart)
@@ -210,12 +210,13 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(buttonStart)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
