@@ -53,6 +53,7 @@ public class GameFrame extends javax.swing.JFrame {
     Grass g;
     Rock r;
     Mud wa;
+    Mud m;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -109,6 +110,7 @@ public class GameFrame extends javax.swing.JFrame {
         g = new Grass(0, 6, entities, entitygrid, gridLength);
         r = new Rock(0, 7, entities, entitygrid, gridLength, false);
         wa = new Mud(0, 8, entities, entitygrid, gridLength, false);
+        m = new Mud(0, 9, entities, entitygrid, gridLength, false);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
@@ -118,6 +120,7 @@ public class GameFrame extends javax.swing.JFrame {
         entities.add(g);
         entities.add(r);
         entities.add(wa);
+        entities.add(m);
     }
     
     public void drawStuff(Graphics g){
