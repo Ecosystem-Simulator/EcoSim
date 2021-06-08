@@ -20,6 +20,21 @@ public class Animal extends Entity{
         attractiveness = (int)(Math.random()*100)+1;
         restrictedVision = false;
     }
+    public int getAge(){
+        return(age);
+    }
+    public int getHunger(){
+        return(hunger);
+    }
+    public int getThirst(){
+        return(thirst);
+    }
+    public int getAttractiveness(){
+        return(attractiveness);
+    }
+    public String getGender(){
+        return(gender);
+    }
     public void act(){
         //move code
         age++;
