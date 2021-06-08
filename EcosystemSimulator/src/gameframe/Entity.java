@@ -48,7 +48,7 @@ public class Entity {
     public int getGridLength(){
         return gridLength;
     }
-    public int getDistance(Entity e){
+    public int distanceTo(Entity e){
         return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));
     }
     /*public boolean isActive() {
