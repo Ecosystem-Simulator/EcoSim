@@ -20,9 +20,12 @@ public class Animal extends Entity{
         attractiveness = (int)(Math.random()*100)+1;
         restrictedVision = false;
     }
-    public void move(){
+    public void act(){
         //move code
-        //test1
+        age++;
+        hunger++;
+        thirst++;
+        //target code;
     }
     public void eat(){
         //eat code

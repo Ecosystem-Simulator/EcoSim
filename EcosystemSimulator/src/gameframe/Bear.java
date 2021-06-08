@@ -14,5 +14,15 @@ public class Bear extends Animal{
         g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
     }
     
-    
+    @Override
+    public void act(){
+        /*if 
+        if age > 1000 then die
+        hunger > 100 then die
+        if hunger > 25, look for food, distanceTo
+        if thirst > 100 then die
+        if thirst > 25, look for water,
+        mating, distanceTo (opposite gender, //higher attractiveness if same distance)
+        */
+    }
 }
