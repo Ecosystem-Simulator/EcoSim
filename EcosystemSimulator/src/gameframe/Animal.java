@@ -45,6 +45,7 @@ public class Animal extends Entity{
         thirst++;
         reproductiveUrge++;
         //target code;
+        
     }
     public void eat(){
         //eat code

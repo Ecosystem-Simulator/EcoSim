@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.Color;
 
 public class Entity {
-    private ArrayList<Entity> entities;
-    private Entity[][] entitygrid;
+    ArrayList<Entity> entities;
+    Entity[][] entitygrid;
     private int x, y;
     private int gridX, gridY;
     private int gridLength;

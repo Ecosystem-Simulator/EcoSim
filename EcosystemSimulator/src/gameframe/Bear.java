@@ -19,16 +19,53 @@ public class Bear extends Animal{
         if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100){
             die();
         }
+        //THIS WILL NEED TO BE MOVED TO ANIMAL
         else if (getHunger() > getThirst() && getHunger() > 25){
-            //look for food
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon){
+                    if (minDistance > distanceTo(entities.get(k))){
+                        minDistance = distanceTo(entities.get(k));
+                        row = entities.get(k).getGridX();
+                        col = entities.get(k).getGridY();
+                    }
+                }
+            }
         }
         else if (getThirst() > getHunger() && getThirst() > 25){
-            //look for water
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Water){
+                    if (minDistance > distanceTo(entities.get(k))){
+                        minDistance = distanceTo(entities.get(k));
+                        row = entities.get(k).getGridX();
+                        col = entities.get(k).getGridY();
+                    }
+                }
+            }
         }
         else if (getReproductiveUrge() > 200){
-            //mate
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Bear){
+                    Bear tempBear = ((Bear) entities.get(k));
+                    if (!tempBear.getGender().equals(getGender()) && tempBear.getReproductiveUrge() > 200){
+                        if (minDistance > distanceTo(entities.get(k))){
+                            minDistance = distanceTo(entities.get(k));
+                            row = entities.get(k).getGridX();
+                            col = entities.get(k).getGridY();
+                        }
+                    }
+                }
+            }
             resetReproductiveUrge();
         }
-        
+        super.act();
     }
 }
