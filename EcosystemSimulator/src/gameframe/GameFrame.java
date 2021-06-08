@@ -46,14 +46,16 @@ public class GameFrame extends javax.swing.JFrame {
     //testing objects
     Entity e;
     Entity eb;
-    Bear w;
+    Wolf w;
     Deer d;
     Berries b;
     PoisonBerries pb;
     Grass g;
     Rock r;
-    Mud wa;
+    Water wa;
     Mud m;
+    Bear be;
+    Salmon s;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -103,14 +105,16 @@ public class GameFrame extends javax.swing.JFrame {
         // entities.add(new ...)
         e = new Entity(0, 0, entities, entitygrid, gridLength);
         eb = new Entity(0, 1, entities, entitygrid, gridLength);
-        w = new Bear(0, 2, entities, "male", entitygrid, gridLength);
+        w = new Wolf(0, 2, entities, "male", entitygrid, gridLength);
         d = new Deer(0, 3, entities, "male", entitygrid, gridLength);
         b = new Berries(0, 4, entities, entitygrid, gridLength);
         pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
         g = new Grass(0, 6, entities, entitygrid, gridLength);
         r = new Rock(0, 7, entities, entitygrid, gridLength, false);
-        wa = new Mud(0, 8, entities, entitygrid, gridLength, false);
+        wa = new Water(0, 8, entities, entitygrid, gridLength, false);
         m = new Mud(0, 9, entities, entitygrid, gridLength, false);
+        be = new Bear(1, 1, entities, "male", entitygrid, gridLength);
+        s = new Salmon(1, 0, entities, entitygrid, gridLength);
         entities.add(e);
         entities.add(eb);
         entities.add(w);
@@ -121,6 +125,8 @@ public class GameFrame extends javax.swing.JFrame {
         entities.add(r);
         entities.add(wa);
         entities.add(m);
+        entities.add(be);
+        entities.add(s);
     }
     
     public void drawStuff(Graphics g){
