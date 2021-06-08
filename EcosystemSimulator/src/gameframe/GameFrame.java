@@ -27,7 +27,7 @@ public class GameFrame extends javax.swing.JFrame {
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    Entity[][] entitygrid = new Entity[10][10];
+    public Entity[][] entitygrid = new Entity[10][10];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -36,7 +36,7 @@ public class GameFrame extends javax.swing.JFrame {
     private Graphics ibg;
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
-    private int timerDelay = 30; 
+    private int timerDelay = 500; 
     //side length of grid
     int gridLength = 50;
     /**
@@ -86,7 +86,7 @@ public class GameFrame extends javax.swing.JFrame {
     public void tick() {
         updateTicker();
         //keyboardCheck();   
-        //updateActors();      //most important part of simulation!
+        updateEntities();      //most important part of simulation!
         //removeDeactivatedActors();    //removes actors from list that are not active any more
         redraw();
     } 
@@ -111,7 +111,7 @@ public class GameFrame extends javax.swing.JFrame {
         pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
         g = new Grass(0, 6, entities, entitygrid, gridLength);
         r = new Rock(0, 7, entities, entitygrid, gridLength, false);
-        wa = new Water(0, 8, entities, entitygrid, gridLength, false);
+        wa = new Water(6, 6, entities, entitygrid, gridLength, false);
         m = new Mud(0, 9, entities, entitygrid, gridLength, false);
         be = new Bear(1, 1, entities, "male", entitygrid, gridLength);
         s = new Salmon(1, 0, entities, entitygrid, gridLength);
@@ -128,7 +128,11 @@ public class GameFrame extends javax.swing.JFrame {
         entities.add(be);
         entities.add(s);
     }
-    
+    public void updateEntities(){
+        for(Entity e : entities){
+            e.act();
+        }
+    }
     public void drawStuff(Graphics g){
         
         for (Entity temp: entities){
@@ -177,6 +181,8 @@ public class GameFrame extends javax.swing.JFrame {
 
         panelDraw = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
+        buttonMoveRight = new javax.swing.JButton();
+        buttonMoveLeft = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,6 +207,20 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        buttonMoveRight.setText("Move Right");
+        buttonMoveRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMoveRightActionPerformed(evt);
+            }
+        });
+
+        buttonMoveLeft.setText("Move Left");
+        buttonMoveLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMoveLeftActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -208,18 +228,27 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(417, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonStart)
-                .addGap(21, 21, 21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonStart)
+                    .addComponent(buttonMoveLeft)
+                    .addComponent(buttonMoveRight))
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonMoveRight)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonMoveLeft)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonStart)
                 .addContainerGap())
         );
@@ -231,6 +260,14 @@ public class GameFrame extends javax.swing.JFrame {
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
         startTimer();
     }//GEN-LAST:event_buttonStartActionPerformed
+
+    private void buttonMoveRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveRightActionPerformed
+        
+    }//GEN-LAST:event_buttonMoveRightActionPerformed
+
+    private void buttonMoveLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveLeftActionPerformed
+        
+    }//GEN-LAST:event_buttonMoveLeftActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,6 +305,8 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonMoveLeft;
+    private javax.swing.JButton buttonMoveRight;
     private javax.swing.JButton buttonStart;
     private javax.swing.JPanel panelDraw;
     // End of variables declaration//GEN-END:variables

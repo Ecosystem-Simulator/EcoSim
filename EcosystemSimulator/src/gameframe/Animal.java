@@ -11,6 +11,7 @@ public class Animal extends Entity{
     private int thirst;
     private int reproductiveUrge;
     private boolean restrictedVision;
+    private Entity target;
     public Animal(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, entitygrid, gridLength);
         this.gender = gender;
@@ -44,8 +45,57 @@ public class Animal extends Entity{
         hunger++;
         thirst++;
         reproductiveUrge++;
-        //target code;
+        // moving to water
+        //if (getThirst() > getHunger() && getThirst() > 25){
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Water){
+                    if (minDistance > distanceTo(entities.get(k))){
+                        minDistance = distanceTo(entities.get(k));
+                        target = entities.get(k);
+                        //row = entities.get(k).getGridX();
+                        //col = entities.get(k).getGridY();
+                    }
+                }
+            }
+        //}
+        move();
         
+    }
+    
+    public void move(){
+        if(target.getGridX() > getGridX() && entitygrid[getGridX() + 1][getGridY()] == null){
+            moveRight();
+        }
+        else if(target.getGridX() < getGridX() && entitygrid[getGridX() - 1][getGridY()] == null){
+            moveLeft();
+        }
+        else if(target.getGridY() > getGridY() && entitygrid[getGridX()][getGridY() + 1] == null){
+            moveDown();
+        }
+        else if(target.getGridY() < getGridY() && entitygrid[getGridX()][getGridY() - 1] == null){
+            moveUp();
+        }
+        else{
+            if (entitygrid[getGridX() + 1][getGridY()] == null){
+                moveRight();
+            }
+            else if(entitygrid[getGridX() - 1][getGridY()] == null){
+            moveLeft();
+            }
+            else if(entitygrid[getGridX()][getGridY() + 1] == null){
+                moveDown();
+            }
+            else if(entitygrid[getGridX()][getGridY() - 1] == null){
+                moveUp();
+            }
+        }
+    }
+
+    public Animal() {
+        super(0, 0, null, null, 0);
     }
     public void eat(){
         //eat code

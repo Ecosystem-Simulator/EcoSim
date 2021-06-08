@@ -34,7 +34,7 @@ public class Bear extends Animal{
                 }
             }
         }
-        else if (getThirst() > getHunger() && getThirst() > 25){
+        /*else if (getThirst() > getHunger() && getThirst() > 25){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
@@ -47,7 +47,7 @@ public class Bear extends Animal{
                     }
                 }
             }
-        }
+        }*/
         else if (getReproductiveUrge() > 200){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;

@@ -54,6 +54,44 @@ public class Entity {
     /*public boolean isActive() {
         return (active);
     }*/
+    public void moveLeft(){
+        if(gridX - 1 >= 0){
+            entitygrid[gridX][gridY] = null;
+            gridX--;
+            entitygrid[gridX][gridY] = this;
+            x = gridX*gridLength + gridLength/2;
+        }
+    }
+    
+    public void moveRight(){
+        if(gridX + 1 < entitygrid[0].length){
+            entitygrid[gridX][gridY] = null;
+            gridX++;
+            entitygrid[gridX][gridY] = this;
+            x = gridX*gridLength + gridLength/2;
+        }
+    }
+    public void moveUp(){
+        if(gridY - 1 >= 0){
+            entitygrid[gridX][gridY] = null;
+            gridY--;
+            entitygrid[gridX][gridY] = this;
+            y = gridY*gridLength + gridLength/2;
+        }
+    }
+    
+    public void moveDown(){
+        if(gridY + 1 < entitygrid[0].length){
+            entitygrid[gridX][gridY] = null;
+            gridY++;
+            entitygrid[gridX][gridY] = this;
+            y = gridY*gridLength + gridLength/2;
+        }
+    }
+    
+    public void act(){
+         
+    }
     
     public void draw(Graphics g){
         g.setColor(new Color(255, 0, 0));
