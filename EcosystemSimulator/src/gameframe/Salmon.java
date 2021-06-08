@@ -14,5 +14,6 @@ import java.util.ArrayList;
 public class Salmon extends Food {
     public Salmon (int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, entitygrid, gridLength);
+        setNutritionVal(20);
     }
 }
