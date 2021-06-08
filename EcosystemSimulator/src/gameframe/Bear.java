@@ -16,13 +16,19 @@ public class Bear extends Animal{
     
     @Override
     public void act(){
-        /*if 
-        if age > 1000 then die
-        hunger > 100 then die
-        if hunger > 25, look for food, distanceTo
-        if thirst > 100 then die
-        if thirst > 25, look for water,
-        mating, distanceTo (opposite gender, //higher attractiveness if same distance)
-        */
+        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100){
+            die();
+        }
+        else if (getHunger() > getThirst() && getHunger() > 25){
+            //look for food
+        }
+        else if (getThirst() > getHunger() && getThirst() > 25){
+            //look for water
+        }
+        else if (getReproductiveUrge() > 200){
+            //mate
+            resetReproductiveUrge();
+        }
+        
     }
 }
