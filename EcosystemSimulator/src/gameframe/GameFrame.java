@@ -56,6 +56,7 @@ public class GameFrame extends javax.swing.JFrame {
     Mud m;
     Bear be;
     Salmon s;
+    Water wa2, wa3, wa4;
     
     public void startTimer() {                                         
         if (timer != null) {
@@ -90,6 +91,7 @@ public class GameFrame extends javax.swing.JFrame {
         //removeDeactivatedActors();    //removes actors from list that are not active any more
         redraw();
         System.out.println("Thirst: " + d.getThirst());
+        
     } 
     
     //updates the tickCount
@@ -104,30 +106,24 @@ public class GameFrame extends javax.swing.JFrame {
     public void setupSimulation(){
         // setup simulation!
         // entities.add(new ...)
-        e = new Entity(0, 0, entities, entitygrid, gridLength);
-        eb = new Entity(0, 1, entities, entitygrid, gridLength);
-        w = new Wolf(0, 2, entities, "male", entitygrid, gridLength);
-        d = new Deer(0, 3, entities, "male", entitygrid, gridLength);
-        b = new Berries(0, 4, entities, entitygrid, gridLength);
-        pb = new PoisonBerries(0, 5, entities, entitygrid, gridLength);
-        g = new Grass(0, 6, entities, entitygrid, gridLength);
-        r = new Rock(0, 7, entities, entitygrid, gridLength, false);
-        wa = new Water(6, 6, entities, entitygrid, gridLength, false);
-        m = new Mud(0, 9, entities, entitygrid, gridLength, false);
-        //be = new Bear(1, 1, entities, "male", entitygrid, gridLength);
-        s = new Salmon(1, 0, entities, entitygrid, gridLength);
-        entities.add(e);
-        entities.add(eb);
+        w = new Wolf(0, 8, entities, "male", entitygrid, gridLength);
+        d = new Deer(1, 8, entities, "male", entitygrid, gridLength);
+        wa = new Water(2, 2, entities, entitygrid, gridLength, false);
+        wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
+        wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
+        wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
+        //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
+        be = new Bear(5, 8, entities, "male", entitygrid, gridLength);
+        r = new Rock(2, 4, entities, entitygrid, gridLength, false);
         entities.add(w);
         entities.add(d);
-        entities.add(b);
-        entities.add(pb);
-        entities.add(g);
-        entities.add(r);
         entities.add(wa);
-        entities.add(m);
-        //entities.add(be);
-        entities.add(s);
+        entities.add(be);
+        entities.add(r);
+        entities.add(wa2);
+        entities.add(wa3);
+        entities.add(wa4);
+        
     }
     public void updateEntities(){
         for(Entity e : entities){

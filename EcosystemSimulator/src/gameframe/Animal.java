@@ -71,22 +71,72 @@ public class Animal extends Entity{
     }
     
     public void move(){
-        /*
-        if(target.getGridX() > getGridX() && entitygrid[getGridX() + 1][getGridY()] == null){
-            moveRight();
+        if(target.getGridX() > getGridX()){
+            if(entitygrid[getGridX() + 1][getGridY()] == null)
+                moveRight();
+            else{
+                if(entitygrid[getGridX()][getGridY() + 1] == null)
+                    moveDown();
+                else{
+                    if(entitygrid[getGridX()][getGridY() - 1] == null)
+                        moveUp();
+                    else{
+                        if(entitygrid[getGridX() - 1][getGridY()] == null)
+                            moveLeft();
+                    }
+                }
+            }
         }
-        else if(target.getGridY() > getGridY() && entitygrid[getGridX()][getGridY() + 1] == null){
-            moveDown();
+        else if(target.getGridY() > getGridY()){
+            if(entitygrid[getGridX()][getGridY() + 1] == null)
+                moveDown();
+            else{
+                if(entitygrid[getGridX() + 1][getGridY()] == null)
+                    moveRight();
+                else{
+                    if(entitygrid[getGridX() - 1][getGridY()] == null)
+                        moveLeft();
+                    else{
+                        if(entitygrid[getGridX()][getGridY() - 1] == null)
+                            moveUp();
+                    }
+                }
+            }   
         }
-        else if(target.getGridY() < getGridY() && entitygrid[getGridX()][getGridY() - 1] == null){
-            moveUp();
+        else if(target.getGridX() < getGridX()){
+            if(entitygrid[getGridX() - 1][getGridY()] == null)
+                moveLeft();
+            else{
+                if(entitygrid[getGridX()][getGridY() - 1] == null)
+                    moveUp();
+                else{
+                    if(entitygrid[getGridX()][getGridY() + 1] == null)
+                        moveDown();
+                    else{
+                        if(entitygrid[getGridX() + 1][getGridY()] == null)
+                            moveRight();
+                    }
+                }
+            }
         }
-        else if(target.getGridX() < getGridX() && entitygrid[getGridX() - 1][getGridY()] == null){
-            moveLeft();
+        
+        else if(target.getGridY() < getGridY()){
+            if(entitygrid[getGridX()][getGridY() - 1] == null)
+                moveUp();
+            else{
+                if(entitygrid[getGridX() - 1][getGridY()] == null)
+                    moveLeft();
+                else{
+                    if(entitygrid[getGridX() + 1][getGridY()] == null)
+                        moveRight();
+                    else{
+                        if(entitygrid[getGridX()][getGridY() + 1] == null)
+                            moveDown();
+                    }
+                }
+            }
         }
-        else{
-        }
-*/
+      
     }
 
     public Animal() {
