@@ -89,6 +89,7 @@ public class GameFrame extends javax.swing.JFrame {
         updateEntities();      //most important part of simulation!
         //removeDeactivatedActors();    //removes actors from list that are not active any more
         redraw();
+        System.out.println("Thirst: " + d.getThirst());
     } 
     
     //updates the tickCount
@@ -113,7 +114,7 @@ public class GameFrame extends javax.swing.JFrame {
         r = new Rock(0, 7, entities, entitygrid, gridLength, false);
         wa = new Water(6, 6, entities, entitygrid, gridLength, false);
         m = new Mud(0, 9, entities, entitygrid, gridLength, false);
-        be = new Bear(1, 1, entities, "male", entitygrid, gridLength);
+        //be = new Bear(1, 1, entities, "male", entitygrid, gridLength);
         s = new Salmon(1, 0, entities, entitygrid, gridLength);
         entities.add(e);
         entities.add(eb);
@@ -125,18 +126,20 @@ public class GameFrame extends javax.swing.JFrame {
         entities.add(r);
         entities.add(wa);
         entities.add(m);
-        entities.add(be);
+        //entities.add(be);
         entities.add(s);
     }
     public void updateEntities(){
         for(Entity e : entities){
-            e.act();
+            if(e.isActive())
+                e.act();
         }
     }
     public void drawStuff(Graphics g){
         
         for (Entity temp: entities){
-            temp.draw(g);
+            if(temp.isActive())
+                temp.draw(g);
         }
         
         g.setColor(new Color(0, 0, 0));

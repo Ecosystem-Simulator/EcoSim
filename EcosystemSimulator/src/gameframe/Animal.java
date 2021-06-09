@@ -12,6 +12,7 @@ public class Animal extends Entity{
     private int reproductiveUrge;
     private boolean restrictedVision;
     private Entity target;
+    private ArrayList<String> moves = new ArrayList();
     public Animal(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, entitygrid, gridLength);
         this.gender = gender;
@@ -61,16 +62,18 @@ public class Animal extends Entity{
                 }
             }
         //}
-        move();
+        if(distanceTo(target) > 1)
+            move();
+        else if(target instanceof Water){
+            drink();
+        }
         
     }
     
     public void move(){
+        /*
         if(target.getGridX() > getGridX() && entitygrid[getGridX() + 1][getGridY()] == null){
             moveRight();
-        }
-        else if(target.getGridX() < getGridX() && entitygrid[getGridX() - 1][getGridY()] == null){
-            moveLeft();
         }
         else if(target.getGridY() > getGridY() && entitygrid[getGridX()][getGridY() + 1] == null){
             moveDown();
@@ -78,20 +81,12 @@ public class Animal extends Entity{
         else if(target.getGridY() < getGridY() && entitygrid[getGridX()][getGridY() - 1] == null){
             moveUp();
         }
-        else{
-            if (entitygrid[getGridX() + 1][getGridY()] == null){
-                moveRight();
-            }
-            else if(entitygrid[getGridX() - 1][getGridY()] == null){
+        else if(target.getGridX() < getGridX() && entitygrid[getGridX() - 1][getGridY()] == null){
             moveLeft();
-            }
-            else if(entitygrid[getGridX()][getGridY() + 1] == null){
-                moveDown();
-            }
-            else if(entitygrid[getGridX()][getGridY() - 1] == null){
-                moveUp();
-            }
         }
+        else{
+        }
+*/
     }
 
     public Animal() {
@@ -101,7 +96,7 @@ public class Animal extends Entity{
         //eat code
     }
     public void drink(){
-        //drink code
+        thirst = 0;
     }
     public void mate(){
         //mate code

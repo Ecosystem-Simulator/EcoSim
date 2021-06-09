@@ -13,7 +13,7 @@ public class Entity {
     private int length = 10;
     private int height = 10;
     //private double direction;
-    //private boolean active = true;
+    private boolean active;
     public Entity(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
         this.gridX = gridX;
         this.gridY = gridY;
@@ -22,6 +22,7 @@ public class Entity {
         this.entities = entities;
         this.entitygrid = entitygrid;
         this.gridLength = gridLength;
+        active = true;
     }
     
     public int getGridX(){
@@ -51,9 +52,9 @@ public class Entity {
     public int distanceTo(Entity e){
         return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));
     }
-    /*public boolean isActive() {
+    public boolean isActive() {
         return (active);
-    }*/
+    }
     public void moveLeft(){
         if(gridX - 1 >= 0){
             entitygrid[gridX][gridY] = null;
