@@ -15,11 +15,13 @@ import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  *
  * @author 1347278
  */
 public class GameFrame extends javax.swing.JFrame {
+
     //keep track how much time has actually passed since last cycle
     private double delta_time;
     private long prev_time;
@@ -36,13 +38,13 @@ public class GameFrame extends javax.swing.JFrame {
     private Graphics ibg;
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
-    private int timerDelay = 500; 
+    private int timerDelay = 500;
     //side length of grid
     int gridLength = 50;
     /**
      * Creates new form GameFrame
      */
-    
+
     //testing objects
     Entity e;
     Entity eb;
@@ -57,8 +59,8 @@ public class GameFrame extends javax.swing.JFrame {
     Bear be;
     Salmon s;
     Water wa2, wa3, wa4;
-    
-    public void startTimer() {                                         
+
+    public void startTimer() {
         if (timer != null) {
             System.out.println("A timer is already working!");
             return;
@@ -77,8 +79,8 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void timeAdjust() {
-        long curr_time=System.nanoTime();
-        delta_time = (curr_time-prev_time)/1000000000.0;
+        long curr_time = System.nanoTime();
+        delta_time = (curr_time - prev_time) / 1000000000.0;
         System.out.println(delta_time);
         prev_time = curr_time;
     }
@@ -88,73 +90,86 @@ public class GameFrame extends javax.swing.JFrame {
         updateTicker();
         //keyboardCheck();   
         updateEntities();      //most important part of simulation!
-        //removeDeactivatedActors();    //removes actors from list that are not active any more
+        removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
-        System.out.println("Thirst: " + d.getThirst());
-        
-    } 
-    
+
+    }
+
     //updates the tickCount
     public void updateTicker() {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-    public void setUpImageBuffer(){
-        ib=panelDraw.createImage(panelDraw.getWidth(),panelDraw.getHeight());
-        ibg=ib.getGraphics();
+
+    public void setUpImageBuffer() {
+        ib = panelDraw.createImage(panelDraw.getWidth(), panelDraw.getHeight());
+        ibg = ib.getGraphics();
     }
-    public void setupSimulation(){
+
+    public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
         w = new Wolf(0, 8, entities, "male", entitygrid, gridLength);
         d = new Deer(1, 8, entities, "male", entitygrid, gridLength);
-        wa = new Water(2, 2, entities, entitygrid, gridLength, false);
-        wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
-        wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
-        wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
+        wa = new Water(0, 0, entities, entitygrid, gridLength, false);
+        //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
+        //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
+        //wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
         be = new Bear(5, 8, entities, "male", entitygrid, gridLength);
         r = new Rock(2, 4, entities, entitygrid, gridLength, false);
-        
+
     }
-    public void updateEntities(){
-        for(Entity e : entities){
-            if(e.isActive())
+
+    public void updateEntities() {
+        for (Entity e : entities) {
+            if (e.isActive()) {
                 e.act();
-        }
-    }
-    public void drawStuff(Graphics g){
-        
-        for (Entity temp: entities){
-            if(temp.isActive())
-                temp.draw(g);
-        }
-        
-        g.setColor(new Color(0, 0, 0));
-        for(int r = 0; r < entitygrid.length; r++){
-            for(int c = 0; c < entitygrid[0].length; c++){
-                g.drawRect(r*gridLength, c*gridLength, gridLength, gridLength);
             }
         }
     }
-    
-     public void redraw() {
+
+    public void drawStuff(Graphics g) {
+
+        for (Entity temp : entities) {
+            if (temp.isActive()) {
+                temp.draw(g);
+            }
+        }
+
+        g.setColor(new Color(0, 0, 0));
+        for (int r = 0; r < entitygrid.length; r++) {
+            for (int c = 0; c < entitygrid[0].length; c++) {
+                g.drawRect(r * gridLength, c * gridLength, gridLength, gridLength);
+            }
+        }
+    }
+
+    public void removeDeactivatedEntities() {
+        for (int k = entities.size() - 1; k >= 0; k--) {
+            Entity temp = entities.get(k);
+            if (!temp.isActive()) {
+                entities.remove(k);
+            }
+        }
+    }
+
+    public void redraw() {
         //switch to white and draw a white rectangle over the entire image buffer to clear it
         ibg.setColor(backgroundColor);
-        ibg.clearRect(0,0, panelDraw.getWidth(), panelDraw.getHeight() );
-        ibg.fillRect(0,0,panelDraw.getWidth(), panelDraw.getHeight() );
-   
+        ibg.clearRect(0, 0, panelDraw.getWidth(), panelDraw.getHeight());
+        ibg.fillRect(0, 0, panelDraw.getWidth(), panelDraw.getHeight());
+
         /* you can certainly just put all your draw code in here, but to stay organized, I am going to pass the
          * image buffer object to my own draw method.  This keeps the code a little cleaner... */
         drawStuff(ibg);
-        
+
         /* this is the actual drawing of your stuff onto the actual panel.  It copies the image buffer to the
          * panel's image. */
         Graphics g = panelDraw.getGraphics();
-        g.drawImage(ib,0,0,this);
-    }   
-    
-    
+        g.drawImage(ib, 0, 0, this);
+    }
+
     public GameFrame() {
         initComponents();
         setupSimulation();
@@ -253,17 +268,16 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonMoveRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveRightActionPerformed
-        
+
     }//GEN-LAST:event_buttonMoveRightActionPerformed
 
     private void buttonMoveLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveLeftActionPerformed
-        
+
     }//GEN-LAST:event_buttonMoveLeftActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

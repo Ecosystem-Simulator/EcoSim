@@ -57,6 +57,9 @@ public class Entity {
     public boolean isActive() {
         return (active);
     }
+    public void die(){
+        active = false;
+    }
     public void moveLeft(){
         if(gridX - 1 >= 0){
             entitygrid[gridX][gridY] = null;
