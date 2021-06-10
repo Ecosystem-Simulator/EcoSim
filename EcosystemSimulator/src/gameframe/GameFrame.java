@@ -115,14 +115,6 @@ public class GameFrame extends javax.swing.JFrame {
         //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
         be = new Bear(5, 8, entities, "male", entitygrid, gridLength);
         r = new Rock(2, 4, entities, entitygrid, gridLength, false);
-        entities.add(w);
-        entities.add(d);
-        entities.add(wa);
-        entities.add(be);
-        entities.add(r);
-        entities.add(wa2);
-        entities.add(wa3);
-        entities.add(wa4);
         
     }
     public void updateEntities(){
