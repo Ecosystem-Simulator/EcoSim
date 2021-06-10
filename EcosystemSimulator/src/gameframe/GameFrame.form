@@ -31,6 +31,7 @@
                   <Component id="buttonStart" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonMoveLeft" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonMoveRight" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonPause" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
           </Group>
@@ -47,6 +48,8 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="buttonPause" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="buttonMoveRight" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="buttonMoveLeft" min="-2" max="-2" attributes="0"/>
@@ -105,6 +108,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMoveLeftActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonPause">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pause"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPauseActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
