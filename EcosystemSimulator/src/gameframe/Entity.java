@@ -24,6 +24,7 @@ public class Entity {
         this.gridLength = gridLength;
         active = true;
         entitygrid[gridX][gridY] = this;
+        entities.add(this);
     }
     
     public int getGridX(){
