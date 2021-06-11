@@ -15,4 +15,34 @@ public class Deer extends Animal {
         g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight()*2);
         
     }
+    public void act(){
+        if (getHunger() > getThirst() && getHunger() > 25){
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Grass){
+                    if (minDistance > distanceTo(entities.get(k))){
+                        minDistance = distanceTo(entities.get(k));
+                        target = entities.get(k);
+                    }
+                }
+            }
+        }
+        else if (getReproductiveUrge() > 200){
+            int minDistance = Integer.MAX_VALUE;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Deer){
+                    Deer tempDeer = ((Deer) entities.get(k));
+                    if (!tempDeer.getGender().equals(getGender()) && tempDeer.getReproductiveUrge() > 200){
+                        if (minDistance > distanceTo(entities.get(k))){
+                            minDistance = distanceTo(entities.get(k));
+                        }
+                    }
+                }
+            }
+            resetReproductiveUrge();
+        }
+        super.act();
+    }
 }
