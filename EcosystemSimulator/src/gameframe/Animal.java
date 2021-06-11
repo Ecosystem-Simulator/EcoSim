@@ -17,6 +17,7 @@ public class Animal extends Entity {
     protected Entity target;
     public HashMap<String, Integer> favourableness = new HashMap();
     private ArrayList<String> moves = new ArrayList();
+    private Deer d;
 
     public Animal(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
@@ -77,6 +78,11 @@ public class Animal extends Entity {
                         target = entities.get(k);
                     }
                 }
+            }
+        }
+        if(this instanceof Bear || this instanceof Wolf){
+            if(distanceTo(getNearestDeer()) == 1){
+                target = getNearestDeer();
             }
         }
         
@@ -255,5 +261,15 @@ public class Animal extends Entity {
 
     public void mate() {
         //mate code
+    }
+    
+    public Deer getNearestDeer(){
+        int minDist = Integer.MAX_VALUE;
+        for(Entity e : entities){
+            if(e instanceof Deer && distanceTo(e) < minDist){
+                d = (Deer)e;
+            }
+        }
+        return d;
     }
 }

@@ -52,12 +52,16 @@ public class Entity {
         return gridLength;
     }
     public int distanceTo(Entity e){
-        return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));
+        if (e != null)
+            return(Math.abs(getGridX() - e.getGridX()) + Math.abs(getGridY() - e.getGridY()));
+        else
+            return Integer.MAX_VALUE;
     }
     public boolean isActive() {
         return (active);
     }
     public void die(){
+        entitygrid[getGridX()][getGridY()] = null;
         active = false;
     }
     public void moveLeft(){

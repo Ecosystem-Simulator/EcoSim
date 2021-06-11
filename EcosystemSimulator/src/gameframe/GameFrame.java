@@ -50,6 +50,7 @@ public class GameFrame extends javax.swing.JFrame {
     Entity eb;
     Wolf w;
     Deer d;
+    Deer d1, d2, d3;
     Berries b;
     PoisonBerries pb;
     Grass g;
@@ -92,8 +93,14 @@ public class GameFrame extends javax.swing.JFrame {
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
-        System.out.println(be.target);
-        System.out.println(be.getHunger());
+        System.out.println("Bear target: " + be.target.getClass().getName());
+        System.out.println("Bear hunger: " + be.getHunger());
+        System.out.println("Bear thirst: " + be.getThirst());
+        System.out.println();
+        System.out.println("Wolf target: " + w.target.getClass().getName());
+        System.out.println("Wolf hunger: " + w.getHunger());
+        System.out.println("Wolf thirst: " + w.getThirst());
+        System.out.println();
 
     }
 
@@ -112,7 +119,10 @@ public class GameFrame extends javax.swing.JFrame {
         // setup simulation!
         // entities.add(new ...)
         w = new Wolf(0, 8, entities, "male", entitygrid, gridLength);
-        d = new Deer(1, 8, entities, "male", entitygrid, gridLength);
+        d = new Deer(9, 0, entities, "male", entitygrid, gridLength);
+        d1 = new Deer(8, 8, entities, "male", entitygrid, gridLength);
+        d2 = new Deer(9, 9, entities, "male", entitygrid, gridLength);
+        d3 = new Deer(4, 8, entities, "male", entitygrid, gridLength);
         wa = new Water(5, 5, entities, entitygrid, gridLength, false);
         //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
         //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);

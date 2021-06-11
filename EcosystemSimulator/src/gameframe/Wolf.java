@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author thuph
  */
 public class Wolf extends Animal{
+    Deer d;
     
     public Wolf(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, gender, entitygrid, gridLength);
@@ -57,5 +58,15 @@ public class Wolf extends Animal{
             resetReproductiveUrge();
         }
         super.act();
+    }
+    
+    public Deer getNearestDeer(){
+        int minDist = Integer.MAX_VALUE;
+        for(Entity e : entities){
+            if(e instanceof Deer && distanceTo(e) < minDist){
+                d = (Deer)e;
+            }
+        }
+        return d;
     }
 }

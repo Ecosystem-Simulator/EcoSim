@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class Bear extends Animal{
+    Deer d;
     public Bear(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, gender, entitygrid, gridLength);
     }
@@ -49,5 +50,15 @@ public class Bear extends Animal{
             resetReproductiveUrge();
         }
         super.act();
+    }
+    
+    public Deer getNearestDeer(){
+        int minDist = Integer.MAX_VALUE;
+        for(Entity e : entities){
+            if(e instanceof Deer && distanceTo(e) < minDist){
+                d = (Deer)e;
+            }
+        }
+        return d;
     }
 }
