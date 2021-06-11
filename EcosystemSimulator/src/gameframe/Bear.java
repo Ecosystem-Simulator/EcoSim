@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Bear extends Animal{
     Deer d;
-    public Bear(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
-        super(x, y, entities, gender, entitygrid, gridLength);
+    public Bear(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, entities, entitygrid, gridLength);
     }
     
     public void draw(Graphics g){
@@ -38,7 +38,7 @@ public class Bear extends Animal{
             for(int k = 0; k < entities.size(); k++){
                 if (entities.get(k) instanceof Bear){
                     Bear tempBear = ((Bear) entities.get(k));
-                    if (!tempBear.getGender().equals(getGender()) && tempBear.getReproductiveUrge() > 200){
+                    if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 200){
                         if (minDistance > distanceTo(entities.get(k))){
                             minDistance = distanceTo(entities.get(k));
                             row = entities.get(k).getGridX();

@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Animal extends Entity {
-
-    private String gender;
+    //1 is male, 2 is female
+    private int gender;
     private int age;
     private int hunger;
     private int thirst;
@@ -19,9 +19,9 @@ public class Animal extends Entity {
     private ArrayList<String> moves = new ArrayList();
     private Deer d;
 
-    public Animal(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength) {
+    public Animal(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
-        this.gender = gender;
+        gender = (int)(Math.random()*2)+1;
         age = 0;
         hunger = 25;
         thirst = 25;
@@ -259,10 +259,16 @@ public class Animal extends Entity {
             thirst = 0;
     }
 
-    public void mate() {
-        //mate code
+    public void mate(Animal m) {
+        resetReproductiveUrge();
+        m.resetReproductiveUrge();
+        if (this instanceof Bear){
+            if (entitygrid[getX() + 1][getY()] == null){
+                Bear bear = new Bear()
+            }
+        }
+        
     }
-    
     public Deer getNearestDeer(){
         int minDist = Integer.MAX_VALUE;
         for(Entity e : entities){

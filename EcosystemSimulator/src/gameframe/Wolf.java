@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Wolf extends Animal{
     Deer d;
     
-    public Wolf(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
-        super(x, y, entities, gender, entitygrid, gridLength);
+    public Wolf(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, entities, entitygrid, gridLength);
     }
     
     @Override
@@ -48,7 +48,7 @@ public class Wolf extends Animal{
             for(int k = 0; k < entities.size(); k++){
                 if (entities.get(k) instanceof Wolf){
                     Wolf tempWolf = ((Wolf) entities.get(k));
-                    if (!tempWolf.getGender().equals(getGender()) && tempWolf.getReproductiveUrge() > 200){
+                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 200){
                         if (minDistance > distanceTo(entities.get(k))){
                             minDistance = distanceTo(entities.get(k));
                         }

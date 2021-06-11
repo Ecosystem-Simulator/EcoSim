@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.awt.Color;
 
 public class Deer extends Animal {
-    public Deer(int gridX, int gridY, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
-        super(gridX, gridY, entities, gender, entitygrid, gridLength);
+    public Deer(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(gridX, gridY, entities, entitygrid, gridLength);
     }
     
     @Override

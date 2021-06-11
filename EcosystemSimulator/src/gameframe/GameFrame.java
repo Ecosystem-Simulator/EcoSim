@@ -118,17 +118,17 @@ public class GameFrame extends javax.swing.JFrame {
     public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
-        w = new Wolf(0, 8, entities, "male", entitygrid, gridLength);
-        d = new Deer(9, 0, entities, "male", entitygrid, gridLength);
-        d1 = new Deer(8, 8, entities, "male", entitygrid, gridLength);
-        d2 = new Deer(9, 9, entities, "male", entitygrid, gridLength);
-        d3 = new Deer(4, 8, entities, "male", entitygrid, gridLength);
+        w = new Wolf(0, 8, entities, entitygrid, gridLength);
+        d = new Deer(9, 0, entities, entitygrid, gridLength);
+        d1 = new Deer(8, 8, entities, entitygrid, gridLength);
+        d2 = new Deer(9, 9, entities, entitygrid, gridLength);
+        d3 = new Deer(4, 8, entities, entitygrid, gridLength);
         wa = new Water(5, 5, entities, entitygrid, gridLength, false);
         //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
         //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
         //wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
-        be = new Bear(5, 8, entities, "male", entitygrid, gridLength);
+        be = new Bear(5, 8, entities, entitygrid, gridLength);
         r = new Rock(2, 4, entities, entitygrid, gridLength, false);
 
     }
