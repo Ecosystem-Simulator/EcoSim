@@ -53,7 +53,7 @@ public class Animal extends Entity {
         reproductiveUrge = 0;
     }
 
-    public String getGender() {
+    public int getGender() {
         return (gender);
     }
 
