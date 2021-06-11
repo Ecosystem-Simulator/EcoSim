@@ -34,7 +34,7 @@ public class Deer extends Animal {
             for(int k = 0; k < entities.size(); k++){
                 if (entities.get(k) instanceof Deer){
                     Deer tempDeer = ((Deer) entities.get(k));
-                    if (!tempDeer.getGender().equals(getGender()) && tempDeer.getReproductiveUrge() > 200){
+                    if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 200){
                         if (minDistance > distanceTo(entities.get(k))){
                             minDistance = distanceTo(entities.get(k));
                         }
