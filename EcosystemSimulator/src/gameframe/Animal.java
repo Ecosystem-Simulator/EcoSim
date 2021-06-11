@@ -224,12 +224,12 @@ public class Animal extends Entity {
         }
     }
 
-    public Animal() {
-        super(0, 0, null, null, 0);
-    }
-
     public void eat() {
         //eat code
+        if (hunger - 10 > 0)
+            hunger -= 10;
+        else
+            hunger = 0;
     }
 
     public void drink() {
