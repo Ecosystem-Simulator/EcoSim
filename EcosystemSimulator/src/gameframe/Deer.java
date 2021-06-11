@@ -29,19 +29,20 @@ public class Deer extends Animal {
                 }
             }
         }
-        else if (getReproductiveUrge() > 200){
+        else if (getReproductiveUrge() > 10){
+            //set back to 200
             int minDistance = Integer.MAX_VALUE;
             for(int k = 0; k < entities.size(); k++){
                 if (entities.get(k) instanceof Deer){
                     Deer tempDeer = ((Deer) entities.get(k));
-                    if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 200){
+                    if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 10){
                         if (minDistance > distanceTo(entities.get(k))){
                             minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
                         }
                     }
                 }
             }
-            resetReproductiveUrge();
         }
         super.act();
     }

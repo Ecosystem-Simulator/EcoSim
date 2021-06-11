@@ -47,7 +47,6 @@ public class Bear extends Animal{
                     }
                 }
             }
-            resetReproductiveUrge();
         }
         super.act();
     }

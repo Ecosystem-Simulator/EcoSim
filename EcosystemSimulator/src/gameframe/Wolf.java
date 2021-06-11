@@ -55,7 +55,6 @@ public class Wolf extends Animal{
                     }
                 }
             }
-            resetReproductiveUrge();
         }
         super.act();
     }

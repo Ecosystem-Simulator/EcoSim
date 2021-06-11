@@ -23,8 +23,8 @@ public class Animal extends Entity {
         super(x, y, entities, entitygrid, gridLength);
         gender = (int)(Math.random()*2)+1;
         age = 0;
-        hunger = 25;
-        thirst = 25;
+        hunger = 0;
+        thirst = 0;
         reproductiveUrge = 0;
         restrictedVision = false;
         favourableness.put("up", 0);
@@ -262,10 +262,47 @@ public class Animal extends Entity {
     public void mate(Animal m) {
         resetReproductiveUrge();
         m.resetReproductiveUrge();
-        if (this instanceof Bear){
+        if (this instanceof Bear && this.getGender() == 1){
             if (entitygrid[getX() + 1][getY()] == null){
-                Bear bear = new Bear()
+                Bear bear = new Bear(getX() + 1, getY(), entities, entitygrid, getGridLength());
             }
+            else if (entitygrid[getX() - 1][getY()] == null) {
+                Bear bear = new Bear(getX() - 1, getY(), entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() + 1] == null){
+                Bear bear = new Bear(getX(), getY() + 1, entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() - 1] == null){
+                Bear bear = new Bear(getX(), getY() - 1, entities, entitygrid, getGridLength());
+            } 
+        }
+        if (this instanceof Wolf && this.getGender() == 1){
+            if (entitygrid[getX() + 1][getY()] == null){
+                Wolf wolf = new Wolf(getX() + 1, getY(), entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX() - 1][getY()] == null) {
+                Wolf wolf = new Wolf(getX() - 1, getY(), entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() + 1] == null){
+                Wolf wolf = new Wolf(getX(), getY() + 1, entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() - 1] == null){
+                Wolf wolf = new Wolf(getX(), getY() - 1, entities, entitygrid, getGridLength());
+            } 
+        }
+        if (this instanceof Deer && this.getGender() == 1){
+            if (entitygrid[getX() + 1][getY()] == null){
+                Deer deer = new Deer(getX() + 1, getY(), entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX() - 1][getY()] == null) {
+                Deer deer = new Deer(getX() - 1, getY(), entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() + 1] == null){
+                Deer deer = new Deer(getX(), getY() + 1, entities, entitygrid, getGridLength());
+            }
+            else if (entitygrid[getX()][getY() - 1] == null){
+                Deer deer = new Deer(getX(), getY() - 1, entities, entitygrid, getGridLength());
+            } 
         }
         
     }

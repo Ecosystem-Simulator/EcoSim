@@ -93,14 +93,8 @@ public class GameFrame extends javax.swing.JFrame {
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
-        System.out.println("Bear target: " + be.target.getClass().getName());
-        System.out.println("Bear hunger: " + be.getHunger());
-        System.out.println("Bear thirst: " + be.getThirst());
-        System.out.println();
-        System.out.println("Wolf target: " + w.target.getClass().getName());
-        System.out.println("Wolf hunger: " + w.getHunger());
-        System.out.println("Wolf thirst: " + w.getThirst());
-        System.out.println();
+        System.out.println("D: " + d.getReproductiveUrge() + " D1: " + d1.getReproductiveUrge());
+        System.out.println("D: " + d.getGender() + " D1: " + d1.getGender());
 
     }
 
@@ -118,18 +112,18 @@ public class GameFrame extends javax.swing.JFrame {
     public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
-        w = new Wolf(0, 8, entities, entitygrid, gridLength);
+        //w = new Wolf(0, 8, entities, entitygrid, gridLength);
         d = new Deer(9, 0, entities, entitygrid, gridLength);
         d1 = new Deer(8, 8, entities, entitygrid, gridLength);
-        d2 = new Deer(9, 9, entities, entitygrid, gridLength);
-        d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
+        //d2 = new Deer(9, 9, entities, entitygrid, gridLength);
+        //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
+        //wa = new Water(5, 5, entities, entitygrid, gridLength, false);
         //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
         //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
         //wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
-        be = new Bear(5, 8, entities, entitygrid, gridLength);
-        r = new Rock(2, 4, entities, entitygrid, gridLength, false);
+        //be = new Bear(5, 8, entities, entitygrid, gridLength);
+        //r = new Rock(2, 4, entities, entitygrid, gridLength, false);
 
     }
 
