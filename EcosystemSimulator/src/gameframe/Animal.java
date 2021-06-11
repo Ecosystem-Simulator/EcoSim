@@ -14,8 +14,8 @@ public class Animal extends Entity {
     private int thirst;
     private int reproductiveUrge;
     private boolean restrictedVision;
-    private Entity target;
-    public HashMap<String, Integer> favourableness = new HashMap<>();
+    protected Entity target;
+    public HashMap<String, Integer> favourableness = new HashMap();
     private ArrayList<String> moves = new ArrayList();
 
     public Animal(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength) {
@@ -63,26 +63,31 @@ public class Animal extends Entity {
         thirst++;
         reproductiveUrge++;
         // moving to water
-        if (thirst >= 100) {
+        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100){
             die();
         }
-        //if (getThirst() > getHunger() && getThirst() > 25){
-        int minDistance = Integer.MAX_VALUE;
-        int row = 0;
-        int col = 0;
-        for (int k = 0; k < entities.size(); k++) {
-            if (entities.get(k) instanceof Water) {
-                if (minDistance > distanceTo(entities.get(k))) {
-                    minDistance = distanceTo(entities.get(k));
-                    target = entities.get(k);
+        if (getThirst() >= getHunger() && getThirst() >= 25){
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Water) {
+                    if (minDistance > distanceTo(entities.get(k))) {
+                        minDistance = distanceTo(entities.get(k));
+                        target = entities.get(k);
+                    }
                 }
             }
         }
-        //}
-        if (distanceTo(target) > 1) {
+        
+        if (distanceTo(target) > 1 && target != null) {
             move();
-        } else if (target instanceof Water) {
+        } 
+        else if (target instanceof Water) {
             drink();
+        }
+        else if (target instanceof Food || target instanceof Deer){
+            eat(target);
         }
 
     }
@@ -224,12 +229,21 @@ public class Animal extends Entity {
         }
     }
 
-    public void eat() {
+    public void eat(Entity f) {
         //eat code
-        if (hunger - 10 > 0)
-            hunger -= 10;
-        else
-            hunger = 0;
+        if(f instanceof Food){
+            if (hunger - ((Food)f).getNutritionVal() > 0)
+                hunger -= ((Food)f).getNutritionVal();
+            else
+                hunger = 0;
+        }
+        else if(f instanceof Deer){
+            if(hunger - 30 > 0)
+                hunger -= 30;
+            else
+                hunger = 0;
+        }
+        f.die();
     }
 
     public void drink() {

@@ -16,11 +16,7 @@ public class Bear extends Animal{
     
     @Override
     public void act(){
-        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100){
-            die();
-        }
-        //THIS WILL NEED TO BE MOVED TO ANIMAL
-        else if (getHunger() > getThirst() && getHunger() > 25){
+        if (getHunger() > getThirst() && getHunger() > 25){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
@@ -28,26 +24,12 @@ public class Bear extends Animal{
                 if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon){
                     if (minDistance > distanceTo(entities.get(k))){
                         minDistance = distanceTo(entities.get(k));
-                        row = entities.get(k).getGridX();
-                        col = entities.get(k).getGridY();
+                        target = entities.get(k);
                     }
                 }
             }
         }
-        /*else if (getThirst() > getHunger() && getThirst() > 25){
-            int minDistance = Integer.MAX_VALUE;
-            int row = 0;
-            int col = 0;
-            for(int k = 0; k < entities.size(); k++){
-                if (entities.get(k) instanceof Water){
-                    if (minDistance > distanceTo(entities.get(k))){
-                        minDistance = distanceTo(entities.get(k));
-                        row = entities.get(k).getGridX();
-                        col = entities.get(k).getGridY();
-                    }
-                }
-            }
-        }*/
+        
         else if (getReproductiveUrge() > 200){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;

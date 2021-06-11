@@ -14,9 +14,8 @@ import java.util.ArrayList;
  * @author thuph
  */
 public class Salmon extends Food {
-    public Salmon (int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
-        super(x, y, entities, entitygrid, gridLength);
-        setNutritionVal(20);
+    public Salmon (int x, int y, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, nutritionVal, entities, entitygrid, gridLength);
     }
     public void draw(Graphics g){
         g.setColor(new Color(253, 162, 180));

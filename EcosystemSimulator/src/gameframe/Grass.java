@@ -4,12 +4,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.Color;
 
-public class Grass extends Entity {
+public class Grass extends Food {
 
     private int d = 20;
 
-    public Grass(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
-        super(gridX, gridY, entities, entitygrid, gridLength);
+    public Grass(int gridX, int gridY, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(gridX, gridY, nutritionVal, entities, entitygrid, gridLength);
     }
 
     public void draw(Graphics g) {

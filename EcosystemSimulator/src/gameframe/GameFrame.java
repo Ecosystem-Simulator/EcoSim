@@ -92,6 +92,8 @@ public class GameFrame extends javax.swing.JFrame {
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
+        System.out.println(be.target);
+        System.out.println(be.getHunger());
 
     }
 
@@ -111,7 +113,7 @@ public class GameFrame extends javax.swing.JFrame {
         // entities.add(new ...)
         w = new Wolf(0, 8, entities, "male", entitygrid, gridLength);
         d = new Deer(1, 8, entities, "male", entitygrid, gridLength);
-        wa = new Water(0, 0, entities, entitygrid, gridLength, false);
+        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
         //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
         //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
         //wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);

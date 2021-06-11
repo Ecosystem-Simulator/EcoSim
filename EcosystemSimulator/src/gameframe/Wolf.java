@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author thuph
  */
 public class Wolf extends Animal{
+    
     public Wolf(int x, int y, ArrayList<Entity> entities, String gender, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, gender, entitygrid, gridLength);
     }
@@ -23,5 +24,38 @@ public class Wolf extends Animal{
         g.setColor(new Color(105, 105, 105));
         g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
         //g.drawString("Wolf", getX() - getLength(), getY() + getHeight()*2);
+    }
+    
+    @Override
+    public void act(){
+        if (getHunger() > getThirst() && getHunger() > 25){
+            int minDistance = Integer.MAX_VALUE;
+            int row = 0;
+            int col = 0;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon){
+                    if (minDistance > distanceTo(entities.get(k))){
+                        minDistance = distanceTo(entities.get(k));
+                        target = entities.get(k);
+                    }
+                }
+            }
+        }
+        
+        else if (getReproductiveUrge() > 200){
+            int minDistance = Integer.MAX_VALUE;
+            for(int k = 0; k < entities.size(); k++){
+                if (entities.get(k) instanceof Wolf){
+                    Wolf tempWolf = ((Wolf) entities.get(k));
+                    if (!tempWolf.getGender().equals(getGender()) && tempWolf.getReproductiveUrge() > 200){
+                        if (minDistance > distanceTo(entities.get(k))){
+                            minDistance = distanceTo(entities.get(k));
+                        }
+                    }
+                }
+            }
+            resetReproductiveUrge();
+        }
+        super.act();
     }
 }

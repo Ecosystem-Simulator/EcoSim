@@ -14,9 +14,8 @@ import java.util.ArrayList;
  * @author 1090720
  */
 public class Berries extends Food{
-    public Berries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
-        super(x, y, entities, entitygrid, gridLength);
-        setNutritionVal(20);
+    public Berries(int x, int y, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, nutritionVal, entities, entitygrid, gridLength);
     }
     @Override
     public void draw(Graphics g){
