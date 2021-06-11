@@ -29,6 +29,7 @@ public class Wolf extends Animal{
     
     @Override
     public void act(){
+        target = null;
         if (getHunger() > getThirst() && getHunger() > 25){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;

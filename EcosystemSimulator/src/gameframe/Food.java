@@ -11,16 +11,18 @@ import java.util.ArrayList;
  *
  * @author thuph
  */
-public class Food extends Entity{
+public class Food extends Entity {
+
     private int age;
     private int nutritionVal;
+
     public Food(int x, int y, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
         age = 0;
         this.nutritionVal = nutritionVal;
     }
-    
-    public int getNutritionVal(){
+
+    public int getNutritionVal() {
         return nutritionVal;
     }
 }

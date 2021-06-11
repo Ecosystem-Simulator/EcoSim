@@ -113,8 +113,8 @@ public class GameFrame extends javax.swing.JFrame {
         // setup simulation!
         // entities.add(new ...)
         //w = new Wolf(0, 8, entities, entitygrid, gridLength);
-        d = new Deer(9, 0, entities, entitygrid, gridLength);
-        d1 = new Deer(8, 8, entities, entitygrid, gridLength);
+        d = new Deer(5, 5, entities, entitygrid, gridLength);
+        d1 = new Deer(6, 6, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 9, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
         //wa = new Water(5, 5, entities, entitygrid, gridLength, false);
@@ -128,9 +128,9 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void updateEntities() {
-        for (Entity e : entities) {
-            if (e.isActive()) {
-                e.act();
+        for (int k = 0; k < entities.size(); k++) {
+            if (entities.get(k).isActive()) {
+                entities.get(k).act();
             }
         }
     }

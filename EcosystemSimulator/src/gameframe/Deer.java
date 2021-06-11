@@ -16,6 +16,7 @@ public class Deer extends Animal {
         
     }
     public void act(){
+        target = null;
         if (getHunger() > getThirst() && getHunger() > 25){
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
