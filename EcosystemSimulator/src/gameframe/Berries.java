@@ -13,16 +13,19 @@ import java.util.ArrayList;
  *
  * @author 1090720
  */
-public class Berries extends Food{
-    public Berries(int x, int y, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
-        super(x, y, nutritionVal, entities, entitygrid, gridLength);
+public class Berries extends Food {
+
+    public Berries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(x, y, entities, entitygrid, gridLength);
+        this.nutritionVal = 20;
     }
+
     @Override
-    public void draw(Graphics g){
+    public void draw(Graphics g) {
         g.setColor(new Color(0, 153, 0));
-        g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
-        g.setColor (new Color(204, 0, 0));
-        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength()/2, getHeight()/2);
-        g.fillOval(getX() + getLength()/2, getY() - getHeight()/4, getLength()/2, getHeight()/2);
+        g.fillOval(getX() - getLength() / 2, getY() - getHeight() / 2, getLength(), getHeight());
+        g.setColor(new Color(204, 0, 0));
+        g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 4, getLength() / 4, getHeight() / 4);
+        g.fillOval(getX() + getLength() / 4, getY() - getHeight() / 8, getLength() / 4, getHeight() / 4);
     }
 }

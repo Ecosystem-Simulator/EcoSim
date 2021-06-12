@@ -14,11 +14,14 @@ import java.util.ArrayList;
  * @author thuph
  */
 public class Salmon extends Food {
-    public Salmon (int x, int y, int nutritionVal, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
-        super(x, y, nutritionVal, entities, entitygrid, gridLength);
+
+    public Salmon(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(x, y, entities, entitygrid, gridLength);
+        this.nutritionVal = 35;
     }
-    public void draw(Graphics g){
+
+    public void draw(Graphics g) {
         g.setColor(new Color(253, 162, 180));
-        g.fillOval(getX() - getLength()/2, getY() - getHeight()/2, getLength(), getHeight()*2);
+        g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 2, getLength() / 2, getHeight());
     }
 }

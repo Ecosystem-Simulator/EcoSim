@@ -40,7 +40,7 @@ public class GameFrame extends javax.swing.JFrame {
     //how long to wait between timer calls
     private int timerDelay = 500;
     //side length of grid
-    int gridLength = 50;
+    int gridLength = 500 / entitygrid.length;
     /**
      * Creates new form GameFrame
      */
@@ -51,13 +51,13 @@ public class GameFrame extends javax.swing.JFrame {
     Wolf w;
     Deer d;
     Deer d1, d2, d3;
-    Berries b;
+    Berries b1, b2, b3, b4, b5;
     PoisonBerries pb;
     Grass g;
     Rock r;
     Water wa;
     Mud m;
-    Bear be;
+    Bear be, be2, be3;
     Salmon s;
     Water wa2, wa3, wa4;
 
@@ -86,16 +86,13 @@ public class GameFrame extends javax.swing.JFrame {
         prev_time = curr_time;
     }
 
-    //runs every tick when the timer is on. 
+    //runs every tick when the timer is on.
     public void tick() {
         updateTicker();
-        //keyboardCheck();   
+        //keyboardCheck();
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
-        System.out.println("D: " + d.getReproductiveUrge() + " D1: " + d1.getReproductiveUrge());
-        System.out.println("D: " + d.getGender() + " D1: " + d1.getGender());
-
     }
 
     //updates the tickCount
@@ -112,18 +109,27 @@ public class GameFrame extends javax.swing.JFrame {
     public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
-        //w = new Wolf(0, 8, entities, entitygrid, gridLength);
-        d = new Deer(5, 5, entities, entitygrid, gridLength);
-        d1 = new Deer(6, 6, entities, entitygrid, gridLength);
-        //d2 = new Deer(9, 9, entities, entitygrid, gridLength);
-        //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        //wa = new Water(5, 5, entities, entitygrid, gridLength, false);
-        //wa2 = new Water (1, 2, entities, entitygrid, gridLength, false);
-        //wa3 = new Water (2, 1, entities, entitygrid, gridLength, false);
-        //wa4 = new Water (1, 1, entities, entitygrid, gridLength, false);
-        //m = new Mud (2, 2, entities, entitygrid, gridLength, false);
-        //be = new Bear(5, 8, entities, entitygrid, gridLength);
+        w = new Wolf(0, 0, entities, entitygrid, gridLength);
+        d = new Deer(9, 9, entities, entitygrid, gridLength);
+        d1 = new Deer(9, 8, entities, entitygrid, gridLength);
+        d2 = new Deer(9, 2, entities, entitygrid, gridLength);
+        d3 = new Deer(4, 8, entities, entitygrid, gridLength);
+        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
+        wa2 = new Water(3, 3, entities, entitygrid, gridLength, false);
+        wa3 = new Water(2, 1, entities, entitygrid, gridLength, false);
+        wa4 = new Water(1, 1, entities, entitygrid, gridLength, false);
+        //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
+        be = new Bear(0, 1, entities, entitygrid, gridLength);
+        be2 = new Bear(1, 3, entities, entitygrid, gridLength);
+        be3 = new Bear(1, 4, entities, entitygrid, gridLength);
         //r = new Rock(2, 4, entities, entitygrid, gridLength, false);
+        b1 = new Berries(5, 6, entities, entitygrid, gridLength);
+        b2 = new Berries(6, 6, entities, entitygrid, gridLength);
+        b3 = new Berries(7, 6, entities, entitygrid, gridLength);
+        b4 = new Berries(8, 6, entities, entitygrid, gridLength);
+        g = new Grass(9, 1, entities, entitygrid, gridLength);
+        //pb = new PoisonBerries(6, 6, 0, entities, entitygrid, gridLength);
+        //s = new Salmon(7, 7, 40, entities, entitygrid, gridLength);
 
     }
 
@@ -193,13 +199,12 @@ public class GameFrame extends javax.swing.JFrame {
 
         panelDraw = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
-        buttonMoveRight = new javax.swing.JButton();
-        buttonMoveLeft = new javax.swing.JButton();
+        buttonPause = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 600));
 
         panelDraw.setBackground(new java.awt.Color(255, 255, 255));
-        panelDraw.setPreferredSize(new java.awt.Dimension(501, 501));
 
         javax.swing.GroupLayout panelDrawLayout = new javax.swing.GroupLayout(panelDraw);
         panelDraw.setLayout(panelDrawLayout);
@@ -219,17 +224,10 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
-        buttonMoveRight.setText("Move Right");
-        buttonMoveRight.addActionListener(new java.awt.event.ActionListener() {
+        buttonPause.setText("Pause");
+        buttonPause.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMoveRightActionPerformed(evt);
-            }
-        });
-
-        buttonMoveLeft.setText("Move Left");
-        buttonMoveLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMoveLeftActionPerformed(evt);
+                buttonPauseActionPerformed(evt);
             }
         });
 
@@ -239,28 +237,25 @@ public class GameFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addComponent(panelDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(230, 230, 230)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonStart)
-                    .addComponent(buttonMoveLeft)
-                    .addComponent(buttonMoveRight))
+                    .addComponent(buttonPause))
                 .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(panelDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonMoveRight)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonMoveLeft)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonPause)
+                        .addGap(18, 18, 18)))
                 .addComponent(buttonStart)
                 .addContainerGap())
         );
@@ -273,13 +268,15 @@ public class GameFrame extends javax.swing.JFrame {
         startTimer();
     }//GEN-LAST:event_buttonStartActionPerformed
 
-    private void buttonMoveRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveRightActionPerformed
-
-    }//GEN-LAST:event_buttonMoveRightActionPerformed
-
-    private void buttonMoveLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMoveLeftActionPerformed
-
-    }//GEN-LAST:event_buttonMoveLeftActionPerformed
+    private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+            System.out.println("Simulation paused");
+        } else {
+            System.out.println("No timer active!");
+        }
+    }//GEN-LAST:event_buttonPauseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,8 +313,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonMoveLeft;
-    private javax.swing.JButton buttonMoveRight;
+    private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonStart;
     private javax.swing.JPanel panelDraw;
     // End of variables declaration//GEN-END:variables

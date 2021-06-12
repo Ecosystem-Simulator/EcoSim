@@ -9,48 +9,86 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-/**
- *
- * @author thuph
- */
-public class Wolf extends Animal{
-    Deer d;
-    
-    public Wolf(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+public class Wolf extends Animal {
+
+    private int length;
+    private int eyeSize;
+    private int snoutLength;
+    private int noseSize;
+    private int d;
+
+    private Color grey = new Color(115, 125, 132);
+    private Color black = new Color(0, 0, 0);
+    private Color white = new Color(255, 255, 255);
+    private Color lightgrey = new Color(144, 157, 166);
+    private Color darkgrey = new Color(92, 100, 106);
+
+    public Wolf(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
     }
-    
+
     @Override
-    public void draw(Graphics g){
-        g.setColor(new Color(105, 105, 105));
-        g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
-        //g.drawString("Wolf", getX() - getLength(), getY() + getHeight()*2);
+    public void draw(Graphics g) {
+        d = getGridLength() / 15;
+        length = getLength() * 3 / 4;
+        //draw ears
+        g.setColor(grey);
+        g.fillPolygon(new int[]{getX() + length / 8, getX() + length * 9 / 16, getX() + length / 2}, new int[]{getY() - length / 2 + d, getY() - length * 3 / 4 + d, getY() - length / 4 + d}, 3);
+        g.fillPolygon(new int[]{getX() - length / 8, getX() - length * 9 / 16, getX() - length / 2}, new int[]{getY() - length / 2 + d, getY() - length * 3 / 4 + d, getY() - length / 4 + d}, 3);
+
+        g.setColor(darkgrey);
+        g.fillPolygon(new int[]{getX() + length / 16, getX() + length / 2, getX() + length * 7 / 16}, new int[]{getY() - length * 3 / 8 + d, getY() - length * 5 / 8 + d, getY() - length * 1 / 8 + d}, 3);
+        g.fillPolygon(new int[]{getX() - length / 16, getX() - length / 2, getX() - length * 7 / 16}, new int[]{getY() - length * 3 / 8 + d, getY() - length * 5 / 8 + d, getY() - length * 1 / 8 + d}, 3);
+
+        //draw head
+        g.setColor(grey);
+        g.fillOval(getX() - length / 2, getY() - length / 2, length, length);
+        //draw eyes
+        g.setColor(black);
+        eyeSize = length / 5;
+        g.fillOval(getX() - length / 4 - eyeSize / 2, getY() - length / 4, eyeSize, eyeSize);
+        g.fillOval(getX() + length / 4 - eyeSize / 2, getY() - length / 4, eyeSize, eyeSize);
+
+        g.setColor(white);
+        g.fillOval(getX() - length / 4 - eyeSize / 4, getY() - length / 4, eyeSize / 2, eyeSize / 2);
+        g.fillOval(getX() + length / 4 - eyeSize / 4, getY() - length / 4, eyeSize / 2, eyeSize / 2);
+
+        //draw snout
+        g.setColor(lightgrey);
+        snoutLength = length / 3;
+        //g.fillOval(getX() - snoutLength / 4, getY() + length / 4 - snoutLength / 2, snoutLength / 2, snoutLength);
+
+        g.fillRoundRect(getX() - snoutLength / 2, getY(), snoutLength, snoutLength, snoutLength * 3 / 4, snoutLength * 3 / 4);
+
+        //draw nose
+        g.setColor(black);
+        noseSize = snoutLength / 2;
+        g.fillOval(getX() - noseSize / 2, getY() + noseSize, noseSize, noseSize * 3 / 4);
+
     }
-    
+
     @Override
-    public void act(){
+    public void act() {
         target = null;
-        if (getHunger() > getThirst() && getHunger() > 25){
+        if (getHunger() > getThirst() && getHunger() > 25) {
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
-            for(int k = 0; k < entities.size(); k++){
-                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon){
-                    if (minDistance > distanceTo(entities.get(k))){
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon) {
+                    if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);
                     }
                 }
             }
-        }
-        
-        else if (getReproductiveUrge() > 200){
+        } else if (getReproductiveUrge() > 200) {
             int minDistance = Integer.MAX_VALUE;
-            for(int k = 0; k < entities.size(); k++){
-                if (entities.get(k) instanceof Wolf){
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Wolf) {
                     Wolf tempWolf = ((Wolf) entities.get(k));
-                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 200){
-                        if (minDistance > distanceTo(entities.get(k))){
+                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 200) {
+                        if (minDistance > distanceTo(entities.get(k))) {
                             minDistance = distanceTo(entities.get(k));
                         }
                     }
@@ -58,15 +96,5 @@ public class Wolf extends Animal{
             }
         }
         super.act();
-    }
-    
-    public Deer getNearestDeer(){
-        int minDist = Integer.MAX_VALUE;
-        for(Entity e : entities){
-            if(e instanceof Deer && distanceTo(e) < minDist){
-                d = (Deer)e;
-            }
-        }
-        return d;
     }
 }

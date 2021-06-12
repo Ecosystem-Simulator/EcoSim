@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Animal extends Entity {
+
     //1 is male, 2 is female
     private int gender;
     private int age;
@@ -17,15 +18,14 @@ public class Animal extends Entity {
     protected Entity target;
     public HashMap<String, Integer> favourableness = new HashMap();
     private ArrayList<String> moves = new ArrayList();
-    private Deer d;
 
     public Animal(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
-        gender = (int)(Math.random()*2)+1;
+        gender = (int) (Math.random() * 2) + 1;
         age = 0;
         hunger = 0;
         thirst = 0;
-        reproductiveUrge = 11;
+        reproductiveUrge = 0;
         restrictedVision = false;
         favourableness.put("up", 0);
         favourableness.put("down", 0);
@@ -64,10 +64,10 @@ public class Animal extends Entity {
         thirst++;
         reproductiveUrge++;
         // moving to water
-        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100){
+        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100) {
             die();
         }
-        if (getThirst() >= getHunger() && getThirst() >= 25){
+        if (getThirst() >= getHunger() && getThirst() >= 25) {
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
@@ -80,25 +80,17 @@ public class Animal extends Entity {
                 }
             }
         }
-        /*if(this instanceof Bear || this instanceof Wolf){
-            if(distanceTo(getNearestDeer()) == 1){
-                target = getNearestDeer();
-            }
-        }*/
-        if(target == null){
+
+        if (target == null) {
             wander();
-        }
-        else if (distanceTo(target) > 1) {
+        } else if (distanceTo(target) > 1) {
             move();
-        } 
-        else if (target instanceof Water) {
+        } else if (target instanceof Water) {
             drink();
-        }
-        else if (target instanceof Food || (target instanceof Deer && (this instanceof Bear || this instanceof Wolf))){
+        } else if (target instanceof Food || (target instanceof Deer && this instanceof Wolf)) {
             eat(target);
-        }
-        else if(this.getClass() == target.getClass()){
-            mate((Animal)target);
+        } else if (this.getClass() == target.getClass()) {
+            mate((Animal) target);
         }
 
     }
@@ -240,112 +232,173 @@ public class Animal extends Entity {
         }
     }
 
-    public void wander(){
-        int random = (int)(Math.random()*4) + 1;
-        switch(random){
+    public void wander() {
+        int random = (int) (Math.random() * 4) + 1;
+        switch (random) {
             case 1:
-                if(getGridY() - 1 >= 0)
-                    if(entitygrid[getGridX()][getGridY() - 1] == null)
+                if (getGridY() - 1 >= 0) {
+                    if (entitygrid[getGridX()][getGridY() - 1] == null) {
                         moveUp();
+                    }
+                }
                 break;
             case 2:
-                if(getGridY() + 1 < entitygrid.length)
-                    if(entitygrid[getGridX()][getGridY() + 1] == null)
+                if (getGridY() + 1 < entitygrid.length) {
+                    if (entitygrid[getGridX()][getGridY() + 1] == null) {
                         moveDown();
+                    }
+                }
                 break;
             case 3:
-                if(getGridX() - 1 >= 0)
-                    if(entitygrid[getGridX() - 1][getGridY()] == null)
+                if (getGridX() - 1 >= 0) {
+                    if (entitygrid[getGridX() - 1][getGridY()] == null) {
                         moveLeft();
+                    }
+                }
                 break;
             case 4:
-                if(getGridX() + 1 < entitygrid[0].length)
-                    if(entitygrid[getGridX() + 1][getGridY()] == null)
+                if (getGridX() + 1 < entitygrid[0].length) {
+                    if (entitygrid[getGridX() + 1][getGridY()] == null) {
                         moveRight();
+                    }
+                }
                 break;
         }
     }
-    
+
     public void eat(Entity f) {
         //eat code
-        if(f instanceof Food){
-            if (hunger - ((Food)f).getNutritionVal() > 0)
-                hunger -= ((Food)f).getNutritionVal();
-            else
+        if (f instanceof Food) {
+            if (hunger - ((Food) f).getNutritionVal() > 0) {
+                hunger -= ((Food) f).getNutritionVal();
+            } else {
                 hunger = 0;
-        }
-        else if(f instanceof Deer){
-            if(hunger - 30 > 0)
-                hunger -= 30;
-            else
+            }
+        } else if (f instanceof Deer) {
+            if (hunger - 50 > 0) {
+                hunger -= 50;
+            } else {
                 hunger = 0;
+            }
         }
         f.die();
     }
 
     public void drink() {
-        if(thirst - 10 > 0)
+        if (thirst - 10 > 0) {
             thirst -= 10;
-        else
+        } else {
             thirst = 0;
+        }
+        System.out.println("Drinking...");
     }
 
     public void mate(Animal m) {
         //fix out of bounds
-        if (this instanceof Bear && this.getGender() == 1){
-            if (entitygrid[getGridX() + 1][getGridY()] == null){
-                Bear bear = new Bear(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+        if (this instanceof Bear && this.getGender() == 2) {
+            if (getGridX() + 1 < entitygrid[0].length) {
+                if (entitygrid[getGridX() + 1][getGridY()] == null) {
+                    Bear bear = new Bear(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX() - 1][getGridY()] == null) {
-                Bear bear = new Bear(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+            if (getGridX() - 1 >= 0) {
+                if (entitygrid[getGridX() - 1][getGridY()] == null) {
+                    Bear bear = new Bear(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() + 1] == null){
-                Bear bear = new Bear(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+            if (getGridY() + 1 < entitygrid.length) {
+                if (entitygrid[getGridX()][getGridY() + 1] == null) {
+                    Bear bear = new Bear(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() - 1] == null){
-                Bear bear = new Bear(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
-            } 
+            if (getGridY() - 1 >= 0) {
+                if (entitygrid[getGridX()][getGridY() - 1] == null) {
+                    Bear bear = new Bear(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
+            }
         }
-        if (this instanceof Wolf && this.getGender() == 1){
-            if (entitygrid[getGridX() + 1][getGridY()] == null){
-                Wolf wolf = new Wolf(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+
+        if (this instanceof Wolf && this.getGender() == 2) {
+            if (getGridX() + 1 < entitygrid[0].length) {
+                if (entitygrid[getGridX() + 1][getGridY()] == null) {
+                    Wolf wolf = new Wolf(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX() - 1][getGridY()] == null) {
-                Wolf wolf = new Wolf(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+            if (getGridX() - 1 >= 0) {
+                if (entitygrid[getGridX() - 1][getGridY()] == null) {
+                    Wolf wolf = new Wolf(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() + 1] == null){
-                Wolf wolf = new Wolf(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+            if (getGridY() + 1 < entitygrid.length) {
+                if (entitygrid[getGridX()][getGridY() + 1] == null) {
+                    Wolf wolf = new Wolf(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() - 1] == null){
-                Wolf wolf = new Wolf(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
-            } 
+            if (getGridY() - 1 >= 0) {
+                if (entitygrid[getGridX()][getGridY() - 1] == null) {
+                    Wolf wolf = new Wolf(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
+            }
         }
-        if (this instanceof Deer && this.getGender() == 1){
-            if (entitygrid[getGridX() + 1][getGridY()] == null){
-                Deer deer = new Deer(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+        if (this instanceof Deer && this.getGender() == 2) {
+            if (getGridX() + 1 < entitygrid[0].length) {
+                if (entitygrid[getGridX() + 1][getGridY()] == null) {
+                    Deer deer = new Deer(getGridX() + 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX() - 1][getGridY()] == null) {
-                Deer deer = new Deer(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+            if (getGridX() - 1 >= 0) {
+                if (entitygrid[getGridX() - 1][getGridY()] == null) {
+                    Deer deer = new Deer(getGridX() - 1, getGridY(), entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() + 1] == null){
-                Deer deer = new Deer(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+            if (getGridY() + 1 < entitygrid.length) {
+                if (entitygrid[getGridX()][getGridY() + 1] == null) {
+                    Deer deer = new Deer(getGridX(), getGridY() + 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
             }
-            else if (entitygrid[getGridX()][getGridY() - 1] == null){
-                Deer deer = new Deer(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
-            } 
+            if (getGridY() - 1 >= 0) {
+                if (entitygrid[getGridX()][getGridY() - 1] == null) {
+                    Deer deer = new Deer(getGridX(), getGridY() - 1, entities, entitygrid, getGridLength());
+                    resetReproductiveUrge();
+                    m.resetReproductiveUrge();
+                    return;
+                }
+            }
         }
-        resetReproductiveUrge();
-        m.resetReproductiveUrge();
-        
+
     }
-    /*public Deer getNearestDeer(){
-        int minDist = Integer.MAX_VALUE;
-        for(Entity e : entities){
-            if(e instanceof Deer && distanceTo(e) < minDist){
-                d = (Deer)e;
-            }
-        }
-        return d;
-    }
-*/
+
 }

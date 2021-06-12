@@ -1,64 +1,89 @@
-
 package gameframe;
+
 import java.awt.Graphics;
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class Bear extends Animal{
-    Deer d;
-    public Bear(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+public class Bear extends Animal {
+
+    private int eyeSize;
+    private int earSize;
+    private int snoutSize;
+
+    private Color black = new Color(0, 0, 0);
+    private Color brown = new Color(141, 74, 22);
+    private Color cream = new Color(201, 158, 105);
+    private Color white = new Color(255, 255, 255);
+
+    public Bear(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
+
     }
-    
-    public void draw(Graphics g){
-        g.setColor(new Color(105, 57, 9));
-        g.fillOval(getX() - getLength(), getY() - getHeight(), getLength()*2, getHeight()*2);
+
+    public void draw(Graphics g) {
+        //draw ears
+        g.setColor(brown);
+        earSize = getLength() / 2;
+        g.fillOval(getX() - getLength() / 2 - earSize / 4, getY() - getLength() / 2 - earSize / 4, earSize, earSize);
+        g.fillOval(getX() + getLength() / 2 - earSize * 3 / 4, getY() - getLength() / 2 - earSize / 4, earSize, earSize);
+        //draw inside of ears
+        earSize = getLength() / 4;
+        g.setColor(cream);
+        g.fillOval(getX() - getLength() / 2, getY() - getLength() / 2, earSize, earSize);
+        g.fillOval(getX() + getLength() / 2 - earSize, getY() - getLength() / 2, earSize, earSize);
+        //draw body
+        g.setColor(brown);
+        g.fillOval(getX() - getLength() / 2, getY() - getHeight() / 2, getLength(), getHeight());
+        //draw snout
+        g.setColor(cream);
+        snoutSize = getLength() * 5 / 12;
+        g.fillOval(getX() - snoutSize / 2, getY(), snoutSize, snoutSize);
+        //draw eyes
+        g.setColor(black);
+        eyeSize = getLength() / 5;
+        g.fillOval(getX() - getLength() / 4 - eyeSize / 2, getY() - getHeight() / 4, eyeSize, eyeSize);
+        g.fillOval(getX() + getLength() / 4 - eyeSize / 2, getY() - getHeight() / 4, eyeSize, eyeSize);
+
+        g.setColor(white);
+        g.fillOval(getX() - getLength() / 4 - eyeSize / 4, getY() - getHeight() / 4, eyeSize / 2, eyeSize / 2);
+        g.fillOval(getX() + getLength() / 4 - eyeSize / 4, getY() - getHeight() / 4, eyeSize / 2, eyeSize / 2);
+
+        //draw nose
+        g.setColor(black);
+        g.fillOval(getX() - snoutSize / 6, getY() + snoutSize / 8, snoutSize / 3, snoutSize / 4);
+
     }
-    
+
     @Override
-    public void act(){
+    public void act() {
         target = null;
-        if (getHunger() > getThirst() && getHunger() > 25){
+        if (getHunger() > getThirst() && getHunger() > 25) {
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
-            for(int k = 0; k < entities.size(); k++){
-                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon){
-                    if (minDistance > distanceTo(entities.get(k))){
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Salmon) {
+                    if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);
                     }
                 }
             }
-        }
-        
-        else if (getReproductiveUrge() > 200){
+        } else if (getReproductiveUrge() > 50) {
+            //set back to 200
             int minDistance = Integer.MAX_VALUE;
-            int row = 0;
-            int col = 0;
-            for(int k = 0; k < entities.size(); k++){
-                if (entities.get(k) instanceof Bear){
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Bear) {
                     Bear tempBear = ((Bear) entities.get(k));
-                    if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 200){
-                        if (minDistance > distanceTo(entities.get(k))){
+                    if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 10) {
+                        if (minDistance > distanceTo(entities.get(k))) {
                             minDistance = distanceTo(entities.get(k));
-                            row = entities.get(k).getGridX();
-                            col = entities.get(k).getGridY();
+                            target = entities.get(k);
                         }
                     }
                 }
             }
         }
         super.act();
-    }
-    
-    public Deer getNearestDeer(){
-        int minDist = Integer.MAX_VALUE;
-        for(Entity e : entities){
-            if(e instanceof Deer && distanceTo(e) < minDist){
-                d = (Deer)e;
-            }
-        }
-        return d;
     }
 }

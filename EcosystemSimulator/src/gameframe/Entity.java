@@ -11,8 +11,8 @@ public class Entity {
     private int x, y;
     private int gridX, gridY;
     private int gridLength;
-    private int length = 10;
-    private int height = 10;
+    private int length;
+    private int height;
     //private double direction;
     private boolean active;
 
@@ -24,6 +24,8 @@ public class Entity {
         this.entities = entities;
         this.entitygrid = entitygrid;
         this.gridLength = gridLength;
+        this.length = this.gridLength / 2;
+        this.height = this.gridLength / 2;
         active = true;
         entitygrid[gridX][gridY] = this;
         entities.add(this);
