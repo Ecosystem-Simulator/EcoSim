@@ -107,7 +107,7 @@ public class GameFrame extends javax.swing.JFrame {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-    
+
     public void setUpImageBuffer() {
         ib = panelDraw.createImage(panelDraw.getWidth(), panelDraw.getHeight());
         ibg = ib.getGraphics();
@@ -117,25 +117,25 @@ public class GameFrame extends javax.swing.JFrame {
         // setup simulation!
         // entities.add(new ...)
         c = new Camera();
-        w = new Wolf(0, 0, entities, entitygrid, gridLength);
-        d = new Deer(9, 9, entities, entitygrid, gridLength);
-        d1 = new Deer(9, 8, entities, entitygrid, gridLength);
-        d2 = new Deer(9, 2, entities, entitygrid, gridLength);
-        d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
-        wa2 = new Water(3, 3, entities, entitygrid, gridLength, false);
-        wa3 = new Water(2, 1, entities, entitygrid, gridLength, false);
-        wa4 = new Water(1, 1, entities, entitygrid, gridLength, false);
+        //w = new Wolf(0, 0, entities, entitygrid, gridLength);
+        d = new Deer(0, 0, entities, entitygrid, gridLength);
+        //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
+        //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
+        //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
+        //wa = new Water(5, 5, entities, entitygrid, gridLength, false);
+        //wa2 = new Water(3, 3, entities, entitygrid, gridLength, false);
+        //wa3 = new Water(2, 1, entities, entitygrid, gridLength, false);
+        //wa4 = new Water(1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
         be = new Bear(0, 1, entities, entitygrid, gridLength);
-        be2 = new Bear(1, 3, entities, entitygrid, gridLength);
-        be3 = new Bear(1, 4, entities, entitygrid, gridLength);
+        //be2 = new Bear(1, 3, entities, entitygrid, gridLength);
+        //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
         //r = new Rock(2, 4, entities, entitygrid, gridLength, false);
-        b1 = new Berries(5, 6, entities, entitygrid, gridLength);
-        b2 = new Berries(6, 6, entities, entitygrid, gridLength);
-        b3 = new Berries(7, 6, entities, entitygrid, gridLength);
-        b4 = new Berries(8, 6, entities, entitygrid, gridLength);
-        g = new Grass(9, 1, entities, entitygrid, gridLength);
+        //b1 = new Berries(5, 6, entities, entitygrid, gridLength);
+        //b2 = new Berries(6, 6, entities, entitygrid, gridLength);
+        //b3 = new Berries(7, 6, entities, entitygrid, gridLength);
+        //b4 = new Berries(8, 6, entities, entitygrid, gridLength);
+        //g = new Grass(9, 1, entities, entitygrid, gridLength);
         //pb = new PoisonBerries(6, 6, 0, entities, entitygrid, gridLength);
         //s = new Salmon(7, 7, 40, entities, entitygrid, gridLength);
 
@@ -245,8 +245,8 @@ public class GameFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(230, 230, 230)
+                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonStart)
                     .addComponent(buttonPause))
@@ -255,15 +255,11 @@ public class GameFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonPause)
-                        .addGap(18, 18, 18)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buttonPause)
+                    .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonStart)
                 .addContainerGap())
         );

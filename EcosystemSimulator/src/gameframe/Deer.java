@@ -6,14 +6,58 @@ import java.awt.Color;
 
 public class Deer extends Animal {
 
+    private int eyeSize;
+    private int snoutSize;
+    private int noseSize;
+    private int earSize;
+
+    private Color brown = new Color(136, 71, 0);
+    private Color cream = new Color(253, 187, 121);
+    private Color black = new Color(0, 0, 0);
+    private Color white = new Color(255, 255, 255);
+    private Color darkbrown = new Color(95, 57, 11);
+
     public Deer(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(gridX, gridY, entities, entitygrid, gridLength);
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(new Color(186, 135, 89));
-        g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 2, getLength() / 2, getHeight());
+        //draw ears
+        g.setColor(brown);
+        earSize = getLength() * 2 / 3;
+        g.fillOval(getX() - getLength() * 2 / 3, getY() - getHeight() / 2, earSize, earSize / 2);
+        g.fillOval(getX() + getLength() * 2 / 3 - earSize, getY() - getHeight() / 2, earSize, earSize / 2);
+
+        g.setColor(cream);
+        earSize = earSize / 2;
+        g.fillOval(getX() - getLength() / 3 - earSize / 2, getY() - getHeight() / 2 + earSize / 4, earSize, earSize / 2);
+        g.fillOval(getX() + getLength() / 3 - earSize / 2, getY() - getHeight() / 2 + earSize / 4, earSize, earSize / 2);
+
+        //draw head
+        g.setColor(brown);
+        g.fillOval(getX() - getLength() * 1 / 3, getY() - getHeight() / 2, getLength() * 2 / 3, getHeight());
+
+        //draw eyes
+        g.setColor(black);
+        eyeSize = getLength() / 5;
+        g.fillOval(getX() - getLength() / 4 - eyeSize / 2, getY() - getHeight() / 4, eyeSize, eyeSize);
+        g.fillOval(getX() + getLength() / 4 - eyeSize / 2, getY() - getHeight() / 4, eyeSize, eyeSize);
+
+        g.setColor(white);
+        g.fillOval(getX() - getLength() / 4 - eyeSize / 4, getY() - getHeight() / 4, eyeSize / 2, eyeSize / 2);
+        g.fillOval(getX() + getLength() / 4 - eyeSize / 4, getY() - getHeight() / 4, eyeSize / 2, eyeSize / 2);
+
+        //draw snout
+        g.setColor(cream);
+        snoutSize = getHeight() / 4;
+        g.fillOval(getX() - snoutSize / 2, getY() + snoutSize / 2, snoutSize, snoutSize);
+
+        //draw nose
+        g.setColor(black);
+        noseSize = snoutSize / 2;
+        g.fillOval(getX() - noseSize / 2, getY() + snoutSize / 2, noseSize, noseSize);
+
     }
 
     public void act() {
