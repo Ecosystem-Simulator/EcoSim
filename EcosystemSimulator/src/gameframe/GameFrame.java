@@ -29,7 +29,7 @@ public class GameFrame extends javax.swing.JFrame {
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    public Entity[][] entitygrid = new Entity[1][1];
+    public Entity[][] entitygrid = new Entity[5][5];
     //timer object
     private Timer timer = null;
     private boolean active = false;
