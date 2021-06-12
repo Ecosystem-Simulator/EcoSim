@@ -41,6 +41,12 @@ public class GameFrame extends javax.swing.JFrame {
     private int timerDelay = 500;
     //side length of grid
     int gridLength = 500 / entitygrid.length;
+    private boolean key_w = false;
+    private boolean key_a = false;
+    private boolean key_s = false;
+    private boolean key_d = false;
+    private int x_center = 400;
+    private int y_center = 400;
     /**
      * Creates new form GameFrame
      */
@@ -60,6 +66,7 @@ public class GameFrame extends javax.swing.JFrame {
     Bear be, be2, be3;
     Salmon s;
     Water wa2, wa3, wa4;
+    Camera c;
 
     public void startTimer() {
         if (timer != null) {
@@ -89,7 +96,7 @@ public class GameFrame extends javax.swing.JFrame {
     //runs every tick when the timer is on.
     public void tick() {
         updateTicker();
-        //keyboardCheck();
+        c.keyboardCheck();
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
@@ -100,7 +107,7 @@ public class GameFrame extends javax.swing.JFrame {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-
+    
     public void setUpImageBuffer() {
         ib = panelDraw.createImage(panelDraw.getWidth(), panelDraw.getHeight());
         ibg = ib.getGraphics();
@@ -109,6 +116,7 @@ public class GameFrame extends javax.swing.JFrame {
     public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
+        c = new Camera();
         w = new Wolf(0, 0, entities, entitygrid, gridLength);
         d = new Deer(9, 9, entities, entitygrid, gridLength);
         d1 = new Deer(9, 8, entities, entitygrid, gridLength);
