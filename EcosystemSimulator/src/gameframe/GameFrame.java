@@ -20,7 +20,7 @@ import java.util.TimerTask;
  *
  * @author 1347278
  */
-public class GameFrame extends javax.swing.JFrame {
+public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
 
     //keep track how much time has actually passed since last cycle
     private double delta_time;
@@ -41,12 +41,11 @@ public class GameFrame extends javax.swing.JFrame {
     private int timerDelay = 500;
     //side length of grid
     int gridLength = 500 / entitygrid.length;
+    //keyboard input variables for camera
     private boolean key_w = false;
     private boolean key_a = false;
     private boolean key_s = false;
     private boolean key_d = false;
-    private int x_center = 400;
-    private int y_center = 400;
     /**
      * Creates new form GameFrame
      */
@@ -77,6 +76,7 @@ public class GameFrame extends javax.swing.JFrame {
         timer = new Timer(true);
         //make a timertask that has a job to do (call updateTime)
         TimerTask task = new TimerTask() {
+            @Override
             public void run() {
                 tick();
             }
@@ -96,7 +96,7 @@ public class GameFrame extends javax.swing.JFrame {
     //runs every tick when the timer is on.
     public void tick() {
         updateTicker();
-        c.keyboardCheck();
+        keyboardCheck();
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
@@ -107,7 +107,55 @@ public class GameFrame extends javax.swing.JFrame {
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-
+    
+    //dispatchKeyEvent required method
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if (e.getID() == KeyEvent.KEY_PRESSED) {
+            if (e.getKeyCode() == e.VK_D) {
+                key_d = true;
+            } 
+            else if (e.getKeyCode() == e.VK_A) {
+                key_a = true;
+            } 
+            else if (e.getKeyCode() == e.VK_S) {
+                key_s = true;
+            } 
+            else if (e.getKeyCode() == e.VK_W) {
+                key_w = true;
+            }
+        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            if (e.getKeyCode() == e.VK_D) {
+                key_d = false;
+            } 
+            else if (e.getKeyCode() == e.VK_A) {
+                key_a = false;
+            }
+            if (e.getKeyCode() == e.VK_W) {
+                key_w = false;
+            } 
+            else if (e.getKeyCode() == e.VK_S) {
+                key_s = false;
+            }
+        }
+        return false;
+    }
+    
+    //keyboard check
+        public void keyboardCheck(){
+        if (key_d == true){
+            c.incrementX();
+        }
+        if (key_a == true){
+            c.decrementX();
+        }
+        if (key_s == true){
+            c.incrementY();
+        }
+        if (key_w == true){
+            c.decrementY();
+        }
+    }
+        
     public void setUpImageBuffer() {
         ib = panelDraw.createImage(panelDraw.getWidth(), panelDraw.getHeight());
         ibg = ib.getGraphics();
@@ -194,6 +242,9 @@ public class GameFrame extends javax.swing.JFrame {
         initComponents();
         setupSimulation();
         setUpImageBuffer();
+        //please notify this frame when keyboard events occur
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this);
     }
 
     /**
@@ -310,6 +361,7 @@ public class GameFrame extends javax.swing.JFrame {
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new GameFrame().setVisible(true);
             }
