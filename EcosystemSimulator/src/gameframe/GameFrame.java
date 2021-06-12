@@ -29,7 +29,7 @@ public class GameFrame extends javax.swing.JFrame {
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    public Entity[][] entitygrid = new Entity[10][10];
+    public Entity[][] entitygrid = new Entity[1][1];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -127,7 +127,7 @@ public class GameFrame extends javax.swing.JFrame {
         //wa3 = new Water(2, 1, entities, entitygrid, gridLength, false);
         //wa4 = new Water(1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
-        be = new Bear(0, 1, entities, entitygrid, gridLength);
+        //be = new Bear(0, 1, entities, entitygrid, gridLength);
         //be2 = new Bear(1, 3, entities, entitygrid, gridLength);
         //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
         //r = new Rock(2, 4, entities, entitygrid, gridLength, false);

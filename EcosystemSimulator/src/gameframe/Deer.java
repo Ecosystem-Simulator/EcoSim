@@ -54,7 +54,7 @@ public class Deer extends Animal {
         g.fillOval(getX() - snoutSize / 2, getY() + snoutSize / 2, snoutSize, snoutSize);
 
         //draw nose
-        g.setColor(black);
+        g.setColor(darkbrown);
         noseSize = snoutSize / 2;
         g.fillOval(getX() - noseSize / 2, getY() + snoutSize / 2, noseSize, noseSize);
 
