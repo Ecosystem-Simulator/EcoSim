@@ -17,10 +17,16 @@ public class Bear extends Animal {
 
     public Bear(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
-
+        setMaxHunger(100);
+        setMaxThirst(100);
+        if (getGender() == 2) {
+            setHeight(getHeight() * 3 / 4);
+            setLength(getLength() * 3 / 4);
+        }
     }
 
     public void draw(Graphics g) {
+
         //draw ears
         g.setColor(brown);
         earSize = getLength() / 2;
@@ -52,24 +58,34 @@ public class Bear extends Animal {
         g.setColor(black);
         g.fillOval(getX() - snoutSize / 6, getY() + snoutSize / 8, snoutSize / 3, snoutSize / 4);
 
+        //draw bars
+        //hunger
+        g.setColor(new Color(255, 0, 0));
+        g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength * getHunger() / getMaxHunger(), barHeight);
+
+        //thirst
+        g.setColor(new Color(0, 0, 255));
+        g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight * 2, barLength * getThirst() / getMaxThirst(), barHeight);
+
+        g.setColor(black);
+        g.drawRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength, barHeight);
+        g.drawRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight * 2, barLength, barHeight);
     }
 
     @Override
     public void act() {
         target = null;
-        if (getHunger() > getThirst() && getHunger() > 25) {
+        if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
             int minDistance = Integer.MAX_VALUE;
-            int row = 0;
-            int col = 0;
             for (int k = 0; k < entities.size(); k++) {
-                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Salmon) {
+                if ((entities.get(k) instanceof Berries || entities.get(k) instanceof Salmon) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
                     if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);
                     }
                 }
             }
-        } else if (getReproductiveUrge() > 50) {
+        } else if (getReproductiveUrge() > 250) {
             //set back to 200
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {

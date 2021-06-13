@@ -6,17 +6,28 @@ import java.awt.Color;
 
 public class Grass extends Food {
 
-    private int d = 20;
+    private int d;
 
     public Grass(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(gridX, gridY, entities, entitygrid, gridLength);
-        this.nutritionVal = 10;
+        setNutritionVal((int) (Math.random() * 5) + 10);
+        setRipeAge(5);
+        setLength(getLength() / 2);
+        setHeight(getHeight() / 2);
+        d = getGridLength() / 5;
     }
 
     public void draw(Graphics g) {
         g.setColor(new Color(0, 154, 23));
-        g.fillPolygon(new int[]{getX() - getLength() / 4, getX(), getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
-        g.fillPolygon(new int[]{getX() - getLength() / 2, getX() - getLength() / 2, getX() - getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
-        g.fillPolygon(new int[]{getX() + getLength() / 2, getX() + getLength() / 2, getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
+        if (getAge() < getRipeAge()) {
+            g.fillPolygon(new int[]{getX() - getLength() / 4, getX(), getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() * getAge() / getRipeAge() + d, getY() + d}, 3);
+            g.fillPolygon(new int[]{getX() - getLength() / 2, getX() - getLength() / 2, getX() - getLength() / 4}, new int[]{getY() + d, getY() - getHeight() * getAge() / getRipeAge() + d, getY() + d}, 3);
+            g.fillPolygon(new int[]{getX() + getLength() / 2, getX() + getLength() / 2, getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() * getAge() / getRipeAge() + d, getY() + d}, 3);
+
+        } else {
+            g.fillPolygon(new int[]{getX() - getLength() / 4, getX(), getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
+            g.fillPolygon(new int[]{getX() - getLength() / 2, getX() - getLength() / 2, getX() - getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
+            g.fillPolygon(new int[]{getX() + getLength() / 2, getX() + getLength() / 2, getX() + getLength() / 4}, new int[]{getY() + d, getY() - getHeight() + d, getY() + d}, 3);
+        }
     }
 }

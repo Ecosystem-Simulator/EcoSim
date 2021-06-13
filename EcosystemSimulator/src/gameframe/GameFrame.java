@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameframe;
 
 import java.awt.Color;
@@ -15,12 +10,13 @@ import java.awt.KeyboardFocusManager;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.Graphics2D;
 
 /**
  *
  * @author 1347278
  */
-public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
+public class GameFrame extends javax.swing.JFrame {
 
     //keep track how much time has actually passed since last cycle
     private double delta_time;
@@ -29,8 +25,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    //public Entity[][] entitygrid = new Entity[5][5];
-    public Entity[][] entitygrid = new Entity[1000][1000];
+    public Entity[][] entitygrid = new Entity[100][100];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -39,15 +34,12 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     private Graphics ibg;
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
-    private int timerDelay = 500;
+    private int timerDelay = 200;
     //side length of grid
     //int gridLength = 650 / entitygrid.length;
-    int gridLength = 130;
-    //keyboard input variables for camera
-    private boolean key_w = false;
-    private boolean key_a = false;
-    private boolean key_s = false;
-    private boolean key_d = false;
+    int gridLength = 50;
+    private Graphics2D g2d;
+    private KeyLis listener = new KeyLis();
     /**
      * Creates new form GameFrame
      */
@@ -67,7 +59,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     Bear be, be2, be3;
     Salmon s;
     Water wa2, wa3, wa4;
-    Camera c;
+    Camera cam;
 
     public void startTimer() {
         if (timer != null) {
@@ -98,11 +90,10 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     //runs every tick when the timer is on.
     public void tick() {
         updateTicker();
-        keyboardCheck();
+        requestFocusInWindow();
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
-        System.out.println("Entity x: " + r.getGridX() + " Entity y: " + r.getGridY());
     }
 
     //updates the tickCount
@@ -110,56 +101,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         tickCount++;
         //textTick.setText(""+tickCount);
     }
-    
-    //dispatchKeyEvent required method
-    public boolean dispatchKeyEvent(KeyEvent e) {
-        if (e.getID() == KeyEvent.KEY_PRESSED) {
-            if (e.getKeyCode() == e.VK_D) {
-                key_d = true;
-            } 
-            else if (e.getKeyCode() == e.VK_A) {
-                key_a = true;
-            } 
-            else if (e.getKeyCode() == e.VK_S) {
-                key_s = true;
-            } 
-            else if (e.getKeyCode() == e.VK_W) {
-                key_w = true;
-            }
-        } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            if (e.getKeyCode() == e.VK_D) {
-                key_d = false;
-            } 
-            else if (e.getKeyCode() == e.VK_A) {
-                key_a = false;
-            }
-            if (e.getKeyCode() == e.VK_W) {
-                key_w = false;
-            } 
-            else if (e.getKeyCode() == e.VK_S) {
-                key_s = false;
-            }
-        }
-        return false;
-    }
-    
-    //keyboard check
-    public void keyboardCheck(){
-        if (key_d == true){
-            c.incrementX();
-        }
-        if (key_a == true){
-            c.decrementX();
-        }
-        if (key_s == true){
-            c.incrementY();
-        }
-        if (key_w == true){
-            c.decrementY();
-        }
-            System.out.println(c.getX() + ", " + c.getY());
-    }
-        
+
     public void setUpImageBuffer() {
         ib = panelDraw.createImage(panelDraw.getWidth(), panelDraw.getHeight());
         ibg = ib.getGraphics();
@@ -168,28 +110,28 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     public void setupSimulation() {
         // setup simulation!
         // entities.add(new ...)
-        c = new Camera();
-        //w = new Wolf(0, 0, entities, entitygrid, gridLength);
+        cam = new Camera(250, 250);
+        w = new Wolf(0, 0, entities, entitygrid, gridLength);
         //d = new Deer(0, 0, entities, entitygrid, gridLength);
-        //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
+        d1 = new Deer(4, 3, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        //wa = new Water(5, 5, entities, entitygrid, gridLength, false);
+        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
         //wa2 = new Water(3, 3, entities, entitygrid, gridLength, false);
         //wa3 = new Water(2, 1, entities, entitygrid, gridLength, false);
         //wa4 = new Water(1, 1, entities, entitygrid, gridLength, false);
         //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
-        //be = new Bear(0, 1, entities, entitygrid, gridLength);
+        be = new Bear(0, 1, entities, entitygrid, gridLength);
         //be2 = new Bear(1, 3, entities, entitygrid, gridLength);
         //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
         r = new Rock(10, 10, entities, entitygrid, gridLength, false);
-        //b1 = new Berries(5, 6, entities, entitygrid, gridLength);
+        b1 = new Berries(5, 6, entities, entitygrid, gridLength);
         //b2 = new Berries(6, 6, entities, entitygrid, gridLength);
         //b3 = new Berries(7, 6, entities, entitygrid, gridLength);
         //b4 = new Berries(8, 6, entities, entitygrid, gridLength);
-        //g = new Grass(9, 1, entities, entitygrid, gridLength);
-        //pb = new PoisonBerries(6, 6, 0, entities, entitygrid, gridLength);
-        //s = new Salmon(7, 7, 40, entities, entitygrid, gridLength);
+        g = new Grass(9, 1, entities, entitygrid, gridLength);
+        pb = new PoisonBerries(6, 6, entities, entitygrid, gridLength);
+        //s = new Salmon(7, 7, entities, entitygrid, gridLength);
 
     }
 
@@ -204,23 +146,18 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     public void drawStuff(Graphics g) {
 
         for (Entity temp : entities) {
-            if (temp.isActive()){
-                if (temp.getGridX() <= c.getX() + 4 && temp.getGridX() >= c.getX() - 4){
-                    if (temp.getGridY() <= c.getY() + 2 && temp.getGridY() >= c.getY() -2){
-                        temp.draw(g);
-                    }
-                }
+            if (temp.isActive()) {
+                temp.draw(g);
             }
         }
 
         g.setColor(new Color(0, 0, 0));
-        for (int row = 0; row <= c.getX()*2; row++){
-            for (int col = 0; col <= c.getY()*2; col++){
+        for (int row = 0; row < entitygrid.length; row++) {
+            for (int col = 0; col < entitygrid[0].length; col++) {
                 g.drawRect(row * gridLength, col * gridLength, gridLength, gridLength);
             }
         }
-        
-        
+
     }
 
     public void removeDeactivatedEntities() {
@@ -238,23 +175,28 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         ibg.clearRect(0, 0, panelDraw.getWidth(), panelDraw.getHeight());
         ibg.fillRect(0, 0, panelDraw.getWidth(), panelDraw.getHeight());
 
+        g2d = (Graphics2D) ibg;
         /* you can certainly just put all your draw code in here, but to stay organized, I am going to pass the
          * image buffer object to my own draw method.  This keeps the code a little cleaner... */
+        g2d.translate(-cam.getxOffset(), -cam.getyOffset());
+
         drawStuff(ibg);
 
         /* this is the actual drawing of your stuff onto the actual panel.  It copies the image buffer to the
          * panel's image. */
         Graphics g = panelDraw.getGraphics();
         g.drawImage(ib, 0, 0, this);
+        g2d.translate(cam.getxOffset(), cam.getyOffset());
     }
 
     public GameFrame() {
         initComponents();
         setupSimulation();
         setUpImageBuffer();
-        //please notify this frame when keyboard events occur
-        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(this);
+        setVisible(true);
+        setFocusable(true);
+        requestFocusInWindow();
+        this.addKeyListener(listener);
     }
 
     /**
@@ -281,11 +223,11 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         panelDraw.setLayout(panelDrawLayout);
         panelDrawLayout.setHorizontalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1171, Short.MAX_VALUE)
+            .addGap(0, 1001, Short.MAX_VALUE)
         );
         panelDrawLayout.setVerticalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 651, Short.MAX_VALUE)
+            .addGap(0, 501, Short.MAX_VALUE)
         );
 
         buttonStart.setText("Start Simulation");
@@ -308,8 +250,8 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -320,12 +262,12 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonPause)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonStart))
-                    .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addComponent(buttonStart)))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
 
         pack();
@@ -381,7 +323,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
                 GameFrame gf = new GameFrame();
                 gf.setVisible(true);
                 gf.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                
+
             }
         });
     }
@@ -391,4 +333,32 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     private javax.swing.JButton buttonStart;
     private javax.swing.JPanel panelDraw;
     // End of variables declaration//GEN-END:variables
+    public class KeyLis implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                if (cam.getyOffset() - gridLength >= 0) {
+                    cam.setyOffset(cam.getyOffset() - gridLength);
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                cam.setyOffset(cam.getyOffset() + gridLength);
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (cam.getxOffset() - gridLength >= 0) {
+                    cam.setxOffset(cam.getxOffset() - gridLength);
+                }
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                cam.setxOffset(cam.getxOffset() + gridLength);
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+    }
+
 }

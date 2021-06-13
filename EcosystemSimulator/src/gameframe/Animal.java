@@ -13,9 +13,12 @@ public class Animal extends Entity {
     private int age;
     private int hunger;
     private int thirst;
+    private int maxHunger;
+    private int maxThirst;
     private int reproductiveUrge;
     private boolean restrictedVision;
     protected Entity target;
+    protected int barLength, barHeight;
     public HashMap<String, Integer> favourableness = new HashMap();
     private ArrayList<String> moves = new ArrayList();
 
@@ -25,8 +28,11 @@ public class Animal extends Entity {
         age = 0;
         hunger = 0;
         thirst = 0;
+
         reproductiveUrge = 0;
         restrictedVision = false;
+        barLength = gridLength / 2;
+        barHeight = gridLength / 16;
         favourableness.put("up", 0);
         favourableness.put("down", 0);
         favourableness.put("left", 0);
@@ -45,6 +51,22 @@ public class Animal extends Entity {
         return (thirst);
     }
 
+    public int getMaxHunger() {
+        return (maxHunger);
+    }
+
+    public int getMaxThirst() {
+        return (maxThirst);
+    }
+
+    public void setMaxHunger(int maxHunger) {
+        this.maxHunger = maxHunger;
+    }
+
+    public void setMaxThirst(int maxThirst) {
+        this.maxThirst = maxThirst;
+    }
+
     public int getReproductiveUrge() {
         return (reproductiveUrge);
     }
@@ -58,19 +80,16 @@ public class Animal extends Entity {
     }
 
     public void act() {
-        //move code
         age++;
         hunger++;
         thirst++;
         reproductiveUrge++;
-        // moving to water
-        if (getAge() > 1000 || getHunger() > 100 || getThirst() > 100) {
+        if (getAge() > 1000 || getHunger() > maxHunger || getThirst() > maxThirst) {
             die();
         }
-        if (getThirst() >= getHunger() && getThirst() >= 25) {
+        //look for water
+        if (getThirst() >= getHunger() && getThirst() >= maxThirst / 4) {
             int minDistance = Integer.MAX_VALUE;
-            int row = 0;
-            int col = 0;
             for (int k = 0; k < entities.size(); k++) {
                 if (entities.get(k) instanceof Water) {
                     if (minDistance > distanceTo(entities.get(k))) {
@@ -281,7 +300,14 @@ public class Animal extends Entity {
                 hunger = 0;
             }
         }
-        f.die();
+        if (f instanceof Deer) {
+            f.die();
+        } else if (f instanceof Food) {
+            ((Food) f).setAge(0);
+        }
+        if (f instanceof PoisonBerries) {
+            die();
+        }
     }
 
     public void drink() {

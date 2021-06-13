@@ -25,12 +25,18 @@ public class Wolf extends Animal {
 
     public Wolf(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
+        setMaxHunger(200);
+        setMaxThirst(100);
+        if (getGender() == 2) {
+            setHeight(getHeight() * 3 / 4);
+            setLength(getLength() * 3 / 4);
+        }
     }
 
     @Override
     public void draw(Graphics g) {
         d = getGridLength() / 15;
-        length = getLength() * 3 / 4;
+        length = getLength();
         //draw ears
         g.setColor(grey);
         g.fillPolygon(new int[]{getX() + length / 8, getX() + length * 9 / 16, getX() + length / 2}, new int[]{getY() - length / 2 + d, getY() - length * 3 / 4 + d, getY() - length / 4 + d}, 3);
@@ -65,12 +71,24 @@ public class Wolf extends Animal {
         noseSize = snoutLength / 2;
         g.fillOval(getX() - noseSize / 2, getY() + noseSize, noseSize, noseSize * 3 / 4);
 
+        //draw bars
+        //hunger
+        g.setColor(new Color(255, 0, 0));
+        g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength * getHunger() / getMaxHunger(), barHeight);
+
+        //thirst
+        g.setColor(new Color(0, 0, 255));
+        g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight * 2, barLength * getThirst() / getMaxThirst(), barHeight);
+
+        g.setColor(black);
+        g.drawRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength, barHeight);
+        g.drawRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight * 2, barLength, barHeight);
     }
 
     @Override
     public void act() {
         target = null;
-        if (getHunger() > getThirst() && getHunger() > 25) {
+        if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
             int minDistance = Integer.MAX_VALUE;
             int row = 0;
             int col = 0;
@@ -82,14 +100,15 @@ public class Wolf extends Animal {
                     }
                 }
             }
-        } else if (getReproductiveUrge() > 200) {
+        } else if (getReproductiveUrge() > 150) {
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {
                 if (entities.get(k) instanceof Wolf) {
                     Wolf tempWolf = ((Wolf) entities.get(k));
-                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 200) {
+                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 150) {
                         if (minDistance > distanceTo(entities.get(k))) {
                             minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
                         }
                     }
                 }

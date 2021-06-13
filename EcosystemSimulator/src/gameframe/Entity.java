@@ -28,7 +28,7 @@ public class Entity {
         this.height = this.gridLength / 2;
         active = true;
         entitygrid[gridX][gridY] = this;
-        entities.add(this);
+        entities.add(this);;
     }
 
     public int getGridX() {
@@ -53,6 +53,14 @@ public class Entity {
 
     public int getHeight() {
         return (height);
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public int getGridLength() {

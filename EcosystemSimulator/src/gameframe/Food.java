@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameframe;
 
 import java.util.ArrayList;
@@ -14,7 +9,8 @@ import java.util.ArrayList;
 public class Food extends Entity {
 
     private int age;
-    protected int nutritionVal;
+    private int ripeAge;
+    private int nutritionVal;
 
     public Food(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
@@ -23,5 +19,29 @@ public class Food extends Entity {
 
     public int getNutritionVal() {
         return nutritionVal;
+    }
+
+    public void setNutritionVal(int nutritionVal) {
+        this.nutritionVal = nutritionVal;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getRipeAge() {
+        return ripeAge;
+    }
+
+    public void setRipeAge(int ripeAge) {
+        this.ripeAge = ripeAge;
+    }
+
+    public void act() {
+        age++;
     }
 }

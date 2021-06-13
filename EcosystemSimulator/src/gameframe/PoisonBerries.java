@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameframe;
 
 import java.awt.Color;
@@ -17,7 +12,7 @@ public class PoisonBerries extends Berries {
 
     public PoisonBerries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
-        this.nutritionVal = 0;
+        setNutritionVal(0);
     }
 
     @Override
@@ -25,7 +20,13 @@ public class PoisonBerries extends Berries {
         g.setColor(new Color(0, 153, 0));
         g.fillOval(getX() - getLength() / 2, getY() - getHeight() / 2, getLength(), getHeight());
         g.setColor(new Color(153, 0, 76));
-        g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 4, getLength() / 4, getHeight() / 4);
-        g.fillOval(getX() + getLength() / 4, getY() - getHeight() / 8, getLength() / 4, getHeight() / 4);
+        if (getAge() < getRipeAge()) {
+            g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 4, getLength() / 4 * getAge() / getRipeAge(), getHeight() / 4 * getAge() / getRipeAge());
+            g.fillOval(getX() + getLength() / 4, getY() - getHeight() / 8, getLength() / 4 * getAge() / getRipeAge(), getHeight() / 4 * getAge() / getRipeAge());
+        } else {
+            g.fillOval(getX() - getLength() / 4, getY() - getHeight() / 4, getLength() / 4, getHeight() / 4);
+            g.fillOval(getX() + getLength() / 4, getY() - getHeight() / 8, getLength() / 4, getHeight() / 4);
+
+        }
     }
 }

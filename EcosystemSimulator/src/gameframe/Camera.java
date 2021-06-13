@@ -1,39 +1,41 @@
 package gameframe;
 
+public class Camera {
 
-public class Camera{
-    private int x_center;
-    private int y_center;
-    public Camera(){
-        x_center = 4;
-        y_center = 2;
+    private int x;
+    private int y;
+    private int xOffset = 0;
+    private int yOffset = 0;
+
+    public Camera(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
-    
-    public void incrementX(){
-        x_center++;
+
+    public int getCamX() {
+        return x;
     }
-    
-    public void incrementY(){
-        y_center++;
+
+    public int getCamY() {
+        return y;
     }
-    
-    public void decrementX(){
-        if (x_center - 1 >= 4){
-            x_center--;
-        }
+
+    public int getxOffset() {
+        return xOffset;
     }
-    
-    public void decrementY(){
-        if (y_center - 1 >= 2){
-            y_center--;
-        }
+
+    public int getyOffset() {
+        return yOffset;
     }
-    
-    public int getX(){
-        return(x_center);
+
+    public void setxOffset(int xOffset) {
+        this.xOffset = xOffset;
+        x += xOffset;
     }
-    
-    public int getY(){
-        return(y_center);
+
+    public void setyOffset(int yOffset) {
+        this.yOffset = yOffset;
+        y += yOffset;
     }
+
 }
