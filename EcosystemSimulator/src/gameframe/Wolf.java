@@ -90,17 +90,24 @@ public class Wolf extends Animal {
         target = null;
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
             int minDistance = Integer.MAX_VALUE;
-            int row = 0;
-            int col = 0;
             for (int k = 0; k < entities.size(); k++) {
-                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer || entities.get(k) instanceof Salmon) {
+                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer) {
                     if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);
                     }
                 }
+                else if (entities.get(k) instanceof Water){
+                    if (((Water) entities.get(k)).getHasFish()){
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
+                    }
+                }
             }
-        } else if (getReproductiveUrge() > 150) {
+        } 
+        else if (getReproductiveUrge() > 150) {
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {
                 if (entities.get(k) instanceof Wolf) {

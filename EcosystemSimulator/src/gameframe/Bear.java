@@ -78,14 +78,23 @@ public class Bear extends Animal {
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {
-                if ((entities.get(k) instanceof Berries || entities.get(k) instanceof Salmon) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
+                if ((entities.get(k) instanceof Berries) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
                     if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);
                     }
                 }
+                else if (entities.get(k) instanceof Water){
+                    if (((Water) entities.get(k)).getHasFish()){
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
+                    }
+                }
             }
-        } else if (getReproductiveUrge() > 250) {
+        } 
+        else if (getReproductiveUrge() > 250) {
             //set back to 200
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {

@@ -79,6 +79,7 @@ public class Animal extends Entity {
         return (gender);
     }
 
+    @Override
     public void act() {
         age++;
         hunger++;
@@ -102,13 +103,21 @@ public class Animal extends Entity {
 
         if (target == null) {
             wander();
-        } else if (distanceTo(target) > 1) {
+        } 
+        else if (distanceTo(target) > 1) {
             move();
-        } else if (target instanceof Water) {
+        } 
+        else if (target instanceof Water && !((Water)target).getHasFish()) {
             drink();
-        } else if (target instanceof Food || (target instanceof Deer && this instanceof Wolf)) {
+        }
+        else if (target instanceof Water && ((Water)target).getHasFish()){
             eat(target);
-        } else if (this.getClass() == target.getClass()) {
+        }
+        else if (target instanceof Food || (target instanceof Deer && this instanceof Wolf)) {
+            eat(target);
+        
+        } 
+        else if (this.getClass() == target.getClass()) {
             mate((Animal) target);
         }
 
@@ -293,7 +302,8 @@ public class Animal extends Entity {
             } else {
                 hunger = 0;
             }
-        } else if (f instanceof Deer) {
+        } 
+        else if (f instanceof Deer) {
             if (hunger - 50 > 0) {
                 hunger -= 50;
             } else {
@@ -302,11 +312,17 @@ public class Animal extends Entity {
         }
         if (f instanceof Deer) {
             f.die();
-        } else if (f instanceof Food) {
+        } 
+        else if (f instanceof Food) {
             ((Food) f).setAge(0);
         }
         if (f instanceof PoisonBerries) {
             die();
+        }
+        
+        if (f instanceof Water && ((Water)f).getHasFish()){
+            hunger -= 35;
+            ((Water)f).setHasFish(false);
         }
     }
 
