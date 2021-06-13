@@ -34,10 +34,10 @@ public class GameFrame extends javax.swing.JFrame {
     private Graphics ibg;
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
-    private int timerDelay = 200;
+    private int timerDelay = 250;
     //side length of grid
     //int gridLength = 650 / entitygrid.length;
-    int gridLength = 50;
+    int gridLength = 100;
     private Graphics2D g2d;
     private KeyLis listener = new KeyLis();
     /**
@@ -110,13 +110,13 @@ public class GameFrame extends javax.swing.JFrame {
         // setup simulation!
         // entities.add(new ...)
         cam = new Camera(250, 250);
-        w = new Wolf(0, 0, entities, entitygrid, gridLength);
+        //w = new Wolf(0, 0, entities, entitygrid, gridLength);
         //d = new Deer(0, 0, entities, entitygrid, gridLength);
         //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        wa = new Water(5, 5, entities, entitygrid, gridLength, false);
-        //wa.setHasFish(true);
+        wa = new Water(4, 4, entities, entitygrid, gridLength, false);
+        wa.setHasFish(true);
         wa2 = new Water(5, 6, entities, entitygrid, gridLength, false);
         wa3 = new Water(4, 5, entities, entitygrid, gridLength, false);
         wa4 = new Water(4, 6, entities, entitygrid, gridLength, false);
@@ -345,17 +345,17 @@ public class GameFrame extends javax.swing.JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
                 if (cam.getyOffset() - gridLength >= 0) {
                     cam.setyOffset(cam.getyOffset() - gridLength);
                 }
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
                 cam.setyOffset(cam.getyOffset() + gridLength);
-            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                 if (cam.getxOffset() - gridLength >= 0) {
                     cam.setxOffset(cam.getxOffset() - gridLength);
                 }
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                 cam.setxOffset(cam.getxOffset() + gridLength);
             }
         }
