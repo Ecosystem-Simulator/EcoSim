@@ -29,7 +29,8 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     //creating arraylist of entities
     ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    public Entity[][] entitygrid = new Entity[5][5];
+    //public Entity[][] entitygrid = new Entity[5][5];
+    public Entity[][] entitygrid = new Entity[1000][1000];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -40,7 +41,8 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     //how long to wait between timer calls
     private int timerDelay = 500;
     //side length of grid
-    int gridLength = 500 / entitygrid.length;
+    //int gridLength = 650 / entitygrid.length;
+    int gridLength = 130;
     //keyboard input variables for camera
     private boolean key_w = false;
     private boolean key_a = false;
@@ -100,6 +102,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
+        System.out.println("Entity x: " + r.getGridX() + " Entity y: " + r.getGridY());
     }
 
     //updates the tickCount
@@ -141,7 +144,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     }
     
     //keyboard check
-        public void keyboardCheck(){
+    public void keyboardCheck(){
         if (key_d == true){
             c.incrementX();
         }
@@ -154,6 +157,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         if (key_w == true){
             c.decrementY();
         }
+            System.out.println(c.getX() + ", " + c.getY());
     }
         
     public void setUpImageBuffer() {
@@ -166,7 +170,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         // entities.add(new ...)
         c = new Camera();
         //w = new Wolf(0, 0, entities, entitygrid, gridLength);
-        d = new Deer(0, 0, entities, entitygrid, gridLength);
+        //d = new Deer(0, 0, entities, entitygrid, gridLength);
         //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
@@ -178,7 +182,7 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         //be = new Bear(0, 1, entities, entitygrid, gridLength);
         //be2 = new Bear(1, 3, entities, entitygrid, gridLength);
         //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
-        //r = new Rock(2, 4, entities, entitygrid, gridLength, false);
+        r = new Rock(10, 10, entities, entitygrid, gridLength, false);
         //b1 = new Berries(5, 6, entities, entitygrid, gridLength);
         //b2 = new Berries(6, 6, entities, entitygrid, gridLength);
         //b3 = new Berries(7, 6, entities, entitygrid, gridLength);
@@ -200,17 +204,23 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
     public void drawStuff(Graphics g) {
 
         for (Entity temp : entities) {
-            if (temp.isActive()) {
-                temp.draw(g);
+            if (temp.isActive()){
+                if (temp.getGridX() <= c.getX() + 4 && temp.getGridX() >= c.getX() - 4){
+                    if (temp.getGridY() <= c.getY() + 2 && temp.getGridY() >= c.getY() -2){
+                        temp.draw(g);
+                    }
+                }
             }
         }
 
         g.setColor(new Color(0, 0, 0));
-        for (int r = 0; r < entitygrid.length; r++) {
-            for (int c = 0; c < entitygrid[0].length; c++) {
-                g.drawRect(r * gridLength, c * gridLength, gridLength, gridLength);
+        for (int row = 0; row <= c.getX()*2; row++){
+            for (int col = 0; col <= c.getY()*2; col++){
+                g.drawRect(row * gridLength, col * gridLength, gridLength, gridLength);
             }
         }
+        
+        
     }
 
     public void removeDeactivatedEntities() {
@@ -261,19 +271,21 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         buttonPause = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
+        setBackground(new java.awt.Color(0, 0, 0));
+        setSize(new java.awt.Dimension(1200, 700));
 
         panelDraw.setBackground(new java.awt.Color(255, 255, 255));
+        panelDraw.setPreferredSize(new java.awt.Dimension(1171, 651));
 
         javax.swing.GroupLayout panelDrawLayout = new javax.swing.GroupLayout(panelDraw);
         panelDraw.setLayout(panelDrawLayout);
         panelDrawLayout.setHorizontalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGap(0, 1171, Short.MAX_VALUE)
         );
         panelDrawLayout.setVerticalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGap(0, 651, Short.MAX_VALUE)
         );
 
         buttonStart.setText("Start Simulation");
@@ -294,25 +306,26 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonStart)
-                    .addComponent(buttonPause))
-                .addGap(80, 80, 80))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonPause)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonPause)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonStart))
                     .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonStart)
-                .addContainerGap())
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -363,7 +376,12 @@ public class GameFrame extends javax.swing.JFrame implements KeyEventDispatcher{
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new GameFrame().setVisible(true);
+                //new GameFrame().setVisible(true);
+                //maximizing JFrame automatically
+                GameFrame gf = new GameFrame();
+                gf.setVisible(true);
+                gf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                
             }
         });
     }
