@@ -140,11 +140,34 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void updateEntities() {
+        ArrayList<Water> noFish = new ArrayList();
+        ArrayList<Water> fish = new ArrayList();
         for (int k = 0; k < entities.size(); k++) {
-            if (entities.get(k).isActive()) {
+            if (entities.get(k).isActive() && !(entities.get(k) instanceof Water)) {
                 entities.get(k).act();
             }
+            else if (entities.get(k) instanceof Water){
+                Water water = ((Water)entities.get(k));
+                if (water.getHasFish()){
+                    fish.add(water);
+                }
+                else {
+                    noFish.add(water);
+                }
+            }
         }
+        for (int k = 0; k < noFish.size(); k++){
+            if (noFish.get(k).isActive()){
+                noFish.get(k).act();
+            }
+        }
+        noFish.clear();
+        for (int k = 0; k < fish.size(); k++){
+            if (fish.get(k).isActive()){
+                fish.get(k).act();
+            }
+        }
+        fish.clear();
     }
 
     public void drawStuff(Graphics g) {

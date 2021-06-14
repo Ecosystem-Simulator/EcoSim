@@ -102,7 +102,7 @@ public class Water extends Terrain {
                 }
             }
         } else {
-            int rand = (int) (Math.random() * 250) + 1;
+            int rand = (int) (Math.random() * 500) + 1;
             if (rand == 1) {
                 this.setHasFish(true);
             }
