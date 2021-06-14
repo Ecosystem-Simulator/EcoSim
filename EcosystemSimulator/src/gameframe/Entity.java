@@ -66,6 +66,15 @@ public class Entity {
     public int getGridLength() {
         return gridLength;
     }
+    public void setGridLength(int gridLength){
+        this.gridLength = gridLength;
+        length = gridLength / 2;
+        height = gridLength / 2;
+        if(this instanceof Water)
+            height = height / 3;
+        x = gridX * gridLength + gridLength / 2;
+        y = gridY * gridLength + gridLength / 2;
+    }
 
     public int distanceTo(Entity e) {
         if (e != null) {

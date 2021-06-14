@@ -60,6 +60,8 @@ public class Bear extends Animal {
 
         //draw bars
         //hunger
+        barLength = getGridLength() / 2;
+        barHeight = getGridLength() / 16;
         g.setColor(new Color(255, 0, 0));
         g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength * getHunger() / getMaxHunger(), barHeight);
 

@@ -70,6 +70,8 @@ public class Deer extends Animal {
         g.fillOval(getX() - noseSize / 2, getY() + getHeight() / 4 + noseSize / 2, noseSize, noseSize / 2);
 
         //draw bars
+        barLength = getGridLength() / 2;
+        barHeight = getGridLength() / 16;
         g.setColor(new Color(255, 0, 0));
         g.fillRect(getX() - barLength / 2, getY() + getHeight() * 2 / 3 + barHeight / 2, barLength * getHunger() / getMaxHunger(), barHeight);
 

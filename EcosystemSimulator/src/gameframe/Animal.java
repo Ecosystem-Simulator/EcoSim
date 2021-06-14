@@ -332,7 +332,6 @@ public class Animal extends Entity {
         } else {
             thirst = 0;
         }
-        System.out.println("Drinking...");
     }
 
     public void mate(Animal m) {

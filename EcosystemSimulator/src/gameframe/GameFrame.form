@@ -32,28 +32,36 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panelDraw" min="-2" pref="1001" max="-2" attributes="0"/>
-              <EmptySpace pref="176" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="buttonStart" pref="180" max="32767" attributes="0"/>
-                  <Component id="buttonPause" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="buttonStart" pref="180" max="32767" attributes="0"/>
+                      <Component id="buttonPause" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="buttonZoomOut" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonZoomIn" min="-2" pref="77" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="panelDraw" min="-2" pref="501" max="-2" attributes="0"/>
+                  <Component id="panelDraw" min="-2" pref="1001" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="buttonPause" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonStart" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="buttonZoomIn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="buttonZoomOut" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="210" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,7 +85,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="501" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="1001" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -96,6 +104,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPauseActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonZoomOut">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Zoom out"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonZoomOutActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonZoomIn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Zoom in"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonZoomInActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -73,6 +73,8 @@ public class Wolf extends Animal {
 
         //draw bars
         //hunger
+        barLength = getGridLength() / 2;
+        barHeight = getGridLength() / 16;
         g.setColor(new Color(255, 0, 0));
         g.fillRect(getX() - barLength / 2, getY() + getHeight() / 2 + barHeight, barLength * getHunger() / getMaxHunger(), barHeight);
 
@@ -91,7 +93,7 @@ public class Wolf extends Animal {
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
             int minDistance = Integer.MAX_VALUE;
             for (int k = 0; k < entities.size(); k++) {
-                if (entities.get(k) instanceof Berries || entities.get(k) instanceof Deer) {
+                if (entities.get(k) instanceof Deer) {
                     if (minDistance > distanceTo(entities.get(k))) {
                         minDistance = distanceTo(entities.get(k));
                         target = entities.get(k);

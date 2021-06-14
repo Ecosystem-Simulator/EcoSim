@@ -37,9 +37,12 @@ public class GameFrame extends javax.swing.JFrame {
     private int timerDelay = 250;
     //side length of grid
     //int gridLength = 650 / entitygrid.length;
-    int gridLength = 100;
     private Graphics2D g2d;
     private KeyLis listener = new KeyLis();
+    public boolean drawing = false;
+    private int[] gridLengths = {10, 25, 50, 100};
+    private int index = 2;
+    int gridLength = gridLengths[index];
     /**
      * Creates new form GameFrame
      */
@@ -110,8 +113,8 @@ public class GameFrame extends javax.swing.JFrame {
         // setup simulation!
         // entities.add(new ...)
         cam = new Camera(250, 250);
-        //w = new Wolf(0, 0, entities, entitygrid, gridLength);
-        //d = new Deer(0, 0, entities, entitygrid, gridLength);
+        w = new Wolf(0, 2, entities, entitygrid, gridLength);
+        d = new Deer(0, 0, entities, entitygrid, gridLength);
         //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
@@ -125,13 +128,13 @@ public class GameFrame extends javax.swing.JFrame {
         wa7 = new Water(5, 8, entities, entitygrid, gridLength, false);
         wa8 = new Water(6, 7, entities, entitygrid, gridLength, false);
         //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
-        //be = new Bear(0, 1, entities, entitygrid, gridLength);
-        //be2 = new Bear(1, 3, entities, entitygrid, gridLength);
+        be = new Bear(0, 1, entities, entitygrid, gridLength);
+        be2 = new Bear(1, 3, entities, entitygrid, gridLength);
         //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
-        //r = new Rock(10, 10, entities, entitygrid, gridLength, false);
-        //b1 = new Berries(5, 6, entities, entitygrid, gridLength);
-        //b2 = new Berries(6, 6, entities, entitygrid, gridLength);
-        //b3 = new Berries(7, 6, entities, entitygrid, gridLength);
+        r = new Rock(10, 10, entities, entitygrid, gridLength, false);
+        b1 = new Berries(8, 6, entities, entitygrid, gridLength);
+        b2 = new Berries(6, 6, entities, entitygrid, gridLength);
+        b3 = new Berries(7, 6, entities, entitygrid, gridLength);
         //b4 = new Berries(8, 6, entities, entitygrid, gridLength);
         //g = new Grass(9, 1, entities, entitygrid, gridLength);
         //pb = new PoisonBerries(6, 6, entities, entitygrid, gridLength);
@@ -145,25 +148,23 @@ public class GameFrame extends javax.swing.JFrame {
         for (int k = 0; k < entities.size(); k++) {
             if (entities.get(k).isActive() && !(entities.get(k) instanceof Water)) {
                 entities.get(k).act();
-            }
-            else if (entities.get(k) instanceof Water){
-                Water water = ((Water)entities.get(k));
-                if (water.getHasFish()){
+            } else if (entities.get(k) instanceof Water) {
+                Water water = ((Water) entities.get(k));
+                if (water.getHasFish()) {
                     fish.add(water);
-                }
-                else {
+                } else {
                     noFish.add(water);
                 }
             }
         }
-        for (int k = 0; k < noFish.size(); k++){
-            if (noFish.get(k).isActive()){
+        for (int k = 0; k < noFish.size(); k++) {
+            if (noFish.get(k).isActive()) {
                 noFish.get(k).act();
             }
         }
         noFish.clear();
-        for (int k = 0; k < fish.size(); k++){
-            if (fish.get(k).isActive()){
+        for (int k = 0; k < fish.size(); k++) {
+            if (fish.get(k).isActive()) {
                 fish.get(k).act();
             }
         }
@@ -205,6 +206,7 @@ public class GameFrame extends javax.swing.JFrame {
         g2d = (Graphics2D) ibg;
         /* you can certainly just put all your draw code in here, but to stay organized, I am going to pass the
          * image buffer object to my own draw method.  This keeps the code a little cleaner... */
+        drawing = true;
         g2d.translate(-cam.getxOffset(), -cam.getyOffset());
 
         drawStuff(ibg);
@@ -213,7 +215,9 @@ public class GameFrame extends javax.swing.JFrame {
          * panel's image. */
         Graphics g = panelDraw.getGraphics();
         g.drawImage(ib, 0, 0, this);
+        drawing = false;
         g2d.translate(cam.getxOffset(), cam.getyOffset());
+        //g2d.translate(cam.getxOffset(), cam.getyOffset());
     }
 
     public GameFrame() {
@@ -238,6 +242,8 @@ public class GameFrame extends javax.swing.JFrame {
         panelDraw = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
         buttonPause = new javax.swing.JButton();
+        buttonZoomOut = new javax.swing.JButton();
+        buttonZoomIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -254,7 +260,7 @@ public class GameFrame extends javax.swing.JFrame {
         );
         panelDrawLayout.setVerticalGroup(
             panelDrawLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 501, Short.MAX_VALUE)
+            .addGap(0, 1001, Short.MAX_VALUE)
         );
 
         buttonStart.setText("Start Simulation");
@@ -271,6 +277,20 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        buttonZoomOut.setText("Zoom out");
+        buttonZoomOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonZoomOutActionPerformed(evt);
+            }
+        });
+
+        buttonZoomIn.setText("Zoom in");
+        buttonZoomIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonZoomInActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,23 +298,30 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(41, 41, 41))
+                .addGap(176, 176, 176)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttonZoomOut)
+                    .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonPause)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonStart)))
-                .addContainerGap(210, Short.MAX_VALUE))
+                        .addComponent(buttonStart)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonZoomIn)
+                        .addGap(17, 17, 17)
+                        .addComponent(buttonZoomOut)))
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -314,6 +341,32 @@ public class GameFrame extends javax.swing.JFrame {
             System.out.println("No timer active!");
         }
     }//GEN-LAST:event_buttonPauseActionPerformed
+
+    private void buttonZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonZoomOutActionPerformed
+        if (index - 1 >= 0) {
+            index--;
+            gridLength = gridLengths[index];
+            for (Entity e : entities) {
+                if (e.isActive()) {
+                    e.setGridLength(gridLength);
+                }
+            }
+        }
+        System.out.println(gridLength);
+    }//GEN-LAST:event_buttonZoomOutActionPerformed
+
+    private void buttonZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonZoomInActionPerformed
+        if (index + 1 < gridLengths.length) {
+            index++;
+            gridLength = gridLengths[index];
+            for (Entity e : entities) {
+                if (e.isActive()) {
+                    e.setGridLength(gridLength);
+                }
+            }
+        }
+        System.out.println(gridLength);
+    }//GEN-LAST:event_buttonZoomInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,6 +411,8 @@ public class GameFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonStart;
+    private javax.swing.JButton buttonZoomIn;
+    private javax.swing.JButton buttonZoomOut;
     private javax.swing.JPanel panelDraw;
     // End of variables declaration//GEN-END:variables
     public class KeyLis implements KeyListener {
@@ -368,23 +423,39 @@ public class GameFrame extends javax.swing.JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-                if (cam.getyOffset() - gridLength >= 0) {
-                    cam.setyOffset(cam.getyOffset() - gridLength);
-                }
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-                cam.setyOffset(cam.getyOffset() + gridLength);
-            } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-                if (cam.getxOffset() - gridLength >= 0) {
-                    cam.setxOffset(cam.getxOffset() - gridLength);
-                }
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-                cam.setxOffset(cam.getxOffset() + gridLength);
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
+                    if (cam.getyOffset() - gridLength >= 0 && !drawing) {
+                        cam.setyOffset(cam.getyOffset() - gridLength);
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    if (!drawing) {
+                        cam.setyOffset(cam.getyOffset() + gridLength);
+                    }
+                    break;
+                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_A:
+                    if (cam.getxOffset() - gridLength >= 0 && !drawing) {
+                        cam.setxOffset(cam.getxOffset() - gridLength);
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_D:
+                    if (!drawing) {
+                        cam.setxOffset(cam.getxOffset() + gridLength);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
+
         }
     }
 
