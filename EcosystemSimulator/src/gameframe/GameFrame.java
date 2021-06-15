@@ -244,6 +244,8 @@ public class GameFrame extends javax.swing.JFrame {
         buttonPause = new javax.swing.JButton();
         buttonZoomOut = new javax.swing.JButton();
         buttonZoomIn = new javax.swing.JButton();
+        sliderTimerDelay = new javax.swing.JSlider();
+        labelTimerDelay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -291,6 +293,17 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        sliderTimerDelay.setMaximum(1000);
+        sliderTimerDelay.setMinimum(100);
+        sliderTimerDelay.setValue(250);
+        sliderTimerDelay.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderTimerDelayStateChanged(evt);
+            }
+        });
+
+        labelTimerDelay.setText("Timer delay: 250");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -303,9 +316,15 @@ public class GameFrame extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                         .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(buttonZoomOut)
-                    .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                    .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTimerDelay)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(buttonZoomOut)
+                                .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,7 +339,11 @@ public class GameFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(buttonZoomIn)
                         .addGap(17, 17, 17)
-                        .addComponent(buttonZoomOut)))
+                        .addComponent(buttonZoomOut)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTimerDelay)
+                        .addGap(18, 18, 18)
+                        .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52))
         );
 
@@ -329,17 +352,17 @@ public class GameFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
+        sliderTimerDelay.setEnabled(false);
         startTimer();
+        
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
         if (timer != null) {
             timer.cancel();
             timer = null;
-            System.out.println("Simulation paused");
-        } else {
-            System.out.println("No timer active!");
-        }
+            sliderTimerDelay.setEnabled(true);
+        } 
     }//GEN-LAST:event_buttonPauseActionPerformed
 
     private void buttonZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonZoomOutActionPerformed
@@ -367,6 +390,11 @@ public class GameFrame extends javax.swing.JFrame {
         }
         System.out.println(gridLength);
     }//GEN-LAST:event_buttonZoomInActionPerformed
+
+    private void sliderTimerDelayStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTimerDelayStateChanged
+        timerDelay = sliderTimerDelay.getValue();
+        labelTimerDelay.setText("Timer delay: " + timerDelay);
+    }//GEN-LAST:event_sliderTimerDelayStateChanged
 
     /**
      * @param args the command line arguments
@@ -413,7 +441,9 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonZoomIn;
     private javax.swing.JButton buttonZoomOut;
+    private javax.swing.JLabel labelTimerDelay;
     private javax.swing.JPanel panelDraw;
+    private javax.swing.JSlider sliderTimerDelay;
     // End of variables declaration//GEN-END:variables
     public class KeyLis implements KeyListener {
 
