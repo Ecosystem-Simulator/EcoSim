@@ -43,6 +43,17 @@ public class GameFrame extends javax.swing.JFrame {
     private int[] gridLengths = {10, 25, 50, 100};
     private int index = 2;
     int gridLength = gridLengths[index];
+    //variables for adding entities at the start of the game
+    private boolean addingWolf = false;
+    private boolean addingBear = false;
+    private boolean addingDeer = false;
+    private boolean addingRock = false;
+    private boolean addingGrass = false;
+    private boolean addingWater = false;
+    private boolean addingBerries = false;
+    private boolean addingMud = false;
+    
+    
     /**
      * Creates new form GameFrame
      */
@@ -240,12 +251,23 @@ public class GameFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         panelDraw = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
         buttonPause = new javax.swing.JButton();
         buttonZoomOut = new javax.swing.JButton();
         buttonZoomIn = new javax.swing.JButton();
         sliderTimerDelay = new javax.swing.JSlider();
         labelTimerDelay = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        labelEntities = new javax.swing.JLabel();
+        tButtonBear = new javax.swing.JToggleButton();
+        tButtonDeer = new javax.swing.JToggleButton();
+        tButtonGrass = new javax.swing.JToggleButton();
+        tButtonWater = new javax.swing.JToggleButton();
+        tButtonWolf = new javax.swing.JToggleButton();
+        tButtonRock = new javax.swing.JToggleButton();
+        tButtonMud = new javax.swing.JToggleButton();
+        tButtonBerries = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -304,6 +326,151 @@ public class GameFrame extends javax.swing.JFrame {
 
         labelTimerDelay.setText("Timer delay: 250");
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTimerDelay)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(buttonZoomOut)
+                                .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(19, 19, 19))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonPause)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonStart)
+                .addGap(18, 18, 18)
+                .addComponent(buttonZoomIn)
+                .addGap(17, 17, 17)
+                .addComponent(buttonZoomOut)
+                .addGap(18, 18, 18)
+                .addComponent(labelTimerDelay)
+                .addGap(18, 18, 18)
+                .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        labelEntities.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        labelEntities.setText("Entities");
+
+        tButtonBear.setText("Bear");
+        tButtonBear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonBearActionPerformed(evt);
+            }
+        });
+
+        tButtonDeer.setText("Deer");
+        tButtonDeer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonDeerActionPerformed(evt);
+            }
+        });
+
+        tButtonGrass.setText("Grass");
+        tButtonGrass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonGrassActionPerformed(evt);
+            }
+        });
+
+        tButtonWater.setText("Water");
+        tButtonWater.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonWaterActionPerformed(evt);
+            }
+        });
+
+        tButtonWolf.setText("Wolf");
+        tButtonWolf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonWolfActionPerformed(evt);
+            }
+        });
+
+        tButtonRock.setText("Rock");
+        tButtonRock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonRockActionPerformed(evt);
+            }
+        });
+
+        tButtonMud.setText("Mud");
+        tButtonMud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonMudActionPerformed(evt);
+            }
+        });
+
+        tButtonBerries.setText("Berries");
+        tButtonBerries.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tButtonBerriesActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tButtonWater, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonGrass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonDeer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonBear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonWolf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(labelEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tButtonRock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tButtonMud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tButtonBerries, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonWolf)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonBear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonDeer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonGrass)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonWater)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonRock)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonMud)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tButtonBerries)
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -311,20 +478,11 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                        .addComponent(buttonPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTimerDelay)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(buttonZoomOut)
-                                .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,18 +491,10 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonPause)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonStart)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonZoomIn)
-                        .addGap(17, 17, 17)
-                        .addComponent(buttonZoomOut)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelTimerDelay)
-                        .addGap(18, 18, 18)
-                        .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(52, 52, 52))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(939, Short.MAX_VALUE))
         );
 
         pack();
@@ -396,6 +546,196 @@ public class GameFrame extends javax.swing.JFrame {
         labelTimerDelay.setText("Timer delay: " + timerDelay);
     }//GEN-LAST:event_sliderTimerDelayStateChanged
 
+    private void tButtonWolfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonWolfActionPerformed
+        if (!addingWolf){
+            addingWolf = true;
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+
+        else{
+            addingWolf = false;
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+    }//GEN-LAST:event_tButtonWolfActionPerformed
+
+    private void tButtonBearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonBearActionPerformed
+        if (!addingBear){
+            addingBear = true;
+            tButtonWolf.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        else{
+            addingBear = false;
+            tButtonWolf.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_tButtonBearActionPerformed
+
+    private void tButtonDeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonDeerActionPerformed
+        if (!addingDeer){
+            addingDeer = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        else{
+            addingDeer = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_tButtonDeerActionPerformed
+
+    private void tButtonGrassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonGrassActionPerformed
+        if (!addingGrass){
+            addingGrass = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        else {
+            addingGrass = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+
+    }//GEN-LAST:event_tButtonGrassActionPerformed
+
+    private void tButtonWaterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonWaterActionPerformed
+        if (!addingWater){
+            addingWater = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        
+        else{
+            addingWater = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+    }//GEN-LAST:event_tButtonWaterActionPerformed
+
+    private void tButtonRockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonRockActionPerformed
+        if (!addingRock){
+            addingRock = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonMud.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        else{
+            addingRock = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonMud.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+    }//GEN-LAST:event_tButtonRockActionPerformed
+
+    private void tButtonMudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonMudActionPerformed
+        if (!addingMud){
+            addingMud = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonBerries.setEnabled(false);
+        }
+        else{
+            addingMud = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonBerries.setEnabled(true);
+        }
+    }//GEN-LAST:event_tButtonMudActionPerformed
+
+    private void tButtonBerriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonBerriesActionPerformed
+        if (!addingBerries){
+            addingBerries = true;
+            tButtonWolf.setEnabled(false);
+            tButtonBear.setEnabled(false);
+            tButtonDeer.setEnabled(false);
+            tButtonGrass.setEnabled(false);
+            tButtonWater.setEnabled(false);
+            tButtonRock.setEnabled(false);
+            tButtonMud.setEnabled(false);
+        }
+        else{
+            addingBerries = false;
+            tButtonWolf.setEnabled(true);
+            tButtonBear.setEnabled(true);
+            tButtonDeer.setEnabled(true);
+            tButtonGrass.setEnabled(true);
+            tButtonWater.setEnabled(true);
+            tButtonRock.setEnabled(true);
+            tButtonMud.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_tButtonBerriesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -441,9 +781,20 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonZoomIn;
     private javax.swing.JButton buttonZoomOut;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelEntities;
     private javax.swing.JLabel labelTimerDelay;
     private javax.swing.JPanel panelDraw;
     private javax.swing.JSlider sliderTimerDelay;
+    private javax.swing.JToggleButton tButtonBear;
+    private javax.swing.JToggleButton tButtonBerries;
+    private javax.swing.JToggleButton tButtonDeer;
+    private javax.swing.JToggleButton tButtonGrass;
+    private javax.swing.JToggleButton tButtonMud;
+    private javax.swing.JToggleButton tButtonRock;
+    private javax.swing.JToggleButton tButtonWater;
+    private javax.swing.JToggleButton tButtonWolf;
     // End of variables declaration//GEN-END:variables
     public class KeyLis implements KeyListener {
 
