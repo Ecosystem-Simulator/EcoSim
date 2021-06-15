@@ -135,20 +135,20 @@ public class GameFrame extends javax.swing.JFrame {
         //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
         //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
         //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        wa = new Water(4, 4, entities, entitygrid, gridLength, false);
+        wa = new Water(4, 4, entities, entitygrid, gridLength);
         wa.setHasFish(true);
-        wa2 = new Water(5, 6, entities, entitygrid, gridLength, false);
-        wa3 = new Water(4, 5, entities, entitygrid, gridLength, false);
-        wa4 = new Water(4, 6, entities, entitygrid, gridLength, false);
-        wa5 = new Water(4, 7, entities, entitygrid, gridLength, false);
-        wa6 = new Water(5, 7, entities, entitygrid, gridLength, false);
-        wa7 = new Water(5, 8, entities, entitygrid, gridLength, false);
-        wa8 = new Water(6, 7, entities, entitygrid, gridLength, false);
+        wa2 = new Water(5, 6, entities, entitygrid, gridLength);
+        wa3 = new Water(4, 5, entities, entitygrid, gridLength);
+        wa4 = new Water(4, 6, entities, entitygrid, gridLength);
+        wa5 = new Water(4, 7, entities, entitygrid, gridLength);
+        wa6 = new Water(5, 7, entities, entitygrid, gridLength);
+        wa7 = new Water(5, 8, entities, entitygrid, gridLength);
+        wa8 = new Water(6, 7, entities, entitygrid, gridLength);
         //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
         be = new Bear(0, 1, entities, entitygrid, gridLength);
         be2 = new Bear(1, 3, entities, entitygrid, gridLength);
         //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
-        r = new Rock(10, 10, entities, entitygrid, gridLength, false);
+        r = new Rock(10, 10, entities, entitygrid, gridLength);
         b1 = new Berries(8, 6, entities, entitygrid, gridLength);
         b2 = new Berries(6, 6, entities, entitygrid, gridLength);
         b3 = new Berries(7, 6, entities, entitygrid, gridLength);
@@ -372,6 +372,7 @@ public class GameFrame extends javax.swing.JFrame {
         );
 
         labelEntities.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        labelEntities.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelEntities.setText("Entities");
 
         tButtonBear.setText("Bear");
@@ -854,6 +855,39 @@ public class GameFrame extends javax.swing.JFrame {
             if (lastMouseX >= 0 && lastMouseX + cam.getxOffset() < entitygrid[0].length * gridLength && lastMouseY >= 0 && lastMouseY + cam.getyOffset() < entitygrid.length * gridLength) {
                 nearestGridX = (int) Math.round((double) (lastMouseX - gridLength / 2) / gridLength);
                 nearestGridY = (int) Math.round((double) (lastMouseY - gridLength / 2) / gridLength);
+                if (entitygrid[nearestGridX][nearestGridY] == null){
+                    if (addingBear){
+                        Bear bear = new Bear (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingWolf){
+                        Wolf wolf = new Wolf (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingDeer){
+                        Deer deer = new Deer (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingWater){
+                        Water water = new Water (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingBerries){
+                        int rand = (int)(Math.random()*10)+1;
+                        if (rand == 1){
+                            PoisonBerries poisonBerries = new PoisonBerries(nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                        }
+                        else{
+                            Berries berries = new Berries (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                        }
+                    }
+                    else if (addingGrass){
+                        Grass grass = new Grass (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingMud){
+                        Mud mud = new Mud (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                    else if (addingRock){
+                        Rock rock = new Rock (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
+                    }
+                }
+                
             }
         }
 
