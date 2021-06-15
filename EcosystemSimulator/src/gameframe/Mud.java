@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * @author 1090720
  */
 public class Mud extends Terrain{
-    public Mud(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength, boolean passable){
-        super(x, y, entities, entitygrid, gridLength, passable);
+    public Mud(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
+        super(x, y, entities, entitygrid, gridLength);
     }
     
     @Override

@@ -7,7 +7,7 @@ public class Terrain extends Entity {
     
     private boolean passable;
    
-    public Terrain(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength, boolean passable){
+    public Terrain(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength){
         super(x, y, entities, entitygrid, gridLength);
         this.passable = passable;  
     }

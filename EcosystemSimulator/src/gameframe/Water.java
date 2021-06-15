@@ -14,8 +14,8 @@ public class Water extends Terrain {
     private Color black = new Color(0, 0, 0);
     private Color white = new Color(255, 255, 255);
 
-    public Water(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength, boolean passable) {
-        super(x, y, entities, entitygrid, gridLength, passable);
+    public Water(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(x, y, entities, entitygrid, gridLength);
         setHeight(getHeight() / 3);
     }
 

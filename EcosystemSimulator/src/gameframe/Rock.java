@@ -6,8 +6,8 @@ import java.awt.Color;
 
 public class Rock extends Terrain {
 
-    public Rock(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength, boolean passable) {
-        super(gridX, gridY, entities, entitygrid, gridLength, passable);
+    public Rock(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
+        super(gridX, gridY, entities, entitygrid, gridLength);
     }
 
     public void draw(Graphics g) {
