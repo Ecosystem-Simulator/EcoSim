@@ -22,10 +22,11 @@ public class GameFrame extends javax.swing.JFrame {
     private double delta_time;
     private long prev_time;
     public long tickCount = 0;
+    private int weatherCount;
     //creating arraylist of entities
-    ArrayList<Entity> entities = new ArrayList<Entity>();
+    static ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    public Entity[][] entitygrid = new Entity[100][100];
+    static public Entity[][] entitygrid = new Entity[100][100];
     //timer object
     private Timer timer = null;
     private boolean active = false;
@@ -48,9 +49,9 @@ public class GameFrame extends javax.swing.JFrame {
     private int nearestGridX = 0;
     private int nearestGridY = 0;
     public boolean drawing = false;
-    private int[] gridLengths = {10, 25, 50, 100};
-    private int index = 2;
-    int gridLength = gridLengths[index];
+    static private int[] gridLengths = {10, 25, 50, 100};
+    static private int index = 2;
+    static int gridLength = gridLengths[index];
     //variables for adding entities at the start of the game
     private boolean addingWolf = false;
     private boolean addingBear = false;
@@ -96,6 +97,7 @@ public class GameFrame extends javax.swing.JFrame {
         updateEntities();      //most important part of simulation!
         removeDeactivatedEntities();    //removes actors from list that are not active any more
         redraw();
+        textWeather.setText(Weather.getWeather());
     }
 
     //updates the tickCount
@@ -140,6 +142,23 @@ public class GameFrame extends javax.swing.JFrame {
             }
         }
         fish.clear();
+        //weather
+        weatherCount++;
+        if (weatherCount % 5 == 0){
+            Weather.chooseWeather();
+            if (Weather.getWeather().equals("rainy")){
+                Weather.rain();
+            }
+            else if (Weather.getWeather().equals("sunny")){
+                Weather.sun();
+            }
+            else if (Weather.getWeather().equals("flood")){
+                Weather.flood();
+            }
+            else if (Weather.getWeather().equals("drought")){
+                Weather.drought();
+            }
+        }
     }
 
     public void drawStuff(Graphics g) {
@@ -229,6 +248,8 @@ public class GameFrame extends javax.swing.JFrame {
         tButtonRock = new javax.swing.JToggleButton();
         tButtonMud = new javax.swing.JToggleButton();
         tButtonBerries = new javax.swing.JToggleButton();
+        textWeather = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -385,28 +406,42 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        textWeather.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textWeather.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textWeatherActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Weather");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(tButtonWater, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tButtonGrass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tButtonDeer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tButtonBear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tButtonWolf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(tButtonWater, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tButtonGrass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tButtonDeer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tButtonBear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tButtonWolf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(labelEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tButtonRock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonMud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tButtonBerries, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                                .addComponent(textWeather))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tButtonRock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tButtonMud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tButtonBerries, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))))
+                        .addGap(105, 105, 105)
+                        .addComponent(jLabel1)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -430,7 +465,11 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(tButtonMud)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tButtonBerries)
-                .addContainerGap(242, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textWeather, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -688,6 +727,10 @@ public class GameFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tButtonBerriesActionPerformed
 
+    private void textWeatherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textWeatherActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textWeatherActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -733,6 +776,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonZoomIn;
     private javax.swing.JButton buttonZoomOut;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelEntities;
@@ -747,6 +791,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton tButtonRock;
     private javax.swing.JToggleButton tButtonWater;
     private javax.swing.JToggleButton tButtonWolf;
+    private javax.swing.JTextField textWeather;
     // End of variables declaration//GEN-END:variables
     public class KeyLis implements KeyListener {
 
