@@ -5,8 +5,12 @@ import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.awt.Image;
-import java.awt.KeyEventDispatcher;
-import java.awt.KeyboardFocusManager;
+//writing
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+//reading
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -250,6 +254,8 @@ public class GameFrame extends javax.swing.JFrame {
         tButtonBerries = new javax.swing.JToggleButton();
         textWeather = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        buttonSave = new javax.swing.JButton();
+        buttonLoad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -415,6 +421,20 @@ public class GameFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Weather");
 
+        buttonSave.setText("Save");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+
+        buttonLoad.setText("Load");
+        buttonLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLoadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -441,7 +461,12 @@ public class GameFrame extends javax.swing.JFrame {
                                 .addComponent(textWeather))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonLoad)
+                            .addComponent(buttonSave))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -469,7 +494,11 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textWeather, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(buttonSave)
+                .addGap(18, 18, 18)
+                .addComponent(buttonLoad)
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -728,8 +757,58 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonBerriesActionPerformed
 
     private void textWeatherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textWeatherActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_textWeatherActionPerformed
+
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        String currentDirectory = System.getProperty("user.dir");
+        String fullFileName = currentDirectory + "/game.txt";
+        
+        try {
+            FileWriter fw = new FileWriter(fullFileName);
+            BufferedWriter br = new BufferedWriter(fw);
+            for(Entity e : entities){
+                br.write(e.getClass().getSimpleName() + "*" + e.getGridX() + "*" + e.getGridY());
+                if(e instanceof Animal){
+                    Animal temp = (Animal) e;
+                    br.write("*" + temp.getGender() + "*" + temp.getHunger() + "*" + temp.getThirst() + "*" + temp.getReproductiveUrge());
+                }
+                else if(e instanceof Water){
+                    if(((Water) e).getHasFish()){
+                        br.write("*" + "true");
+                    }
+                    else{
+                        br.write("*" + "false");
+                    }
+                }
+                br.newLine();
+            }
+            System.out.println("File written");
+            br.close();
+        }
+        catch(Exception e) {
+            System.out.println("Error writing to file");
+        }
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private void buttonLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoadActionPerformed
+        try{
+            String currentDirectory = System.getProperty("user.dir");
+            String fullFileName = currentDirectory + "/game.txt";
+
+            FileReader fr = new FileReader(fullFileName);
+            BufferedReader br = new BufferedReader(fr); 
+            
+            ArrayList<String> fileStuff = new ArrayList();
+            
+            while(br.readLine() != null){
+                System.out.println(br.readLine());
+            }
+        }
+        catch(Exception e){
+            System.out.println("404 File not found");
+        }
+    }//GEN-LAST:event_buttonLoadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -772,7 +851,9 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonLoad;
     private javax.swing.JButton buttonPause;
+    private javax.swing.JButton buttonSave;
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonZoomIn;
     private javax.swing.JButton buttonZoomOut;
