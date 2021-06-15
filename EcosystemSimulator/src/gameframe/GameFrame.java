@@ -61,23 +61,6 @@ public class GameFrame extends javax.swing.JFrame {
     private boolean addingBerries = false;
     private boolean addingMud = false;
 
-    /**
-     * Creates new form GameFrame
-     */
-    //testing objects
-    Entity e;
-    Entity eb;
-    Wolf w;
-    Deer d;
-    Deer d1, d2, d3;
-    Berries b1, b2, b3, b4, b5;
-    PoisonBerries pb;
-    Grass g;
-    Rock r;
-    Water wa;
-    Mud m;
-    Bear be, be2, be3;
-    Water wa2, wa3, wa4, wa5, wa6, wa7, wa8;
     Camera cam;
 
     public void startTimer() {
@@ -127,36 +110,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void setupSimulation() {
-        // setup simulation!
-        // entities.add(new ...)
         cam = new Camera(250, 250);
-        w = new Wolf(0, 2, entities, entitygrid, gridLength);
-        d = new Deer(0, 0, entities, entitygrid, gridLength);
-        //d1 = new Deer(4, 3, entities, entitygrid, gridLength);
-        //d2 = new Deer(9, 2, entities, entitygrid, gridLength);
-        //d3 = new Deer(4, 8, entities, entitygrid, gridLength);
-        wa = new Water(4, 4, entities, entitygrid, gridLength);
-        wa.setHasFish(true);
-        wa2 = new Water(5, 6, entities, entitygrid, gridLength);
-        wa3 = new Water(4, 5, entities, entitygrid, gridLength);
-        wa4 = new Water(4, 6, entities, entitygrid, gridLength);
-        wa5 = new Water(4, 7, entities, entitygrid, gridLength);
-        wa6 = new Water(5, 7, entities, entitygrid, gridLength);
-        wa7 = new Water(5, 8, entities, entitygrid, gridLength);
-        wa8 = new Water(6, 7, entities, entitygrid, gridLength);
-        //m = new Mud(2, 2, entities, entitygrid, gridLength, false);
-        be = new Bear(0, 1, entities, entitygrid, gridLength);
-        be2 = new Bear(1, 3, entities, entitygrid, gridLength);
-        //be3 = new Bear(1, 4, entities, entitygrid, gridLength);
-        r = new Rock(10, 10, entities, entitygrid, gridLength);
-        b1 = new Berries(8, 6, entities, entitygrid, gridLength);
-        b2 = new Berries(6, 6, entities, entitygrid, gridLength);
-        b3 = new Berries(7, 6, entities, entitygrid, gridLength);
-        //b4 = new Berries(8, 6, entities, entitygrid, gridLength);
-        //g = new Grass(9, 1, entities, entitygrid, gridLength);
-        //pb = new PoisonBerries(6, 6, entities, entitygrid, gridLength);
-        //s = new Salmon(7, 7, entities, entitygrid, gridLength);
-
     }
 
     public void updateEntities() {
@@ -853,8 +807,8 @@ public class GameFrame extends javax.swing.JFrame {
             lastMouseX = me.getX();
             lastMouseY = me.getY();
             if (lastMouseX >= 0 && lastMouseX + cam.getxOffset() < entitygrid[0].length * gridLength && lastMouseY >= 0 && lastMouseY + cam.getyOffset() < entitygrid.length * gridLength) {
-                nearestGridX = (int) Math.round((double) (lastMouseX - gridLength / 2) / gridLength);
-                nearestGridY = (int) Math.round((double) (lastMouseY - gridLength / 2) / gridLength);
+                nearestGridX = (int) Math.round((double) (lastMouseX + cam.getxOffset() - gridLength / 2) / gridLength);
+                nearestGridY = (int) Math.round((double) (lastMouseY + cam.getyOffset()  - gridLength / 2) / gridLength);
                 if (entitygrid[nearestGridX][nearestGridY] == null){
                     if (addingBear){
                         Bear bear = new Bear (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
@@ -886,6 +840,7 @@ public class GameFrame extends javax.swing.JFrame {
                     else if (addingRock){
                         Rock rock = new Rock (nearestGridX, nearestGridY, entities, entitygrid, gridLength);
                     }
+                    redraw();
                 }
                 
             }
