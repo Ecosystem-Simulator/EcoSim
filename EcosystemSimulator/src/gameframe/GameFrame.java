@@ -38,7 +38,15 @@ public class GameFrame extends javax.swing.JFrame {
     //side length of grid
     //int gridLength = 650 / entitygrid.length;
     private Graphics2D g2d;
-    private KeyLis listener = new KeyLis();
+    //make a keyboard listener & moust listener
+    private KeyLis keylistener = new KeyLis();
+    private MouseLis mouselistener = new MouseLis();
+    //position of mouse
+    private int lastMouseX = 0;
+    private int lastMouseY = 0;
+    //position of nearest grid to mouse;
+    private int nearestGridX = 0;
+    private int nearestGridY = 0;
     public boolean drawing = false;
     private int[] gridLengths = {10, 25, 50, 100};
     private int index = 2;
@@ -52,12 +60,10 @@ public class GameFrame extends javax.swing.JFrame {
     private boolean addingWater = false;
     private boolean addingBerries = false;
     private boolean addingMud = false;
-    
-    
+
     /**
      * Creates new form GameFrame
      */
-
     //testing objects
     Entity e;
     Entity eb;
@@ -238,7 +244,8 @@ public class GameFrame extends javax.swing.JFrame {
         setVisible(true);
         setFocusable(true);
         requestFocusInWindow();
-        this.addKeyListener(listener);
+        this.addKeyListener(keylistener);
+        panelDraw.addMouseListener(mouselistener);
     }
 
     /**
@@ -331,7 +338,7 @@ public class GameFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -478,11 +485,11 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -504,7 +511,7 @@ public class GameFrame extends javax.swing.JFrame {
     private void buttonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartActionPerformed
         sliderTimerDelay.setEnabled(false);
         startTimer();
-        
+
     }//GEN-LAST:event_buttonStartActionPerformed
 
     private void buttonPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPauseActionPerformed
@@ -512,7 +519,7 @@ public class GameFrame extends javax.swing.JFrame {
             timer.cancel();
             timer = null;
             sliderTimerDelay.setEnabled(true);
-        } 
+        }
     }//GEN-LAST:event_buttonPauseActionPerformed
 
     private void buttonZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonZoomOutActionPerformed
@@ -547,7 +554,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_sliderTimerDelayStateChanged
 
     private void tButtonWolfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonWolfActionPerformed
-        if (!addingWolf){
+        if (!addingWolf) {
             addingWolf = true;
             tButtonBear.setEnabled(false);
             tButtonDeer.setEnabled(false);
@@ -556,9 +563,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-
-        else{
+        } else {
             addingWolf = false;
             tButtonBear.setEnabled(true);
             tButtonDeer.setEnabled(true);
@@ -571,7 +576,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonWolfActionPerformed
 
     private void tButtonBearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonBearActionPerformed
-        if (!addingBear){
+        if (!addingBear) {
             addingBear = true;
             tButtonWolf.setEnabled(false);
             tButtonDeer.setEnabled(false);
@@ -580,8 +585,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        else{
+        } else {
             addingBear = false;
             tButtonWolf.setEnabled(true);
             tButtonDeer.setEnabled(true);
@@ -595,7 +599,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonBearActionPerformed
 
     private void tButtonDeerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonDeerActionPerformed
-        if (!addingDeer){
+        if (!addingDeer) {
             addingDeer = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -604,8 +608,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        else{
+        } else {
             addingDeer = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -615,11 +618,11 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonMud.setEnabled(true);
             tButtonBerries.setEnabled(true);
         }
-        
+
     }//GEN-LAST:event_tButtonDeerActionPerformed
 
     private void tButtonGrassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonGrassActionPerformed
-        if (!addingGrass){
+        if (!addingGrass) {
             addingGrass = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -628,8 +631,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        else {
+        } else {
             addingGrass = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -643,7 +645,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonGrassActionPerformed
 
     private void tButtonWaterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonWaterActionPerformed
-        if (!addingWater){
+        if (!addingWater) {
             addingWater = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -652,9 +654,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        
-        else{
+        } else {
             addingWater = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -667,7 +667,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonWaterActionPerformed
 
     private void tButtonRockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonRockActionPerformed
-        if (!addingRock){
+        if (!addingRock) {
             addingRock = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -676,8 +676,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonWater.setEnabled(false);
             tButtonMud.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        else{
+        } else {
             addingRock = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -690,7 +689,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonRockActionPerformed
 
     private void tButtonMudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonMudActionPerformed
-        if (!addingMud){
+        if (!addingMud) {
             addingMud = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -699,8 +698,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonWater.setEnabled(false);
             tButtonRock.setEnabled(false);
             tButtonBerries.setEnabled(false);
-        }
-        else{
+        } else {
             addingMud = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -713,7 +711,7 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tButtonMudActionPerformed
 
     private void tButtonBerriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tButtonBerriesActionPerformed
-        if (!addingBerries){
+        if (!addingBerries) {
             addingBerries = true;
             tButtonWolf.setEnabled(false);
             tButtonBear.setEnabled(false);
@@ -722,8 +720,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonWater.setEnabled(false);
             tButtonRock.setEnabled(false);
             tButtonMud.setEnabled(false);
-        }
-        else{
+        } else {
             addingBerries = false;
             tButtonWolf.setEnabled(true);
             tButtonBear.setEnabled(true);
@@ -733,7 +730,7 @@ public class GameFrame extends javax.swing.JFrame {
             tButtonRock.setEnabled(true);
             tButtonMud.setEnabled(true);
         }
-        
+
     }//GEN-LAST:event_tButtonBerriesActionPerformed
 
     /**
@@ -840,4 +837,33 @@ public class GameFrame extends javax.swing.JFrame {
         }
     }
 
+    public class MouseLis implements MouseListener {
+
+        @Override
+        public void mouseClicked(MouseEvent me) {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent me) {
+            lastMouseX = me.getX();
+            lastMouseY = me.getY();
+            if (lastMouseX >= 0 && lastMouseX + cam.getxOffset() < entitygrid[0].length * gridLength && lastMouseY >= 0 && lastMouseY + cam.getyOffset() < entitygrid.length * gridLength) {
+                nearestGridX = (int) Math.round((double) (lastMouseX - gridLength / 2) / gridLength);
+                nearestGridY = (int) Math.round((double) (lastMouseY - gridLength / 2) / gridLength);
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent me) {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent me) {
+        }
+
+    }
 }
