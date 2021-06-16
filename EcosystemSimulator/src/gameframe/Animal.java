@@ -304,8 +304,8 @@ public class Animal extends Entity {
             }
         } 
         else if (f instanceof Deer) {
-            if (hunger - 50 > 0) {
-                hunger -= 50;
+            if (hunger - 100 > 0) {
+                hunger -= 100;
             } else {
                 hunger = 0;
             }

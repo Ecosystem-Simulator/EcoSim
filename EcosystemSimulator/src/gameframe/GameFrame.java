@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Graphics2D;
+import java.lang.reflect.Constructor;
 
 /**
  *
@@ -167,9 +168,9 @@ public class GameFrame extends javax.swing.JFrame {
 
     public void drawStuff(Graphics g) {
 
-        for (Entity temp : entities) {
-            if (temp.isActive()) {
-                temp.draw(g);
+        for (int k = 0; k < entities.size(); k++) {
+            if (entities.get(k).isActive()) {
+                entities.get(k).draw(g);
             }
         }
 
@@ -801,9 +802,65 @@ public class GameFrame extends javax.swing.JFrame {
             
             ArrayList<String> fileStuff = new ArrayList();
             
-            while(br.readLine() != null){
-                System.out.println(br.readLine());
+            String line = "";
+            while((line = br.readLine()) != null){
+                fileStuff.add(line);
             }
+            
+            //clear everything
+            entities.clear();
+            for(int r = 0; r < entitygrid.length; r++){
+                for(int c = 0; c < entitygrid[0].length; c++){
+                    entitygrid[r][c] = null;
+                }
+            }
+            
+            //load file
+            for(String s : fileStuff){
+                String entityname;
+                int gridX, gridY, gender, hunger, thirst, reproductiveUrge;
+                boolean hasFish;
+                int index = s.indexOf("*");
+                entityname = s.substring(0, index);
+                s = s.substring(index + 1);
+                index = s.indexOf("*");
+                gridX = Integer.parseInt(s.substring(0, index));
+                s = s.substring(index + 1);
+                if(Animal.class.isAssignableFrom(Class.forName("gameframe." + entityname))){
+                    index = s.indexOf("*");
+                    gridY = Integer.parseInt(s.substring(0, index));
+                    
+                    
+                    s = s.substring(index + 1);
+                    index = s.indexOf("*");
+                    gender = Integer.parseInt(s.substring(0, index));
+                    
+                    s = s.substring(index + 1);
+                    index = s.indexOf("*");
+                    hunger = Integer.parseInt(s.substring(0, index));
+                    
+                    s = s.substring(index + 1);
+                    index = s.indexOf("*");
+                    thirst = Integer.parseInt(s.substring(0, index));
+                    
+                    s = s.substring(index + 1);
+                    reproductiveUrge = Integer.parseInt(s);
+                    System.out.println(entityname + gridX + gridY + gender + hunger + thirst);
+                }
+                else if(Water.class.getSimpleName().equals(entityname)){
+                    index = s.indexOf("*");
+                    gridY = Integer.parseInt(s.substring(0, index));
+                    
+                    s.substring(index + 1);
+                    //
+                    
+                }
+            }
+            //get class name from string
+            
+            //System.out.println(Class.forName("gameframe." + s));
+            
+            br.close();
         }
         catch(Exception e){
             System.out.println("404 File not found");
