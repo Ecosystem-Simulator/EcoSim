@@ -8,6 +8,8 @@ public class Weather extends Entity{
         super(gridX, gridY, entities, entitygrid, gridLength);
     }
     //test
+    static ArrayList<Integer> waterCoordinatesR = new ArrayList(); 
+    static ArrayList<Integer> waterCoordinatesC = new ArrayList();
     private static String weather = ""; 
     private static String yesterdayWeather = "";
     private static int weatherCounter = 1;
@@ -18,8 +20,8 @@ public class Weather extends Entity{
     public static void chooseWeather(){
         int chance = (int)(Math.random()*10)+1;
         //70% chance of sun, 30% chance of rain
-        if (weatherCounter < 5){
-            if (chance <= 5){
+        if (weatherCounter < 2){
+            if (chance <= 0){
                 weather  = "sunny";      
             }
             else{ 
@@ -40,7 +42,7 @@ public class Weather extends Entity{
         //There's a 30% chance of flood after a day of flood
         else if (yesterdayWeather.equals("flood")){
             int x = (int)(Math.random()*10)+1;
-            if (x <= 5){
+            if (x <= 10){
                 weather = "flood";
             }
             //Otherwise, weather goes back to normal, and counter = 1
@@ -61,7 +63,7 @@ public class Weather extends Entity{
         //There's a 30% chance of drought after a day of drought
         else if (yesterdayWeather.equals("drought")){
             int a = (int)(Math.random()*10)+1;
-            if (a <= 5){
+            if (a <= 8){
                 weather = "drought";
             }
             //Otherwise, weather goes back to normal, and counter = 1
@@ -89,10 +91,15 @@ public class Weather extends Entity{
     
     
     public static void rain(){
-        for(int r = 0; r < GameFrame.gridLength; r++){
-            for (int c = 0; c < GameFrame.gridLength; c++){
+        for (int k = waterCoordinatesR.size() - 1; k >= 0; k--){
+            Water wat = new Water(waterCoordinatesR.get(k), waterCoordinatesC.get(k), GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
+            waterCoordinatesR.remove(k);
+            waterCoordinatesC.remove(k);
+        }
+        for(int r = 0; r < GameFrame.entitygrid.length; r++){
+            for (int c = 0; c < GameFrame.entitygrid[0].length; c++){
                 if (GameFrame.entitygrid[r][c] instanceof FloodWater){
-                    GameFrame.entitygrid[r][c] = null;
+                    GameFrame.entitygrid[r][c].die();
                 }
             }
         }
@@ -102,10 +109,15 @@ public class Weather extends Entity{
     }
     
     public static void sun(){
-        for(int r = 0; r < GameFrame.gridLength; r++){
-            for (int c = 0; c < GameFrame.gridLength; c++){
+        for(int k = waterCoordinatesR.size()-1; k >=0; k--){
+            Water wat = new Water(waterCoordinatesR.get(k),waterCoordinatesC.get(k), GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
+            waterCoordinatesR.remove(k);
+            waterCoordinatesC.remove(k);
+        }
+        for(int r = 0; r < GameFrame.entitygrid.length; r++){
+            for (int c = 0; c < GameFrame.entitygrid[0].length; c++){
                 if (GameFrame.entitygrid[r][c] instanceof FloodWater){
-                    GameFrame.entitygrid[r][c] = null;
+                    GameFrame.entitygrid[r][c].die();
                 }
             }
         }
@@ -126,39 +138,96 @@ public class Weather extends Entity{
     }
     
     public static void flood(){
-        for(int r = 0; r < GameFrame.gridLength; r++ ){
-            for (int c = 0; c < GameFrame.gridLength; c++){
-                if (GameFrame.entitygrid[r][c] instanceof Water && !(GameFrame.entitygrid[r][c] instanceof FloodWater)){
-                    if (r - 1 > -1 && !(GameFrame.entitygrid[r-1][c] instanceof Water) && !(GameFrame.entitygrid[r-1][c] instanceof FloodWater)){
-                        if (GameFrame.entitygrid[r-1][c] instanceof Animal){
-                            GameFrame.entitygrid[r-1][c].die();
-                        }
-                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
-                    }
-                    if (r + 1 <= GameFrame.gridLength - 1 && !(GameFrame.entitygrid[r+1][c] instanceof Water) && !(GameFrame.entitygrid[r+1][c] instanceof FloodWater)){
-                        if (GameFrame.entitygrid[r+1][c] instanceof Animal){
-                            GameFrame.entitygrid[r+1][c].die();
-                        }
-                        FloodWater fl0 = new FloodWater(r+1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
-                    }
-                    if (c - 1 > -1 && !(GameFrame.entitygrid[r][c-1] instanceof Water) && !(GameFrame.entitygrid[r][c-1] instanceof FloodWater)){ 
-                        if (GameFrame.entitygrid[r][c-1] instanceof Animal){
-                            GameFrame.entitygrid[r][c-1].die();
-                        }
-                        FloodWater fl1 = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
-                    }
-                    if (c + 1 > GameFrame.gridLength && !(GameFrame.entitygrid[r][c+1] instanceof Water) && !(GameFrame.entitygrid[r][c+1] instanceof FloodWater)){
-                       if (GameFrame.entitygrid[r][c+1] instanceof Animal){
-                            GameFrame.entitygrid[r][c+1].die();
-                        }
-                        FloodWater fl2 = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
+        for (int a = 0; a < GameFrame.entitygrid.length; a++){
+            for (int b = 0; b < GameFrame.entitygrid.length; b++){
+                if (GameFrame.entitygrid[a][b] instanceof FloodWater){
+                    if(((FloodWater)GameFrame.entitygrid[a][b]).justMade == true){
+                        ((FloodWater)GameFrame.entitygrid[a][b]).justMade = false;
                     }
                 }
             }
         }
-    }    
+        for(int r = 0; r < GameFrame.entitygrid.length; r++ ){
+            for (int c = 0; c < GameFrame.entitygrid.length; c++){ 
+                if (GameFrame.entitygrid[r][c] instanceof FloodWater && !((FloodWater)GameFrame.entitygrid[r][c]).justMade){
+                    //left
+                    if (r - 1 > -1 && !(GameFrame.entitygrid[r-1][c] instanceof Water)){
+                        if (GameFrame.entitygrid[r-1][c] instanceof Entity){
+                            GameFrame.entitygrid[r-1][c].die();
+                        }
+                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //up
+                    if (c - 1 > -1 && !(GameFrame.entitygrid[r][c-1] instanceof Water)){ 
+                        if (GameFrame.entitygrid[r][c-1] instanceof Entity){
+                            GameFrame.entitygrid[r][c-1].die();
+                        }
+                        FloodWater fl = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //right
+                    if (r + 1 < GameFrame.entitygrid.length && !(GameFrame.entitygrid[r+1][c] instanceof Water)){
+                        if (GameFrame.entitygrid[r + 1][c] instanceof Entity){
+                            GameFrame.entitygrid[r + 1][c].die();
+                        }
+                        FloodWater fl = new FloodWater(r + 1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //down
+                    if (c + 1 < GameFrame.entitygrid[0].length && !(GameFrame.entitygrid[r][c+1] instanceof Water)){
+                       if (GameFrame.entitygrid[r][c+1] instanceof Entity){
+                            GameFrame.entitygrid[r][c+1].die();
+                        }
+                        FloodWater fl = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                }
+                else if (GameFrame.entitygrid[r][c] instanceof Water && !(GameFrame.entitygrid[r][c] instanceof FloodWater)){
+                    //left
+                    if (r - 1 > -1 && !(GameFrame.entitygrid[r-1][c] instanceof Water)){
+                        if (GameFrame.entitygrid[r-1][c] instanceof Entity){
+                            GameFrame.entitygrid[r-1][c].die();
+                        }
+                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //up
+                    if (c - 1 > -1 && !(GameFrame.entitygrid[r][c-1] instanceof Water)){ 
+                        if (GameFrame.entitygrid[r][c-1] instanceof Entity){
+                            GameFrame.entitygrid[r][c-1].die();
+                        }
+                        FloodWater fl = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //right
+                    if (r + 1 < GameFrame.entitygrid.length && !(GameFrame.entitygrid[r+1][c] instanceof Water)){
+                        if (GameFrame.entitygrid[r + 1][c] instanceof Entity){
+                            GameFrame.entitygrid[r + 1][c].die();
+                        }
+                        FloodWater fl = new FloodWater(r + 1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                    //down
+                    if (c + 1 < GameFrame.entitygrid[0].length && !(GameFrame.entitygrid[r][c+1] instanceof Water)){
+                       if (GameFrame.entitygrid[r][c+1] instanceof Entity){
+                            GameFrame.entitygrid[r][c+1].die();
+                        }
+                        FloodWater fl = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                    }
+                }
+            }
+        }
+    }
     
     public static void drought(){
-        //tint world yellow   
+        growthMultiplier = 0; 
+        for(int r = 0; r < GameFrame.entitygrid.length; r++){
+            for (int c = 0; c < GameFrame.entitygrid[0].length; c++){
+                if (GameFrame.entitygrid[r][c] instanceof Water){
+                    int rand = (int)(Math.random()*10)+1;
+                    if (rand >= 5){
+                        waterCoordinatesR.add(r);
+                        waterCoordinatesC.add(c);
+                        GameFrame.entitygrid[r][c].die();
+                    }
+                }
+            }
+        }
     }
+
 }
+
