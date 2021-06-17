@@ -13,10 +13,7 @@ public class FloodWater extends Water{
         super(x, y, entities, entitygrid, gridLength);
     
     }
-    @Override
-     public void draw(Graphics g) {
-        g.setColor(blue);
-        g.fillRect(getX() - getGridLength() / 2, getY() - getGridLength() / 2, getGridLength(), getGridLength());
-     }
+    
+    
 
 }

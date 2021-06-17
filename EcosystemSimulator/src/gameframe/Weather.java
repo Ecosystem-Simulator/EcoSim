@@ -42,7 +42,7 @@ public class Weather extends Entity{
         //There's a 30% chance of flood after a day of flood
         else if (yesterdayWeather.equals("flood")){
             int x = (int)(Math.random()*10)+1;
-            if (x <= 10){
+            if (x <= 8){
                 weather = "flood";
             }
             //Otherwise, weather goes back to normal, and counter = 1
