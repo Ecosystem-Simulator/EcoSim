@@ -103,7 +103,7 @@ public class Weather extends Entity{
                 }
             }
         }
-        growthMultiplier = 2;
+        growthMultiplier = 3;
         //tint blue
         //growth++    
     }
@@ -121,11 +121,12 @@ public class Weather extends Entity{
                 }
             }
         }
-        growthMultiplier = 1;
+        growthMultiplier = 2;
         //no tint
     }
     
     public static boolean day(){
+        growthMultiplier = 2;
         restrictedVision = false;
         return restrictedVision;
     }
@@ -138,75 +139,36 @@ public class Weather extends Entity{
     }
     
     public static void flood(){
-        for (int a = 0; a < GameFrame.entitygrid.length; a++){
-            for (int b = 0; b < GameFrame.entitygrid.length; b++){
-                if (GameFrame.entitygrid[a][b] instanceof FloodWater){
-                    if(((FloodWater)GameFrame.entitygrid[a][b]).justMade == true){
-                        ((FloodWater)GameFrame.entitygrid[a][b]).justMade = false;
-                    }
-                }
-            }
-        }
         for(int r = 0; r < GameFrame.entitygrid.length; r++ ){
             for (int c = 0; c < GameFrame.entitygrid.length; c++){ 
-                if (GameFrame.entitygrid[r][c] instanceof FloodWater && !((FloodWater)GameFrame.entitygrid[r][c]).justMade){
+                if (GameFrame.entitygrid[r][c] instanceof Water && !(GameFrame.entitygrid[r][c] instanceof FloodWater)){
                     //left
                     if (r - 1 > -1 && !(GameFrame.entitygrid[r-1][c] instanceof Water)){
                         if (GameFrame.entitygrid[r-1][c] instanceof Entity){
                             GameFrame.entitygrid[r-1][c].die();
                         }
-                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
                     }
                     //up
                     if (c - 1 > -1 && !(GameFrame.entitygrid[r][c-1] instanceof Water)){ 
                         if (GameFrame.entitygrid[r][c-1] instanceof Entity){
                             GameFrame.entitygrid[r][c-1].die();
                         }
-                        FloodWater fl = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                        FloodWater fl = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
                     }
                     //right
                     if (r + 1 < GameFrame.entitygrid.length && !(GameFrame.entitygrid[r+1][c] instanceof Water)){
                         if (GameFrame.entitygrid[r + 1][c] instanceof Entity){
                             GameFrame.entitygrid[r + 1][c].die();
                         }
-                        FloodWater fl = new FloodWater(r + 1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                        FloodWater fl = new FloodWater(r + 1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
                     }
                     //down
                     if (c + 1 < GameFrame.entitygrid[0].length && !(GameFrame.entitygrid[r][c+1] instanceof Water)){
                        if (GameFrame.entitygrid[r][c+1] instanceof Entity){
                             GameFrame.entitygrid[r][c+1].die();
                         }
-                        FloodWater fl = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
-                    }
-                }
-                else if (GameFrame.entitygrid[r][c] instanceof Water && !(GameFrame.entitygrid[r][c] instanceof FloodWater)){
-                    //left
-                    if (r - 1 > -1 && !(GameFrame.entitygrid[r-1][c] instanceof Water)){
-                        if (GameFrame.entitygrid[r-1][c] instanceof Entity){
-                            GameFrame.entitygrid[r-1][c].die();
-                        }
-                        FloodWater fl = new FloodWater(r-1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
-                    }
-                    //up
-                    if (c - 1 > -1 && !(GameFrame.entitygrid[r][c-1] instanceof Water)){ 
-                        if (GameFrame.entitygrid[r][c-1] instanceof Entity){
-                            GameFrame.entitygrid[r][c-1].die();
-                        }
-                        FloodWater fl = new FloodWater(r, c-1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
-                    }
-                    //right
-                    if (r + 1 < GameFrame.entitygrid.length && !(GameFrame.entitygrid[r+1][c] instanceof Water)){
-                        if (GameFrame.entitygrid[r + 1][c] instanceof Entity){
-                            GameFrame.entitygrid[r + 1][c].die();
-                        }
-                        FloodWater fl = new FloodWater(r + 1, c, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
-                    }
-                    //down
-                    if (c + 1 < GameFrame.entitygrid[0].length && !(GameFrame.entitygrid[r][c+1] instanceof Water)){
-                       if (GameFrame.entitygrid[r][c+1] instanceof Entity){
-                            GameFrame.entitygrid[r][c+1].die();
-                        }
-                        FloodWater fl = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength, true);
+                        FloodWater fl = new FloodWater(r, c+1, GameFrame.entities, GameFrame.entitygrid, GameFrame.gridLength);
                     }
                 }
             }
