@@ -58,7 +58,23 @@ public class Animal extends Entity {
     public int getMaxThirst() {
         return (maxThirst);
     }
+    
+    public void setHunger(int hunger){
+        this.hunger = hunger;
+    }
 
+    public void setThirst(int thirst){
+        this.thirst = thirst;
+    }
+    
+    public void setReproductiveUrge(int reproductiveUrge){
+        this.reproductiveUrge = reproductiveUrge;
+    }
+    
+    public void setGender(int gender){
+        this.gender = gender;
+    }
+    
     public void setMaxHunger(int maxHunger) {
         this.maxHunger = maxHunger;
     }

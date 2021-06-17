@@ -818,15 +818,17 @@ public class GameFrame extends javax.swing.JFrame {
             //load file
             for(String s : fileStuff){
                 String entityname;
+                Class classname;
                 int gridX, gridY, gender, hunger, thirst, reproductiveUrge;
                 boolean hasFish;
                 int index = s.indexOf("*");
                 entityname = s.substring(0, index);
+                classname = Class.forName("gameframe." + entityname);
                 s = s.substring(index + 1);
                 index = s.indexOf("*");
                 gridX = Integer.parseInt(s.substring(0, index));
                 s = s.substring(index + 1);
-                if(Animal.class.isAssignableFrom(Class.forName("gameframe." + entityname))){
+                if(Animal.class.isAssignableFrom(classname)){
                     index = s.indexOf("*");
                     gridY = Integer.parseInt(s.substring(0, index));
                     
@@ -845,16 +847,30 @@ public class GameFrame extends javax.swing.JFrame {
                     
                     s = s.substring(index + 1);
                     reproductiveUrge = Integer.parseInt(s);
-                    System.out.println(entityname + gridX + gridY + gender + hunger + thirst);
+                    
+                    //gridX, gridY, entities, entitygrid, gridLength, gender, hunger, thirst, reproductiveUrge
+                    Constructor<?> cons = classname.getConstructor(int.class, int.class, ArrayList.class, Entity[][].class, int.class, int.class, int.class, int.class, int.class);
+                    Object entity = cons.newInstance(gridX, gridY, entities, entitygrid, gridLength, gender, hunger, thirst, reproductiveUrge);
+                   
                 }
                 else if(Water.class.getSimpleName().equals(entityname)){
                     index = s.indexOf("*");
                     gridY = Integer.parseInt(s.substring(0, index));
                     
-                    s.substring(index + 1);
+                    s = s.substring(index + 1);
+                    hasFish = Boolean.parseBoolean(s);
                     //
-                    
+                    Constructor<?> cons = classname.getConstructor(int.class, int.class, ArrayList.class, Entity[][].class, int.class);
+                    Object entity = cons.newInstance(gridX, gridY, entities, entitygrid, gridLength);
+                    ((Water)entity).setHasFish(hasFish);
                 }
+                
+                else{
+                    gridY = Integer.parseInt(s);
+                    Constructor<?> cons = classname.getConstructor(int.class, int.class, ArrayList.class, Entity[][].class, int.class);
+                    Object entity = cons.newInstance(gridX, gridY, entities, entitygrid, gridLength);
+                }
+                
             }
             //get class name from string
             
@@ -863,7 +879,7 @@ public class GameFrame extends javax.swing.JFrame {
             br.close();
         }
         catch(Exception e){
-            System.out.println("404 File not found");
+            System.out.println("404 File not found" + e);
         }
     }//GEN-LAST:event_buttonLoadActionPerformed
 

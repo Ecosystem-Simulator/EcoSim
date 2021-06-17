@@ -24,6 +24,19 @@ public class Deer extends Animal {
         setMaxThirst(100);
     }
 
+    public Deer(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength, int gender, int hunger, int thirst, int reproductiveUrge) {
+        super(x, y, entities, entitygrid, gridLength);
+        setMaxHunger(200);
+        setMaxThirst(100);
+        setGender(gender);
+        setHunger(hunger);
+        setThirst(thirst);
+        setReproductiveUrge(reproductiveUrge);
+        if (getGender() == 2) {
+            setHeight(getHeight() * 3 / 4);
+            setLength(getLength() * 3 / 4);
+        }
+    }
     @Override
     public void draw(Graphics g) {
         //draw antlers on males
