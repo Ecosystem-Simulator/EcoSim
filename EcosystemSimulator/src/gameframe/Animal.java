@@ -28,7 +28,6 @@ public class Animal extends Entity {
         age = 0;
         hunger = 0;
         thirst = 0;
-
         reproductiveUrge = 0;
         restrictedVision = false;
         barLength = gridLength / 2;
@@ -94,6 +93,14 @@ public class Animal extends Entity {
     public int getGender() {
         return (gender);
     }
+    
+    public boolean getRestrictedVision(){
+        return(restrictedVision);
+    }
+    
+    public void setRestrictedVision(boolean restrictedVision){
+        this.restrictedVision = restrictedVision;
+    }
 
     @Override
     public void act() {
@@ -106,15 +113,29 @@ public class Animal extends Entity {
         }
         //look for water
         if (getThirst() >= getHunger() && getThirst() >= maxThirst / 4) {
-            int minDistance = Integer.MAX_VALUE;
-            for (int k = 0; k < entities.size(); k++) {
-                if (entities.get(k) instanceof Water) {
-                    if (minDistance > distanceTo(entities.get(k))) {
-                        minDistance = distanceTo(entities.get(k));
-                        target = entities.get(k);
+            if (!restrictedVision){
+                int minDistance = Integer.MAX_VALUE;
+                for (int k = 0; k < entities.size(); k++) {
+                    if (entities.get(k) instanceof Water) {
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
                     }
                 }
             }
+            else{
+               int minDistance = Integer.MAX_VALUE;
+                for (int k = 0; k < entities.size(); k++) {
+                    if (entities.get(k) instanceof Water) {
+                        if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
+                    }
+                } 
+            }
+            
         }
 
         if (target == null) {

@@ -66,6 +66,8 @@ public class GameFrame extends javax.swing.JFrame {
     private boolean addingWater = false;
     private boolean addingBerries = false;
     private boolean addingMud = false;
+    //time of day
+    public boolean timeOfDay;
 
     Camera cam;
 
@@ -121,10 +123,17 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void updateEntities() {
+        timeOfDay = Weather.time();
         ArrayList<Water> noFish = new ArrayList();
         ArrayList<Water> fish = new ArrayList();
         for (int k = 0; k < entities.size(); k++) {
             if (entities.get(k).isActive() && !(entities.get(k) instanceof Water)) {
+                if (timeOfDay && entities.get(k) instanceof Animal){
+                    ((Animal)entities.get(k)).setRestrictedVision(false);
+                }
+                else if (!timeOfDay && entities.get(k) instanceof Animal){
+                    ((Animal)entities.get(k)).setRestrictedVision(true);
+                }
                 entities.get(k).act();
             } else if (entities.get(k) instanceof Water) {
                 Water water = ((Water) entities.get(k));
@@ -166,6 +175,12 @@ public class GameFrame extends javax.swing.JFrame {
             else if (Weather.getWeather().equals("drought")){
                 Weather.drought();
                 backgroundColor = new Color(210, 241,150);
+            }
+            if (timeOfDay){
+                textTime.setText("day");
+            }
+            else {
+                textTime.setText("night");
             }
         }
     }
@@ -261,6 +276,8 @@ public class GameFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         buttonSave = new javax.swing.JButton();
         buttonLoad = new javax.swing.JButton();
+        labelTime = new javax.swing.JLabel();
+        textTime = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -440,6 +457,15 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        labelTime.setText("Time");
+
+        textTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        textTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textTimeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -463,15 +489,20 @@ public class GameFrame extends javax.swing.JFrame {
                                 .addComponent(tButtonRock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tButtonMud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(tButtonBerries, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                .addComponent(textWeather))))
+                                .addComponent(textWeather)
+                                .addComponent(textTime))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonLoad)
-                            .addComponent(buttonSave))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonSave)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(buttonLoad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addComponent(labelTime))))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -499,11 +530,15 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(textWeather, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
+                .addComponent(labelTime)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonSave)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonLoad)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -887,6 +922,10 @@ public class GameFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonLoadActionPerformed
 
+    private void textTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textTimeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -938,6 +977,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelEntities;
+    private javax.swing.JLabel labelTime;
     private javax.swing.JLabel labelTimerDelay;
     private javax.swing.JPanel panelDraw;
     private javax.swing.JSlider sliderTimerDelay;
@@ -949,6 +989,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton tButtonRock;
     private javax.swing.JToggleButton tButtonWater;
     private javax.swing.JToggleButton tButtonWolf;
+    private javax.swing.JTextField textTime;
     private javax.swing.JTextField textWeather;
     // End of variables declaration//GEN-END:variables
     public class KeyLis implements KeyListener {

@@ -125,18 +125,11 @@ public class Weather extends Entity{
         //no tint
     }
     
-    public static boolean day(){
-        growthMultiplier = 2;
-        restrictedVision = false;
-        return restrictedVision;
+    public static boolean time(){
+        day = !day;
+        return(day);
     }
-    
-    public static boolean night(){
-        growthMultiplier = 1;
-        restrictedVision = true;
-        return restrictedVision;
-        
-    }
+
     
     public static void flood(){
         for(int r = 0; r < GameFrame.entitygrid.length; r++ ){
