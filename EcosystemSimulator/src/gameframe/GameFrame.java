@@ -153,15 +153,19 @@ public class GameFrame extends javax.swing.JFrame {
             Weather.chooseWeather();
             if (Weather.getWeather().equals("rainy")){
                 Weather.rain();
+                backgroundColor = new Color(150, 225, 200);
             }
             else if (Weather.getWeather().equals("sunny")){
                 Weather.sun();
+                backgroundColor = new Color(150, 255, 150);
             }
             else if (Weather.getWeather().equals("flood")){
                 Weather.flood();
+                backgroundColor = new Color(115, 225, 200);
             }
             else if (Weather.getWeather().equals("drought")){
                 Weather.drought();
+                backgroundColor = new Color(210, 241,150);
             }
         }
     }

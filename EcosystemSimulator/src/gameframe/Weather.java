@@ -21,7 +21,7 @@ public class Weather extends Entity{
         int chance = (int)(Math.random()*10)+1;
         //70% chance of sun, 30% chance of rain
         if (weatherCounter < 2){
-            if (chance <= 0){
+            if (chance <= 5){
                 weather  = "sunny";      
             }
             else{ 
@@ -60,7 +60,7 @@ public class Weather extends Entity{
         else if(yesterdayWeather.equals("sunny")){
             weather = "drought";
         }
-        //There's a 30% chance of drought after a day of drought
+        //There's a 80% chance of drought after a day of drought
         else if (yesterdayWeather.equals("drought")){
             int a = (int)(Math.random()*10)+1;
             if (a <= 8){
