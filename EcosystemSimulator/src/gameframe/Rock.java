@@ -10,6 +10,7 @@ public class Rock extends Terrain {
         super(gridX, gridY, entities, entitygrid, gridLength);
     }
 
+    @Override
     public void draw(Graphics g) {
         g.setColor(new Color(128, 132, 135));
         g.fillOval(getX() - getLength() * 3 / 4, getY() - getHeight() * 3 / 4, getLength() * 3 / 2, getHeight() * 3 / 2);

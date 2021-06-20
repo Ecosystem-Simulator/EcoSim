@@ -13,7 +13,6 @@ public class Entity {
     private int gridLength;
     private int length;
     private int height;
-    //private double direction;
     private boolean active;
 
     public Entity(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
@@ -28,7 +27,7 @@ public class Entity {
         this.height = this.gridLength / 2;
         active = true;
         entitygrid[gridX][gridY] = this;
-        entities.add(this);;
+        entities.add(this);
     }
 
     public int getGridX() {
@@ -130,7 +129,7 @@ public class Entity {
     }
 
     public void act() {
-
+        //act code
     }
 
     public void draw(Graphics g) {

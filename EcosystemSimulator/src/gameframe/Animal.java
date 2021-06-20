@@ -20,7 +20,6 @@ public class Animal extends Entity {
     protected Entity target;
     protected int barLength, barHeight;
     public HashMap<String, Integer> favourableness = new HashMap();
-    private ArrayList<String> moves = new ArrayList();
 
     public Animal(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);

@@ -1,7 +1,5 @@
 package gameframe;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Color;
         
 public class Terrain extends Entity {
    

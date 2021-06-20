@@ -96,6 +96,7 @@ public class Deer extends Animal {
         g.drawRect(getX() - barLength / 2, getY() + getHeight() * 2 / 3 + barHeight * 3 / 2, barLength, barHeight);
     }
 
+    @Override
     public void act() {
         target = null;
         //look for food

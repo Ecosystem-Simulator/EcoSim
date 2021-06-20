@@ -38,6 +38,7 @@ public class Bear extends Animal {
             setLength(getLength() * 3 / 4);
         }
     }
+    @Override
     public void draw(Graphics g) {
 
         //draw ears

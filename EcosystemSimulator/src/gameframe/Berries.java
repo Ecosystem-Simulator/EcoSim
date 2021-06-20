@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-/**
- *
- * @author 1090720
- */
 public class Berries extends Food {
 
     public Berries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {

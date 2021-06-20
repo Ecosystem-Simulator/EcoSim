@@ -41,6 +41,7 @@ public class Food extends Entity {
         this.ripeAge = ripeAge;
     }
 
+    @Override
     public void act() {
         age++;
     }

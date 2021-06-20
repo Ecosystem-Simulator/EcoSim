@@ -17,6 +17,7 @@ public class Grass extends Food {
         d = getGridLength() / 5;
     }
 
+    @Override
     public void draw(Graphics g) {
         g.setColor(new Color(0, 154, 23));
         if (getAge() < getRipeAge()) {

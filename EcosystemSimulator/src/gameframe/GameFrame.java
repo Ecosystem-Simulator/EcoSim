@@ -1,26 +1,25 @@
 package gameframe;
 
+//graphics
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.Image;
+//arraylist
+import java.util.ArrayList;
 //writing
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 //reading
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
+import java.lang.reflect.Constructor;
+//timer
 import java.util.Timer;
 import java.util.TimerTask;
-import java.awt.Graphics2D;
-import java.lang.reflect.Constructor;
 
-/**
- *
- * @author 1347278
- */
 public class GameFrame extends javax.swing.JFrame {
 
     //keep track how much time has actually passed since last cycle
@@ -34,15 +33,12 @@ public class GameFrame extends javax.swing.JFrame {
     static public Entity[][] entitygrid = new Entity[100][100];
     //timer object
     private Timer timer = null;
-    private boolean active = false;
-    //drawing object
+    //drawing/color objects
     private Image ib;
     private Graphics ibg;
     private Color backgroundColor = new Color(150, 255, 150);
     //how long to wait between timer calls
     private int timerDelay = 250;
-    //side length of grid
-    //int gridLength = 650 / entitygrid.length;
     private Graphics2D g2d;
     //make a keyboard listener & moust listener
     private KeyLis keylistener = new KeyLis();
@@ -56,6 +52,7 @@ public class GameFrame extends javax.swing.JFrame {
     public boolean drawing = false;
     static private int[] gridLengths = {10, 25, 50, 100};
     static private int index = 2;
+    //side length of grid
     static int gridLength = gridLengths[index];
     //variables for adding entities at the start of the game
     private boolean addingWolf = false;
@@ -66,7 +63,7 @@ public class GameFrame extends javax.swing.JFrame {
     private boolean addingWater = false;
     private boolean addingBerries = false;
     private boolean addingMud = false;
-    //time of day
+    //time of day; timeOfDay -> day; !timeOfDay -> night
     public boolean timeOfDay;
 
     Camera cam;
@@ -102,7 +99,7 @@ public class GameFrame extends javax.swing.JFrame {
         updateTicker();
         requestFocusInWindow();
         updateEntities();      //most important part of simulation!
-        removeDeactivatedEntities();    //removes actors from list that are not active any more
+        removeDeactivatedEntities();    //removes entities from list that are not active any more
         redraw();
         textWeather.setText(Weather.getWeather());
     }
@@ -110,7 +107,6 @@ public class GameFrame extends javax.swing.JFrame {
     //updates the tickCount
     public void updateTicker() {
         tickCount++;
-        //textTick.setText(""+tickCount);
     }
 
     public void setUpImageBuffer() {
@@ -123,7 +119,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void updateEntities() {
-        //weather
+        //weather and day/night cycle
         weatherCount++;
         if (weatherCount % 5 == 0){
             timeOfDay = Weather.time();
@@ -154,6 +150,7 @@ public class GameFrame extends javax.swing.JFrame {
         
         ArrayList<Water> noFish = new ArrayList();
         ArrayList<Water> fish = new ArrayList();
+        //getting non-water entities to act first
         for (int k = 0; k < entities.size(); k++) {
             if (entities.get(k).isActive() && !(entities.get(k) instanceof Water)) {
                 if (timeOfDay && entities.get(k) instanceof Animal){
@@ -163,7 +160,9 @@ public class GameFrame extends javax.swing.JFrame {
                     ((Animal)entities.get(k)).setRestrictedVision(true);
                 }
                 entities.get(k).act();
-            } else if (entities.get(k) instanceof Water) {
+            } 
+            //separating water into 2 categories (fish and no fish); storing in arraylists
+            else if (entities.get(k) instanceof Water) {
                 Water water = ((Water) entities.get(k));
                 if (water.getHasFish()) {
                     fish.add(water);
@@ -172,12 +171,14 @@ public class GameFrame extends javax.swing.JFrame {
                 }
             }
         }
+        //getting water entities without fish to act
         for (int k = 0; k < noFish.size(); k++) {
             if (noFish.get(k).isActive()) {
                 noFish.get(k).act();
             }
         }
         noFish.clear();
+        //getting water entities with fish to act
         for (int k = 0; k < fish.size(); k++) {
             if (fish.get(k).isActive()) {
                 fish.get(k).act();
@@ -187,23 +188,23 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void drawStuff(Graphics g) {
-
+        //drawing out active entities
         for (int k = 0; k < entities.size(); k++) {
             if (entities.get(k).isActive()) {
                 entities.get(k).draw(g);
             }
         }
-
+        //drawing out grid
         g.setColor(new Color(0, 0, 0));
         for (int row = 0; row < entitygrid.length; row++) {
             for (int col = 0; col < entitygrid[0].length; col++) {
                 g.drawRect(row * gridLength, col * gridLength, gridLength, gridLength);
             }
         }
-
     }
 
     public void removeDeactivatedEntities() {
+        //removing dead entities
         for (int k = entities.size() - 1; k >= 0; k--) {
             Entity temp = entities.get(k);
             if (!temp.isActive()) {
@@ -912,9 +913,6 @@ public class GameFrame extends javax.swing.JFrame {
                 }
                 
             }
-            //get class name from string
-            
-            //System.out.println(Class.forName("gameframe." + s));
             
             br.close();
         }
@@ -1087,7 +1085,6 @@ public class GameFrame extends javax.swing.JFrame {
                     }
                     redraw();
                 }
-                
             }
         }
 

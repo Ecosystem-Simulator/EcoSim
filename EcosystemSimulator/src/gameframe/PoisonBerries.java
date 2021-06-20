@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-/**
- *
- * @author 1090720
- */
 public class PoisonBerries extends Berries {
 
     public PoisonBerries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {

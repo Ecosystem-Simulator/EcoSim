@@ -38,7 +38,7 @@ public class Water extends Terrain {
             //draw tail
             g.fillPolygon(new int[]{getX(), getX(), getX() + getLength() / 2, getX() + getLength() / 2}, new int[]{getY() - getHeight() / 2, getY() + getHeight() / 2, getY() + getHeight() / 8, getY() - getHeight() / 8}, 4);
             g.fillPolygon(new int[]{getX() + getLength() / 2, getX() + getLength() / 2, getX() + getLength() * 5 / 8, getX() + getLength() * 5 / 8}, new int[]{getY() + getHeight() / 8, getY() - getHeight() / 8, getY() - getHeight() / 3, getY() + getHeight() / 3}, 4);
-//draw eye
+            //draw eye
             g.setColor(black);
             eyeSize = getLength() / 10;
             g.fillOval(getX() - getLength() / 3 - eyeSize / 2, getY() - getHeight() / 3 - eyeSize / 2, eyeSize, eyeSize);
