@@ -113,29 +113,18 @@ public class Animal extends Entity {
         }
         //look for water
         if (getThirst() >= getHunger() && getThirst() >= maxThirst / 4) {
-            if (!restrictedVision){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Water) {
-                        if (minDistance > distanceTo(entities.get(k))) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Water) {
+                    if (minDistance > distanceTo(entities.get(k))) {
+                        if (!restrictedVision || (restrictedVision && distanceTo(entities.get(k)) < 5)){
                             minDistance = distanceTo(entities.get(k));
                             target = entities.get(k);
                         }
+
                     }
                 }
             }
-            else{
-               int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Water) {
-                        if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                } 
-            }
-            
         }
 
         if (target == null) {

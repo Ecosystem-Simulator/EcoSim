@@ -90,55 +90,41 @@ public class Bear extends Animal {
     @Override
     public void act() {
         target = null;
+        //food
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if ((entities.get(k) instanceof Berries) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if ((entities.get(k) instanceof Berries) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
+                    if (minDistance > distanceTo(entities.get(k))) {
+                        if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)){
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
+
+                    }
+                }
+                else if (entities.get(k) instanceof Water){
+                    if (((Water) entities.get(k)).getHasFish()){
                         if (minDistance > distanceTo(entities.get(k))) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                    else if (entities.get(k) instanceof Water){
-                        if (((Water) entities.get(k)).getHasFish()){
-                            if (minDistance > distanceTo(entities.get(k))) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)){
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
+                            
                         }
                     }
                 }
             }
-            else{
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if ((entities.get(k) instanceof Berries) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
-                        if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                    else if (entities.get(k) instanceof Water){
-                        if (((Water) entities.get(k)).getHasFish()){
-                            if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
-                                minDistance = distanceTo(entities.get(k));
-                                target = entities.get(k);
-                            }
-                        }
-                    }
-                }
-            }
-            
-        } 
+        }
+        //mating
         else if (getReproductiveUrge() > 250) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Bear) {
-                        Bear tempBear = ((Bear) entities.get(k));
-                        if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 250) {
-                            if (minDistance > distanceTo(entities.get(k))) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Bear) {
+                    Bear tempBear = ((Bear) entities.get(k));
+                    if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 250) {
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
@@ -146,22 +132,6 @@ public class Bear extends Animal {
                     }
                 }
             }
-            else{
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Bear) {
-                        Bear tempBear = ((Bear) entities.get(k));
-                        if (tempBear.getGender() != (getGender()) && tempBear.getReproductiveUrge() > 250) {
-                            if (minDistance > distanceTo(entities.get(k)) && distanceTo(tempBear) < 5) {
-                                minDistance = distanceTo(entities.get(k));
-                                target = entities.get(k);
-                            }
-                        }
-                    }
-                }
-                
-            }
-            
         }
         super.act();
     }

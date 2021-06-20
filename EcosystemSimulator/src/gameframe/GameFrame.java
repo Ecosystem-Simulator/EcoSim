@@ -123,7 +123,35 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     public void updateEntities() {
-        timeOfDay = Weather.time();
+        //weather
+        weatherCount++;
+        if (weatherCount % 5 == 0){
+            timeOfDay = Weather.time();
+            Weather.chooseWeather();
+            if (Weather.getWeather().equals("rainy")){
+                Weather.rain();
+                backgroundColor = new Color(150, 225, 200);
+            }
+            else if (Weather.getWeather().equals("sunny")){
+                Weather.sun();
+                backgroundColor = new Color(150, 255, 150);
+            }
+            else if (Weather.getWeather().equals("flood")){
+                Weather.flood();
+                backgroundColor = new Color(115, 225, 200);
+            }
+            else if (Weather.getWeather().equals("drought")){
+                Weather.drought();
+                backgroundColor = new Color(210, 241,150);
+            }
+            if (timeOfDay){
+                textTime.setText("day");
+            }
+            else {
+                textTime.setText("night");
+            }
+        }
+        
         ArrayList<Water> noFish = new ArrayList();
         ArrayList<Water> fish = new ArrayList();
         for (int k = 0; k < entities.size(); k++) {
@@ -156,33 +184,6 @@ public class GameFrame extends javax.swing.JFrame {
             }
         }
         fish.clear();
-        //weather
-        weatherCount++;
-        if (weatherCount % 5 == 0){
-            Weather.chooseWeather();
-            if (Weather.getWeather().equals("rainy")){
-                Weather.rain();
-                backgroundColor = new Color(150, 225, 200);
-            }
-            else if (Weather.getWeather().equals("sunny")){
-                Weather.sun();
-                backgroundColor = new Color(150, 255, 150);
-            }
-            else if (Weather.getWeather().equals("flood")){
-                Weather.flood();
-                backgroundColor = new Color(115, 225, 200);
-            }
-            else if (Weather.getWeather().equals("drought")){
-                Weather.drought();
-                backgroundColor = new Color(210, 241,150);
-            }
-            if (timeOfDay){
-                textTime.setText("day");
-            }
-            else {
-                textTime.setText("night");
-            }
-        }
     }
 
     public void drawStuff(Graphics g) {

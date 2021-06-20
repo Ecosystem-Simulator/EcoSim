@@ -104,76 +104,49 @@ public class Wolf extends Animal {
     @Override
     public void act() {
         target = null;
+        //looking for food
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Deer) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Deer) {
+                    if (minDistance > distanceTo(entities.get(k))) {
+                        if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
+                            minDistance = distanceTo(entities.get(k));
+                            target = entities.get(k);
+                        }
+                    }
+                } 
+                else if (entities.get(k) instanceof Water) {
+                    if (((Water) entities.get(k)).getHasFish()) {
                         if (minDistance > distanceTo(entities.get(k))) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                    else if (entities.get(k) instanceof Water){
-                        if (((Water) entities.get(k)).getHasFish()){
-                            if (minDistance > distanceTo(entities.get(k))) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
+
                         }
                     }
                 }
             }
-            
-            else {
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Deer) {
-                        if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                    else if (entities.get(k) instanceof Water){
-                        if (((Water) entities.get(k)).getHasFish()){
-                            if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5 ) {
-                                minDistance = distanceTo(entities.get(k));
-                                target = entities.get(k);
-                            }
-                        }
-                    }
-                }
-            }
-        } 
+        }
+        //mating
         else if (getReproductiveUrge() > 150) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Wolf) {
-                        Wolf tempWolf = ((Wolf) entities.get(k));
-                        if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 150) {
-                            if (minDistance > distanceTo(entities.get(k))) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Wolf) {
+                    Wolf tempWolf = ((Wolf) entities.get(k));
+                    if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 150) {
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
+
                         }
                     }
                 }
             }
-            else{
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Wolf) {
-                        Wolf tempWolf = ((Wolf) entities.get(k));
-                        if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 150) {
-                            if (minDistance > distanceTo(entities.get(k)) && distanceTo(tempWolf) < 5) {
-                                minDistance = distanceTo(entities.get(k));
-                                target = entities.get(k);
-                            }
-                        }
-                    }
-                }
-            }
+
         }
         super.act();
     }

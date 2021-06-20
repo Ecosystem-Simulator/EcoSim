@@ -13,7 +13,7 @@ public class Weather extends Entity{
     private static String weather = ""; 
     private static String yesterdayWeather = "";
     private static int weatherCounter = 1;
-    private static boolean day;
+    private static boolean day = true;
     private static boolean restrictedVision;
     private static int growthMultiplier = 1;
     

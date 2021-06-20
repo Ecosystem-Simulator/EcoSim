@@ -100,56 +100,32 @@ public class Deer extends Animal {
         target = null;
         //look for food
         if (getHunger() > getThirst() && getHunger() > getMaxHunger() / 4) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if ((entities.get(k) instanceof Berries || entities.get(k) instanceof Grass) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
-                        if (minDistance > distanceTo(entities.get(k))) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if ((entities.get(k) instanceof Berries || entities.get(k) instanceof Grass) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
+                    if (minDistance > distanceTo(entities.get(k))) {
+                        if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
                             minDistance = distanceTo(entities.get(k));
                             target = entities.get(k);
                         }
+
                     }
                 }
-            }
-            else{
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if ((entities.get(k) instanceof Berries || entities.get(k) instanceof Grass) && ((Food) entities.get(k)).getAge() >= ((Food) entities.get(k)).getRipeAge()) {
-                        if (minDistance > distanceTo(entities.get(k)) && distanceTo(entities.get(k)) < 5) {
-                            minDistance = distanceTo(entities.get(k));
-                            target = entities.get(k);
-                        }
-                    }
-                }
-            }
-            
-            //look for mate
+            } 
         } 
+        //look for mate
         else if (getReproductiveUrge() > 50) {
-            if (!getRestrictedVision()){
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Deer) {
-                        Deer tempDeer = ((Deer) entities.get(k));
-                        if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 50) {
-                            if (minDistance > distanceTo(entities.get(k))) {
+            int minDistance = Integer.MAX_VALUE;
+            for (int k = 0; k < entities.size(); k++) {
+                if (entities.get(k) instanceof Deer) {
+                    Deer tempDeer = ((Deer) entities.get(k));
+                    if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 50) {
+                        if (minDistance > distanceTo(entities.get(k))) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
-                        }
-                    }
-                }
-            }
-            else{
-                int minDistance = Integer.MAX_VALUE;
-                for (int k = 0; k < entities.size(); k++) {
-                    if (entities.get(k) instanceof Deer) {
-                        Deer tempDeer = ((Deer) entities.get(k));
-                        if (tempDeer.getGender() != (getGender()) && tempDeer.getReproductiveUrge() > 50) {
-                            if (minDistance > distanceTo(entities.get(k)) && distanceTo(tempDeer) < 5) {
-                                minDistance = distanceTo(entities.get(k));
-                                target = entities.get(k);
-                            }
+
                         }
                     }
                 }
