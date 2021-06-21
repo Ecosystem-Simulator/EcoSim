@@ -49,7 +49,7 @@
                   <Component id="panelDraw" min="-2" pref="1001" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -87,26 +87,35 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace pref="36" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="buttonStart" max="32767" attributes="0"/>
-                          <Component id="buttonPause" min="-2" pref="180" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="sliderTimerDelay" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelTimerDelay" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="buttonZoomOut" min="-2" max="-2" attributes="0"/>
-                                  <Component id="buttonZoomIn" min="-2" pref="77" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="buttonStart" max="32767" attributes="0"/>
+                                  <Component id="buttonPause" min="-2" pref="180" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="sliderTimerDelay" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="labelTimerDelay" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="buttonZoomOut" min="-2" max="-2" attributes="0"/>
+                                          <Component id="buttonZoomIn" min="-2" pref="77" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Component id="sliderCameraSpeed" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="labelCameraSpeed" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,9 +132,12 @@
                   <Component id="buttonZoomOut" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="labelTimerDelay" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="sliderTimerDelay" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="labelCameraSpeed" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="sliderCameraSpeed" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -165,8 +177,11 @@
         </Component>
         <Component class="javax.swing.JSlider" name="sliderTimerDelay">
           <Properties>
+            <Property name="majorTickSpacing" type="int" value="50"/>
             <Property name="maximum" type="int" value="1000"/>
-            <Property name="minimum" type="int" value="100"/>
+            <Property name="minimum" type="int" value="50"/>
+            <Property name="paintTicks" type="boolean" value="true"/>
+            <Property name="snapToTicks" type="boolean" value="true"/>
             <Property name="value" type="int" value="250"/>
           </Properties>
           <Events>
@@ -177,6 +192,23 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Timer delay: 250"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelCameraSpeed">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Camera speed: 100"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSlider" name="sliderCameraSpeed">
+          <Properties>
+            <Property name="majorTickSpacing" type="int" value="100"/>
+            <Property name="maximum" type="int" value="200"/>
+            <Property name="minimum" type="int" value="100"/>
+            <Property name="paintLabels" type="boolean" value="true"/>
+            <Property name="paintTicks" type="boolean" value="true"/>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sliderCameraSpeedStateChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

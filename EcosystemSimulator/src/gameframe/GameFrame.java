@@ -55,6 +55,7 @@ public class GameFrame extends javax.swing.JFrame {
     static private int index = 2;
     //side length of grid
     static int gridLength = gridLengths[index];
+    static int cameraSpeed = 100;
     //variables for adding entities at the start of the game
     private boolean addingWolf = false;
     private boolean addingBear = false;
@@ -270,6 +271,8 @@ public class GameFrame extends javax.swing.JFrame {
         buttonZoomIn = new javax.swing.JButton();
         sliderTimerDelay = new javax.swing.JSlider();
         labelTimerDelay = new javax.swing.JLabel();
+        labelCameraSpeed = new javax.swing.JLabel();
+        sliderCameraSpeed = new javax.swing.JSlider();
         jPanel2 = new javax.swing.JPanel();
         labelEntities = new javax.swing.JLabel();
         tButtonBear = new javax.swing.JToggleButton();
@@ -333,8 +336,11 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        sliderTimerDelay.setMajorTickSpacing(50);
         sliderTimerDelay.setMaximum(1000);
-        sliderTimerDelay.setMinimum(100);
+        sliderTimerDelay.setMinimum(50);
+        sliderTimerDelay.setPaintTicks(true);
+        sliderTimerDelay.setSnapToTicks(true);
         sliderTimerDelay.setValue(250);
         sliderTimerDelay.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -344,25 +350,44 @@ public class GameFrame extends javax.swing.JFrame {
 
         labelTimerDelay.setText("Timer delay: 250");
 
+        labelCameraSpeed.setText("Camera speed: 100");
+
+        sliderCameraSpeed.setMajorTickSpacing(100);
+        sliderCameraSpeed.setMaximum(200);
+        sliderCameraSpeed.setMinimum(100);
+        sliderCameraSpeed.setPaintLabels(true);
+        sliderCameraSpeed.setPaintTicks(true);
+        sliderCameraSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderCameraSpeedStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelTimerDelay)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(buttonZoomOut)
-                                .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(19, 19, 19))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelTimerDelay)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(buttonZoomOut)
+                                        .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(sliderCameraSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelCameraSpeed)
+                        .addGap(77, 77, 77))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,9 +402,12 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(buttonZoomOut)
                 .addGap(18, 18, 18)
                 .addComponent(labelTimerDelay)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCameraSpeed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sliderCameraSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         labelEntities.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -570,7 +598,7 @@ public class GameFrame extends javax.swing.JFrame {
                     .addComponent(panelDraw, javax.swing.GroupLayout.PREFERRED_SIZE, 1001, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(939, Short.MAX_VALUE))
         );
@@ -833,6 +861,7 @@ public class GameFrame extends javax.swing.JFrame {
             }
             System.out.println("File written");
             br.close();
+            JOptionPane.showMessageDialog(null, "File saved!");
         }
         catch(Exception e) {
             System.out.println("Error writing to file");
@@ -931,6 +960,11 @@ public class GameFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textTimeActionPerformed
 
+    private void sliderCameraSpeedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderCameraSpeedStateChanged
+        cameraSpeed = sliderCameraSpeed.getValue();
+        labelCameraSpeed.setText("Camera speed: " + cameraSpeed);
+    }//GEN-LAST:event_sliderCameraSpeedStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -981,10 +1015,12 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelCameraSpeed;
     private javax.swing.JLabel labelEntities;
     private javax.swing.JLabel labelTime;
     private javax.swing.JLabel labelTimerDelay;
     private javax.swing.JPanel panelDraw;
+    private javax.swing.JSlider sliderCameraSpeed;
     private javax.swing.JSlider sliderTimerDelay;
     private javax.swing.JToggleButton tButtonBear;
     private javax.swing.JToggleButton tButtonBerries;
@@ -1008,26 +1044,26 @@ public class GameFrame extends javax.swing.JFrame {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    if (cam.getyOffset() - gridLength >= 0 && !drawing) {
-                        cam.setyOffset(cam.getyOffset() - gridLength);
+                    if (cam.getyOffset() - cameraSpeed >= 0 && !drawing) {
+                        cam.setyOffset(cam.getyOffset() - cameraSpeed);
                     }
                     break;
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
                     if (!drawing) {
-                        cam.setyOffset(cam.getyOffset() + gridLength);
+                        cam.setyOffset(cam.getyOffset() + cameraSpeed);
                     }
                     break;
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
-                    if (cam.getxOffset() - gridLength >= 0 && !drawing) {
-                        cam.setxOffset(cam.getxOffset() - gridLength);
+                    if (cam.getxOffset() - cameraSpeed >= 0 && !drawing) {
+                        cam.setxOffset(cam.getxOffset() - cameraSpeed);
                     }
                     break;
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
                     if (!drawing) {
-                        cam.setxOffset(cam.getxOffset() + gridLength);
+                        cam.setxOffset(cam.getxOffset() + cameraSpeed);
                     }
                     break;
                 default:

@@ -30,12 +30,9 @@ public class Camera {
 
     public void setxOffset(int xOffset) {
         this.xOffset = xOffset;
-        x += xOffset;
     }
 
     public void setyOffset(int yOffset) {
         this.yOffset = yOffset;
-        y += yOffset;
     }
-
 }
