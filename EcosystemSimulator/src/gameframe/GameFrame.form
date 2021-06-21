@@ -257,7 +257,6 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                           <Component id="labelTime" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="buttonClear" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>

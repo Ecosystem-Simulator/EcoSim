@@ -645,7 +645,6 @@ public class GameFrame extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println(gridLength);
     }//GEN-LAST:event_buttonZoomOutActionPerformed
 
     private void buttonZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonZoomInActionPerformed
@@ -658,7 +657,6 @@ public class GameFrame extends javax.swing.JFrame {
                 }
             }
         }
-        System.out.println(gridLength);
     }//GEN-LAST:event_buttonZoomInActionPerformed
 
     private void sliderTimerDelayStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTimerDelayStateChanged
