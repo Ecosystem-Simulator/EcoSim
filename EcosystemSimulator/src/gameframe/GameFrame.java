@@ -266,13 +266,13 @@ public class GameFrame extends javax.swing.JFrame {
         panelDraw = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         buttonStart = new javax.swing.JButton();
-        buttonPause = new javax.swing.JButton();
         buttonZoomOut = new javax.swing.JButton();
         buttonZoomIn = new javax.swing.JButton();
         sliderTimerDelay = new javax.swing.JSlider();
         labelTimerDelay = new javax.swing.JLabel();
         labelCameraSpeed = new javax.swing.JLabel();
         sliderCameraSpeed = new javax.swing.JSlider();
+        buttonPause = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         labelEntities = new javax.swing.JLabel();
         tButtonBear = new javax.swing.JToggleButton();
@@ -289,6 +289,7 @@ public class GameFrame extends javax.swing.JFrame {
         buttonLoad = new javax.swing.JButton();
         labelTime = new javax.swing.JLabel();
         textTime = new javax.swing.JTextField();
+        buttonClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -312,13 +313,6 @@ public class GameFrame extends javax.swing.JFrame {
         buttonStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonStartActionPerformed(evt);
-            }
-        });
-
-        buttonPause.setText("Pause");
-        buttonPause.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPauseActionPerformed(evt);
             }
         });
 
@@ -357,9 +351,17 @@ public class GameFrame extends javax.swing.JFrame {
         sliderCameraSpeed.setMinimum(100);
         sliderCameraSpeed.setPaintLabels(true);
         sliderCameraSpeed.setPaintTicks(true);
+        sliderCameraSpeed.setSnapToTicks(true);
         sliderCameraSpeed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 sliderCameraSpeedStateChanged(evt);
+            }
+        });
+
+        buttonPause.setText("Pause");
+        buttonPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPauseActionPerformed(evt);
             }
         });
 
@@ -372,9 +374,7 @@ public class GameFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(buttonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sliderTimerDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(47, 47, 47)
@@ -383,7 +383,8 @@ public class GameFrame extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(buttonZoomOut)
                                         .addComponent(buttonZoomIn, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(sliderCameraSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(sliderCameraSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonPause, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(labelCameraSpeed)
@@ -393,9 +394,9 @@ public class GameFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonPause)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonPause)
                 .addGap(18, 18, 18)
                 .addComponent(buttonZoomIn)
                 .addGap(17, 17, 17)
@@ -502,6 +503,13 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
 
+        buttonClear.setText("Clear");
+        buttonClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -532,13 +540,17 @@ public class GameFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(buttonSave)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(buttonLoad, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(12, 12, 12)
-                                    .addComponent(labelTime))))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(labelTime)
+                                        .addGap(21, 21, 21))
+                                    .addComponent(buttonClear)))
+                            .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -574,7 +586,9 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(buttonSave)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonLoad)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonClear)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -965,6 +979,15 @@ public class GameFrame extends javax.swing.JFrame {
         labelCameraSpeed.setText("Camera speed: " + cameraSpeed);
     }//GEN-LAST:event_sliderCameraSpeedStateChanged
 
+    private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
+        entities.clear();
+        for (int r = 0; r < entitygrid.length; r++){
+            for (int c = 0; c < entitygrid[0].length; c++){
+                entitygrid[r][c] = null;
+            }
+        }
+    }//GEN-LAST:event_buttonClearActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1006,6 +1029,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonClear;
     private javax.swing.JButton buttonLoad;
     private javax.swing.JButton buttonPause;
     private javax.swing.JButton buttonSave;

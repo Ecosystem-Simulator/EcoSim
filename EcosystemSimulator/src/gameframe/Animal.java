@@ -106,8 +106,7 @@ public class Animal extends Entity {
     @Override
     public void act() {
         age++;
-        //change back
-        //hunger++;
+        hunger++;
         thirst++;
         reproductiveUrge++;
         if (getAge() > 1000 || getHunger() > maxHunger || getThirst() > maxThirst) {

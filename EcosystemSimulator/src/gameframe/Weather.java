@@ -19,7 +19,7 @@ public class Weather extends Entity{
     public static void chooseWeather(){
         int chance = (int)(Math.random()*10)+1;
         //70% chance of sun, 30% chance of rain
-        if (weatherCounter < 2){
+        if (weatherCounter < 6){
             if (chance <= 5){
                 weather  = "sunny";      
             }
