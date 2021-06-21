@@ -27,10 +27,11 @@ public class GameFrame extends javax.swing.JFrame {
     private long prev_time;
     public long tickCount = 0;
     private int weatherCount;
+    private int timeCount;
     //creating arraylist of entities
-    static ArrayList<Entity> entities = new ArrayList<Entity>();
+    public static ArrayList<Entity> entities = new ArrayList<Entity>();
     //make a grid of entities
-    static public Entity[][] entitygrid = new Entity[100][100];
+    public static Entity[][] entitygrid = new Entity[100][100];
     //timer object
     private Timer timer = null;
     //drawing/color objects
@@ -99,7 +100,7 @@ public class GameFrame extends javax.swing.JFrame {
         updateTicker();
         requestFocusInWindow();
         updateEntities();      //most important part of simulation!
-        removeDeactivatedEntities();    //removes entities from list that are not active any more
+        removeDeactivatedEntities(); //removes entities from list that are not active any more
         redraw();
         textWeather.setText(Weather.getWeather());
     }
@@ -120,26 +121,8 @@ public class GameFrame extends javax.swing.JFrame {
 
     public void updateEntities() {
         //weather and day/night cycle
-        weatherCount++;
-        if (weatherCount % 5 == 0){
-            timeOfDay = Weather.time();
-            Weather.chooseWeather();
-            if (Weather.getWeather().equals("rainy")){
-                Weather.rain();
-                backgroundColor = new Color(150, 225, 200);
-            }
-            else if (Weather.getWeather().equals("sunny")){
-                Weather.sun();
-                backgroundColor = new Color(150, 255, 150);
-            }
-            else if (Weather.getWeather().equals("flood")){
-                Weather.flood();
-                backgroundColor = new Color(115, 225, 200);
-            }
-            else if (Weather.getWeather().equals("drought")){
-                Weather.drought();
-                backgroundColor = new Color(210, 241,150);
-            }
+        timeCount++;
+        if (timeCount % 5 == 0){
             if (timeOfDay){
                 textTime.setText("day");
             }
@@ -162,7 +145,7 @@ public class GameFrame extends javax.swing.JFrame {
                 entities.get(k).act();
             } 
             //separating water into 2 categories (fish and no fish); storing in arraylists
-            else if (entities.get(k) instanceof Water) {
+            else if (entities.get(k) instanceof Water && entities.get(k).isActive()) {
                 Water water = ((Water) entities.get(k));
                 if (water.getHasFish()) {
                     fish.add(water);
@@ -185,6 +168,28 @@ public class GameFrame extends javax.swing.JFrame {
             }
         }
         fish.clear();
+        
+        weatherCount++;
+        if (weatherCount % 5 == 0){
+            timeOfDay = Weather.time();
+            Weather.chooseWeather();
+            if (Weather.getWeather().equals("rainy")){
+                Weather.rain();
+                backgroundColor = new Color(150, 225, 200);
+            }
+            else if (Weather.getWeather().equals("sunny")){
+                Weather.sun();
+                backgroundColor = new Color(150, 255, 150);
+            }
+            else if (Weather.getWeather().equals("flood")){
+                Weather.flood();
+                backgroundColor = new Color(115, 225, 200);
+            }
+            else if (Weather.getWeather().equals("drought")){
+                Weather.drought();
+                backgroundColor = new Color(210, 241,150);
+            }
+        }
     }
 
     public void drawStuff(Graphics g) {
@@ -208,6 +213,7 @@ public class GameFrame extends javax.swing.JFrame {
         for (int k = entities.size() - 1; k >= 0; k--) {
             Entity temp = entities.get(k);
             if (!temp.isActive()) {
+                entitygrid[entities.get(k).getGridX()][entities.get(k).getGridY()] = null;
                 entities.remove(k);
             }
         }

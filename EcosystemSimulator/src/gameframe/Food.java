@@ -43,6 +43,8 @@ public class Food extends Entity {
 
     @Override
     public void act() {
-        age++;
+        if (!Weather.getWeather().equals("drought")){
+            age++;
+        }
     }
 }

@@ -11,7 +11,7 @@ public class Grass extends Food {
     public Grass(int gridX, int gridY, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(gridX, gridY, entities, entitygrid, gridLength);
         setNutritionVal((int) (Math.random() * 5) + 10);
-        setRipeAge(5);
+        setRipeAge(20);
         setLength(getLength() / 2);
         setHeight(getHeight() / 2);
         d = getGridLength() / 5;

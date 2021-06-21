@@ -9,7 +9,7 @@ public class Berries extends Food {
     public Berries(int x, int y, ArrayList<Entity> entities, Entity[][] entitygrid, int gridLength) {
         super(x, y, entities, entitygrid, gridLength);
         setNutritionVal((int) (Math.random() * 10) + 20);
-        setRipeAge(10);
+        setRipeAge(50);
     }
 
     @Override

@@ -110,7 +110,7 @@ public class Wolf extends Animal {
             for (int k = 0; k < entities.size(); k++) {
                 if (entities.get(k) instanceof Deer) {
                     if (minDistance > distanceTo(entities.get(k))) {
-                        if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
+                        if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 10)) {
                             minDistance = distanceTo(entities.get(k));
                             target = entities.get(k);
                         }
@@ -119,7 +119,7 @@ public class Wolf extends Animal {
                 else if (entities.get(k) instanceof Water) {
                     if (((Water) entities.get(k)).getHasFish()) {
                         if (minDistance > distanceTo(entities.get(k))) {
-                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 10)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }
@@ -137,7 +137,7 @@ public class Wolf extends Animal {
                     Wolf tempWolf = ((Wolf) entities.get(k));
                     if (tempWolf.getGender() != (getGender()) && tempWolf.getReproductiveUrge() > 150) {
                         if (minDistance > distanceTo(entities.get(k))) {
-                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 5)) {
+                            if (!getRestrictedVision() || (getRestrictedVision() && distanceTo(entities.get(k)) < 10)) {
                                 minDistance = distanceTo(entities.get(k));
                                 target = entities.get(k);
                             }

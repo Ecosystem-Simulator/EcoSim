@@ -100,11 +100,14 @@ public class Animal extends Entity {
     public void setRestrictedVision(boolean restrictedVision){
         this.restrictedVision = restrictedVision;
     }
+    
+
 
     @Override
     public void act() {
         age++;
-        hunger++;
+        //change back
+        //hunger++;
         thirst++;
         reproductiveUrge++;
         if (getAge() > 1000 || getHunger() > maxHunger || getThirst() > maxThirst) {
@@ -116,7 +119,7 @@ public class Animal extends Entity {
             for (int k = 0; k < entities.size(); k++) {
                 if (entities.get(k) instanceof Water) {
                     if (minDistance > distanceTo(entities.get(k))) {
-                        if (!restrictedVision || (restrictedVision && distanceTo(entities.get(k)) < 5)){
+                        if (!restrictedVision || (restrictedVision && distanceTo(entities.get(k)) < 10)){
                             minDistance = distanceTo(entities.get(k));
                             target = entities.get(k);
                         }
